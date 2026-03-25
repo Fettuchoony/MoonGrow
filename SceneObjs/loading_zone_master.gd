@@ -6,9 +6,9 @@ extends StaticBody3D
 ## Scene Index:[br]
 ## 0: Main test scene[br]
 ## 1: First level test[br]
-@onready var id_to_path : Dictionary = {
-	0 : "res://Main.tscn",
-	1 : "res://SceneObjs/test_level.tscn"
+@onready var id_to_name : Dictionary = {
+	0 : "MainTestScene",
+	1 : "TestLevel"
 	}
 
 @onready var loading_zone = $LoadingZone
@@ -34,10 +34,14 @@ func _process(delta: float) -> void:
 
 
 func _on_loading_zone_area_entered(area: Area3D) -> void:
-	print("loading entered")
-	var cols = area.get_overlapping_areas()
-	if cols != null and cols.size() > 0:
+	var cols = area.get_overlapping_bodies()
+	print(cols)
+	if cols != null and !cols.is_empty():
+		print(cols)
 		# Set the players subscene to the target, overides old subscene
-		cols[0].get_parent()._last_subscene = subscene_target
+		cols[0]._last_subscene = subscene_target
 		# Moves scene to new scene
-		get_tree().change_scene_to_file(id_to_path[scene_target])
+		cols[0].get_parent().change_scene_to_file_next_frame = id_to_name[scene_target]
+		
+func get_subscene() -> int:
+	return subscene

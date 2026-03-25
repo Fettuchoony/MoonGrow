@@ -1,25 +1,25 @@
-[gd_scene format=3 uid="uid://djd43huil28ek"]
+[gd_scene format=3 uid="uid://3k3gnie4fmav"]
 
-[ext_resource type="Script" uid="uid://exycttr6jbdy" path="res://scene_manager.gd" id="1_2gh4u"]
-[ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://Scripts/character_movement.gd" id="1_uu6xs"]
-[ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://Scripts/Player/camera_3d.gd" id="2_r0du0"]
-[ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="7_hhcpw"]
-[ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://item_pivot.gd" id="8_bg4s2"]
-[ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://health_GUI_update.gd" id="8_hri7i"]
-[ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/heart_module.tscn" id="9_sqvbp"]
-[ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://menu_func.gd" id="10_20pc6"]
-[ext_resource type="Texture2D" uid="uid://cbpsvqr5ha27b" path="res://Textures/Extracted/PlaceholderItem.png" id="10_wkp8b"]
-[ext_resource type="Texture2D" uid="uid://cmi1rhgm324by" path="res://Textures/Extracted/Sword.png" id="11_5vvyt"]
-[ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="13_c2ibq"]
-[ext_resource type="Script" uid="uid://c6tfghya1nc5j" path="res://item_slot.gd" id="13_j4qnp"]
-[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="15_fpfj3"]
-[ext_resource type="Texture2D" uid="uid://cbmdtpgagkpso" path="res://Textures/Extracted/QKey.png" id="16_2gh4u"]
-[ext_resource type="Texture2D" uid="uid://ck57045tytmr8" path="res://Textures/Extracted/Grapple.png" id="16_sc1dx"]
-[ext_resource type="Texture2D" uid="uid://br210xvuacqbp" path="res://Textures/Extracted/EKey.png" id="17_devvj"]
-[ext_resource type="Texture2D" uid="uid://bm8w6rbk6us6h" path="res://Textures/Extracted/RKey.png" id="18_3b0ty"]
-[ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/MainTestScene.tscn" id="20_2gh4u"]
-[ext_resource type="Texture2D" uid="uid://c5lr88gvig1n2" path="res://Textures/Extracted/bomb.png" id="20_devvj"]
-[ext_resource type="Texture2D" uid="uid://5vqebth03c5p" path="res://Textures/Extracted/BlankItem.png" id="22_3b0ty"]
+[ext_resource type="Script" uid="uid://exycttr6jbdy" path="res://scene_manager.gd" id="1_sph3i"]
+[ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://Scripts/character_movement.gd" id="2_a0nle"]
+[ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://Scripts/Player/camera_3d.gd" id="3_pww71"]
+[ext_resource type="Texture2D" uid="uid://cbmdtpgagkpso" path="res://Textures/Extracted/QKey.png" id="4_mycie"]
+[ext_resource type="Texture2D" uid="uid://br210xvuacqbp" path="res://Textures/Extracted/EKey.png" id="5_q3em1"]
+[ext_resource type="Texture2D" uid="uid://bm8w6rbk6us6h" path="res://Textures/Extracted/RKey.png" id="6_rfrpt"]
+[ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="7_4b5c7"]
+[ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://health_GUI_update.gd" id="8_d57gv"]
+[ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/heart_module.tscn" id="9_ivmrb"]
+[ext_resource type="Texture2D" uid="uid://5vqebth03c5p" path="res://Textures/Extracted/BlankItem.png" id="11_du121"]
+[ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://item_pivot.gd" id="12_hp8dc"]
+[ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://menu_func.gd" id="13_ac22a"]
+[ext_resource type="Texture2D" uid="uid://cmi1rhgm324by" path="res://Textures/Extracted/Sword.png" id="14_fg0be"]
+[ext_resource type="Script" uid="uid://c6tfghya1nc5j" path="res://item_slot.gd" id="15_itamg"]
+[ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="16_slwsx"]
+[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="17_naxxy"]
+[ext_resource type="Texture2D" uid="uid://ck57045tytmr8" path="res://Textures/Extracted/Grapple.png" id="18_4ssec"]
+[ext_resource type="Texture2D" uid="uid://c5lr88gvig1n2" path="res://Textures/Extracted/bomb.png" id="19_8ab8f"]
+[ext_resource type="Texture2D" uid="uid://cbpsvqr5ha27b" path="res://Textures/Extracted/PlaceholderItem.png" id="20_g2x1t"]
+[ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/MainTestScene.tscn" id="21_wsmv8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uu6xs"]
 
@@ -54,14 +54,15 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 
 [node name="Node3D" type="Node3D" unique_id=1688291202]
-script = ExtResource("1_2gh4u")
+script = ExtResource("1_sph3i")
 enable_saving = true
 
 [node name="MainPlayer" type="CharacterBody3D" parent="." unique_id=1501440258 groups=["carry_on_load"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 270.6035, 1.2649469, 279.2255)
+transform = Transform3D(0.030792164, 0, -0.99952424, 0, 1, 0, 0.99952424, 0, 0.030792164, 283.1435, -0.48680356, 283.99445)
 disable_mode = 2
 collision_layer = 258
-script = ExtResource("1_uu6xs")
+velocity = Vector3(0.00025636915, 0, -8.028524e-06)
+script = ExtResource("2_a0nle")
 item_cooldown_time = 0.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MainPlayer" unique_id=13420787]
@@ -73,13 +74,15 @@ debug_color = Color(3.706068e-06, 0.62085986, 0.5616422, 0.41960785)
 mesh = SubResource("CapsuleMesh_uu6xs")
 
 [node name="CameraPivot" type="Node3D" parent="MainPlayer" unique_id=1057470171]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+transform = Transform3D(1, 0, 0, 0, 0.971338, 0.23770268, 0, -0.23770268, 0.971338, 0, 4, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="MainPlayer/CameraPivot" unique_id=1271630180]
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="MainPlayer/CameraPivot/SpringArm3D" unique_id=873020112]
-script = ExtResource("2_r0du0")
+transform = Transform3D(1.0000015, -3.008172e-07, 2.8684735e-07, 3.0128285e-07, 1.0000001, -1.395747e-06, -2.8684735e-07, 6.8450754e-07, 1.0000014, 0, 0, 5.0000305)
+current = true
+script = ExtResource("3_pww71")
 tilt_limit = 1.2
 
 [node name="PlayerRay" type="RayCast3D" parent="MainPlayer/CameraPivot/SpringArm3D/Camera3D" unique_id=469574903]
@@ -88,6 +91,7 @@ collision_mask = 5
 collide_with_areas = true
 
 [node name="DebugBall" type="MeshInstance3D" parent="MainPlayer/CameraPivot/SpringArm3D/Camera3D/PlayerRay" unique_id=1974561682]
+visible = false
 mesh = SubResource("SphereMesh_cm0pq")
 
 [node name="ItemRay" type="RayCast3D" parent="MainPlayer/CameraPivot/SpringArm3D/Camera3D" unique_id=3895217]
@@ -137,7 +141,7 @@ offset_left = -16.0
 offset_top = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="ColorRect" type="ColorRect" parent="MainPlayer/GUI/QSlot" unique_id=1321423168]
 layout_mode = 1
@@ -173,7 +177,7 @@ offset_left = -16.0
 offset_top = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="ColorRect" type="ColorRect" parent="MainPlayer/GUI/ESlot" unique_id=1749650808]
 layout_mode = 1
@@ -209,7 +213,7 @@ offset_left = -16.0
 offset_top = -16.0
 grow_horizontal = 0
 grow_vertical = 0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="ColorRect" type="ColorRect" parent="MainPlayer/GUI/RSlot" unique_id=1984926241]
 layout_mode = 1
@@ -240,7 +244,7 @@ texture_filter = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("7_hhcpw")
+texture = ExtResource("7_4b5c7")
 
 [node name="Health" type="Control" parent="MainPlayer/GUI" unique_id=846317371]
 layout_mode = 1
@@ -252,7 +256,7 @@ offset_left = -0.12800217
 offset_bottom = -0.27200127
 grow_horizontal = 2
 mouse_filter = 2
-script = ExtResource("8_hri7i")
+script = ExtResource("8_d57gv")
 metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainPlayer/GUI/Health" unique_id=1592403817]
@@ -261,45 +265,50 @@ layout_mode = 1
 offset_right = 56.0
 offset_bottom = 16.0
 
-[node name="H1" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=2028691687 instance=ExtResource("9_sqvbp")]
+[node name="H1" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=2028691687 instance=ExtResource("9_ivmrb")]
 layout_mode = 2
 
-[node name="H2" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1406597796 instance=ExtResource("9_sqvbp")]
+[node name="H2" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1406597796 instance=ExtResource("9_ivmrb")]
 layout_mode = 2
 
-[node name="H3" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1919705351 instance=ExtResource("9_sqvbp")]
+[node name="H3" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1919705351 instance=ExtResource("9_ivmrb")]
 layout_mode = 2
 
-[node name="H4" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1767175386 instance=ExtResource("9_sqvbp")]
+[node name="H4" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1767175386 instance=ExtResource("9_ivmrb")]
 layout_mode = 2
 
-[node name="H5" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1404316637 instance=ExtResource("9_sqvbp")]
+[node name="H5" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1404316637 instance=ExtResource("9_ivmrb")]
 layout_mode = 2
 
-[node name="H6" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1582441088 instance=ExtResource("9_sqvbp")]
+[node name="H6" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1582441088 instance=ExtResource("9_ivmrb")]
+visible = false
 layout_mode = 2
 
-[node name="H7" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=201557856 instance=ExtResource("9_sqvbp")]
+[node name="H7" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=201557856 instance=ExtResource("9_ivmrb")]
+visible = false
 layout_mode = 2
 
-[node name="H8" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1831249941 instance=ExtResource("9_sqvbp")]
+[node name="H8" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1831249941 instance=ExtResource("9_ivmrb")]
+visible = false
 layout_mode = 2
 
-[node name="H9" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=422146902 instance=ExtResource("9_sqvbp")]
+[node name="H9" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=422146902 instance=ExtResource("9_ivmrb")]
+visible = false
 layout_mode = 2
 
-[node name="H10" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1437467539 instance=ExtResource("9_sqvbp")]
+[node name="H10" parent="MainPlayer/GUI/Health/HBoxContainer" unique_id=1437467539 instance=ExtResource("9_ivmrb")]
+visible = false
 layout_mode = 2
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
 texture_filter = 1
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("22_3b0ty")
+texture = ExtResource("11_du121")
 
 [node name="ItemPivot" type="Node3D" parent="MainPlayer" unique_id=1756800719]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-script = ExtResource("8_bg4s2")
+transform = Transform3D(1, 0, 0, 0, 0.971338, 0.23770268, 0, -0.23770268, 0.971338, 0, 2, 0)
+script = ExtResource("12_hp8dc")
 
 [node name="ItemSpawnSpot" type="Node3D" parent="MainPlayer/ItemPivot" unique_id=42834980]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
@@ -313,8 +322,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 target_position = Vector3(0, -50, 0)
 
 [node name="PickupPivot" type="Node3D" parent="MainPlayer" unique_id=45863599]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-script = ExtResource("8_bg4s2")
+transform = Transform3D(1, 0, 0, 0, 0.971338, 0.23770268, 0, -0.23770268, 0.971338, 0, 1.5, 0)
+script = ExtResource("12_hp8dc")
 
 [node name="ItemHoverSpot" type="Node3D" parent="MainPlayer/PickupPivot" unique_id=1826112540]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3201761, -3.5784016)
@@ -324,14 +333,13 @@ transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676
 shadow_enabled = true
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("10_20pc6")
+script = ExtResource("13_ac22a")
 
 [node name="TabContainer" type="TabContainer" parent="Menus" unique_id=263424285]
 texture_filter = 1
@@ -359,8 +367,8 @@ offset_top = 23.0
 offset_right = 80.0
 offset_bottom = 55.0
 scale = Vector2(3, 3)
-texture = ExtResource("11_5vvyt")
-script = ExtResource("13_j4qnp")
+texture = ExtResource("14_fg0be")
+script = ExtResource("15_itamg")
 is_passive = true
 is_primary = true
 
@@ -369,14 +377,14 @@ visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/sword" unique_id=1694610789]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("15_fpfj3")
+texture = ExtResource("17_naxxy")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/sword" unique_id=84223475]
 visible = false
@@ -395,7 +403,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/sword/ControlPrompt" unique_id=1154576704]
 layout_mode = 0
@@ -403,7 +411,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/sword/ControlPrompt" unique_id=146432399]
 layout_mode = 0
@@ -411,7 +419,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/sword/ControlPrompt" unique_id=1617459356]
 layout_mode = 0
@@ -431,22 +439,22 @@ offset_top = 23.300003
 offset_right = 196.70001
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("16_sc1dx")
-script = ExtResource("13_j4qnp")
+texture = ExtResource("18_4ssec")
+script = ExtResource("15_itamg")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/grapple" unique_id=1824905195]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/grapple" unique_id=997525407]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("15_fpfj3")
+texture = ExtResource("17_naxxy")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/grapple" unique_id=1064811680]
 visible = false
@@ -465,7 +473,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/grapple/ControlPrompt" unique_id=253266083]
 layout_mode = 0
@@ -473,7 +481,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/grapple/ControlPrompt" unique_id=1068681229]
 layout_mode = 0
@@ -481,7 +489,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/grapple/ControlPrompt" unique_id=229974063]
 layout_mode = 0
@@ -501,22 +509,22 @@ offset_top = 23.300003
 offset_right = 311.7
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("20_devvj")
-script = ExtResource("13_j4qnp")
+texture = ExtResource("19_8ab8f")
+script = ExtResource("15_itamg")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/bomb" unique_id=618614273]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/bomb" unique_id=508577972]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("15_fpfj3")
+texture = ExtResource("17_naxxy")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/bomb" unique_id=25528137]
 visible = false
@@ -535,7 +543,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/bomb/ControlPrompt" unique_id=1496606926]
 layout_mode = 0
@@ -543,7 +551,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/bomb/ControlPrompt" unique_id=1283283766]
 layout_mode = 0
@@ -551,7 +559,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/bomb/ControlPrompt" unique_id=1600991131]
 layout_mode = 0
@@ -571,21 +579,21 @@ offset_top = 23.300003
 offset_right = 427.7
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("10_wkp8b")
+texture = ExtResource("20_g2x1t")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot4" unique_id=125107757]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot4" unique_id=1642935874]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/ItemSlot4" unique_id=1477527329]
 visible = false
@@ -604,7 +612,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot4/ControlPrompt" unique_id=1260676943]
 layout_mode = 0
@@ -612,7 +620,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot4/ControlPrompt" unique_id=762938576]
 layout_mode = 0
@@ -620,7 +628,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/ItemSlot4/ControlPrompt" unique_id=2011568620]
 layout_mode = 0
@@ -640,21 +648,21 @@ offset_top = 23.300003
 offset_right = 550.7001
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("10_wkp8b")
+texture = ExtResource("20_g2x1t")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot5" unique_id=663125683]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot5" unique_id=253308264]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/ItemSlot5" unique_id=1524711611]
 visible = false
@@ -673,7 +681,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot5/ControlPrompt" unique_id=301427749]
 layout_mode = 0
@@ -681,7 +689,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot5/ControlPrompt" unique_id=79729190]
 layout_mode = 0
@@ -689,7 +697,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/ItemSlot5/ControlPrompt" unique_id=1729285282]
 layout_mode = 0
@@ -709,21 +717,21 @@ offset_top = 23.300003
 offset_right = 670.7
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("10_wkp8b")
+texture = ExtResource("20_g2x1t")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot6" unique_id=2000042940]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot6" unique_id=754350053]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/ItemSlot6" unique_id=1589191295]
 visible = false
@@ -742,7 +750,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot6/ControlPrompt" unique_id=931404027]
 layout_mode = 0
@@ -750,7 +758,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot6/ControlPrompt" unique_id=1685332149]
 layout_mode = 0
@@ -758,7 +766,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/ItemSlot6/ControlPrompt" unique_id=179547538]
 layout_mode = 0
@@ -778,21 +786,21 @@ offset_top = 23.300003
 offset_right = 794.7001
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("10_wkp8b")
+texture = ExtResource("20_g2x1t")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot7" unique_id=1326875786]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot7" unique_id=1008752016]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/ItemSlot7" unique_id=1505679295]
 visible = false
@@ -811,7 +819,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot7/ControlPrompt" unique_id=86098052]
 layout_mode = 0
@@ -819,7 +827,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot7/ControlPrompt" unique_id=111230575]
 layout_mode = 0
@@ -827,7 +835,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/ItemSlot7/ControlPrompt" unique_id=1047801191]
 layout_mode = 0
@@ -847,21 +855,21 @@ offset_top = 23.300003
 offset_right = 920.7001
 offset_bottom = 55.300003
 scale = Vector2(3, 3)
-texture = ExtResource("10_wkp8b")
+texture = ExtResource("20_g2x1t")
 
 [node name="Hover" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot8" unique_id=1812194973]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="Equipped" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot8" unique_id=822341955]
 visible = false
 layout_mode = 0
 offset_right = 32.0
 offset_bottom = 32.0
-texture = ExtResource("13_c2ibq")
+texture = ExtResource("16_slwsx")
 
 [node name="ControlPrompt" type="Control" parent="Menus/TabContainer/Inventory/ItemSlot8" unique_id=178952898]
 visible = false
@@ -880,7 +888,7 @@ anchor_bottom = 0.033
 offset_top = -1.0
 offset_right = -0.38400078
 offset_bottom = -0.84000015
-texture = ExtResource("16_2gh4u")
+texture = ExtResource("4_mycie")
 
 [node name="E" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot8/ControlPrompt" unique_id=1153499611]
 layout_mode = 0
@@ -888,7 +896,7 @@ offset_left = 16.0
 offset_top = -1.0
 offset_right = 32.0
 offset_bottom = 15.0
-texture = ExtResource("17_devvj")
+texture = ExtResource("5_q3em1")
 
 [node name="R" type="TextureRect" parent="Menus/TabContainer/Inventory/ItemSlot8/ControlPrompt" unique_id=1211586807]
 layout_mode = 0
@@ -896,7 +904,7 @@ offset_left = 32.0
 offset_top = -1.0
 offset_right = 48.0
 offset_bottom = 15.0
-texture = ExtResource("18_3b0ty")
+texture = ExtResource("6_rfrpt")
 
 [node name="Label" type="Label" parent="Menus/TabContainer/Inventory/ItemSlot8/ControlPrompt" unique_id=816097916]
 layout_mode = 0
@@ -931,7 +939,7 @@ text = "SAVE
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=280029085]
 environment = SubResource("Environment_w3rk5")
 
-[node name="MainTestScene" parent="." unique_id=869491980 instance=ExtResource("20_2gh4u")]
+[node name="MainTestScene" parent="." unique_id=869491980 instance=ExtResource("21_wsmv8")]
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 [connection signal="transfer_cam_to_player" from="MainPlayer" to="MainPlayer/CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]

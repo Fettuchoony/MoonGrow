@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bre8dvvlvami"]
+
+[ext_resource type="Texture2D" uid="uid://bok63sp5licm0" path="res://Textures/Extracted/Grass.png" id="1_0ug5b"]
+[ext_resource type="Script" uid="uid://jjavpn0d8u4s" path="res://scene_manager.gd" id="1_74i23"]
+[ext_resource type="PackedScene" uid="uid://2yhpf2hyn0t2" path="res://SceneObjs/test_loading_zone.tscn" id="2_xvxgx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xvxgx"]
+albedo_texture = ExtResource("1_0ug5b")
+
+[sub_resource type="QuadMesh" id="QuadMesh_74i23"]
+size = Vector2(20, 20)
+orientation = 1
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_d1621"]
+data = PackedVector3Array(10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, 10, -10, 0, -10, 10, 0, -10)
+
+[node name="TestLevel" type="Node3D" unique_id=1998122228 groups=["levels"]]
+script = ExtResource("1_74i23")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1024104873]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=218693262]
+material_override = SubResource("StandardMaterial3D_xvxgx")
+mesh = SubResource("QuadMesh_74i23")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1466834149]
+shape = SubResource("ConcavePolygonShape3D_d1621")
+
+[node name="TestLoadingZone" parent="." unique_id=1947763932 instance=ExtResource("2_xvxgx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.442702, 2.0274482, 0)

@@ -15,7 +15,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="ExtractionTruck"
-run/main_scene="uid://bvj8jv8xjy7ps"
+run/main_scene="uid://djd43huil28ek"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -27,6 +27,7 @@ enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
 
 carry_on_load="Carry this object into other \"levels\". Applied to character, car, items, etc..."
 loading_masters="The objects that hold scene loaders as children"
+levels="All Node3D levels"
 
 [input]
 

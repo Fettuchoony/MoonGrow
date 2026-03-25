@@ -22,8 +22,8 @@ static var HEALTH_SHOW_TIME : float = 1
 @onready var hurt_zone : Area3D = $Area3D
 @onready var time_since_target_update : float = 0
 @onready var time_since_last_hop : float = 0
-@onready var player : CharacterBody3D = $"../../../MainPlayer"
-@onready var player_cam : Camera3D = $"../../../MainPlayer/CameraPivot/SpringArm3D/Camera3D"
+@onready var player : CharacterBody3D = $"../../../../MainPlayer"
+@onready var player_cam : Camera3D = $"../../../../MainPlayer/CameraPivot/SpringArm3D/Camera3D"
 @onready var navigation_agent: NavigationAgent3D = get_node("NavigationAgent3D")
 @onready var b : float
 @onready var charge : float = 0

@@ -14,7 +14,7 @@ data = PackedVector3Array(-1, 0.5, -0.5, -1, 1, -0.75, -1, 1, -0.5, -1, 0.5, -0.
 [node name="TestLoadingZone" unique_id=1947763932 groups=["loading_masters"] instance=ExtResource("1_8cnjx")]
 script = ExtResource("2_fr6gs")
 
-[node name="Cube" parent="." index="0" unique_id=1302834285]
+[node name="Cube" parent="." index="0" unique_id=1827778066]
 transform = Transform3D(1, 0, 0, 0, 1.9738907, 0, 0, 0, 1.7386141, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_61ebj")
 

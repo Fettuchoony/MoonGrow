@@ -1,4 +1,4 @@
-## THIS AREA3D MUST BE THE CHILD OF AN OBJECT WITH "loading_zone_master" SCRIPT ATTACHED
+## DEPRECATED
 extends Area3D
 
 ## Set this loaders subscene so scene manager can grab it on load

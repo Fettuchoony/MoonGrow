@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ciik1lu30vlai"]
+[gd_scene format=3 uid="uid://ciik1lu30vlai"]
 
 [ext_resource type="Script" uid="uid://dm7atgmn4nyu2" path="res://addons/zylann.hterrain/hterrain.gd" id="2_sbvtr"]
 [ext_resource type="Resource" uid="uid://ckvx7kmy1o621" path="res://TerrainData/data.hterrain" id="3_fl65m"]
@@ -9,9 +9,9 @@ script = ExtResource("4_76yo1")
 mode = 0
 textures = [[], []]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D" type="Node3D" unique_id=111678631]
 
-[node name="HTerrain" type="Node3D" parent="."]
+[node name="HTerrain" type="Node3D" parent="." unique_id=446279612]
 script = ExtResource("2_sbvtr")
 centered = true
 _terrain_data = ExtResource("3_fl65m")
