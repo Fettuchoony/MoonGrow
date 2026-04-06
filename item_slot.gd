@@ -8,9 +8,7 @@ enum Item_Type {grapple,
 
 @onready var root : Node3D = $"../../../.."
 @onready var menu : Control = $"../../.."
-@onready var equipped : bool
 # Set by menu controller and nullified by player controller
-@onready var equipped_on_slot_num : int
 @onready var bomb_scene = preload("res://SceneObjs/bomb_item2.tscn")
 @onready var grapple_scene = preload("res://SceneObjs/grapple_item.tscn")
 @onready var turret_scene = preload("res://SceneObjs/turret_placement.tscn")
@@ -19,6 +17,8 @@ enum Item_Type {grapple,
 @onready var hover_sprite : TextureRect
 @onready var equipped_sprite : TextureRect
 
+@export var equipped_on_slot_num : int
+@export var equipped : bool
 @export var amount_label : Label = find_child("Label")
 @export var amount : int = 10
 @export var is_passive : bool

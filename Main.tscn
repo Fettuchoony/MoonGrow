@@ -372,7 +372,6 @@ script = ExtResource("8_bg4s2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MainPlayer/ItemPivot/ItemSpawnSpot" unique_id=1400124158]
-visible = false
 mesh = SubResource("SphereMesh_devvj")
 
 [node name="GroundDetect" type="RayCast3D" parent="MainPlayer" unique_id=1914417888]

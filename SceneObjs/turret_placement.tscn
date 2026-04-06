@@ -3,6 +3,5 @@
 [ext_resource type="Script" uid="uid://bveertsp5mkpm" path="res://turret_placement.gd" id="1_1tygk"]
 
 [node name="TurretPlacement" type="RigidBody3D" unique_id=609040751]
-collision_layer = 16
+collision_layer = 17
 script = ExtResource("1_1tygk")
-placement_range = 100.0
