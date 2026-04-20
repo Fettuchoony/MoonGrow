@@ -24,7 +24,6 @@ signal _unbind_item(target: TextureRect)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Create array of all children (items)
-	_item_slots.get_children()
 	init_taskbar()
 
 
@@ -119,6 +118,8 @@ func init_taskbar() -> void:
 	_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
 
 func _refresh_inventory() -> void:
+	if _item_slots.get_children() == null:
+		return
 	# Remove old icons
 	for child in _item_slots.get_children():
 		child.queue_free()

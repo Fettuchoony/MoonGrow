@@ -60,6 +60,7 @@ func _ready() -> void:
 	_taskbar_items = [null,null,null,null,null,null,null,null]
 	_taskbar_containers = $GUI/TaskBar/HBoxContainer.get_children()
 	change_health(0)
+	_pickup_item(_bomb_spawner.instantiate())
 	_initialize_taskbar()
 	return
 	
@@ -102,8 +103,6 @@ func exit_vehicle() -> void:
 
 # Handles user input and player direction / cardinal movement/jumping
 func movement_processing(delta: float) -> void:
-	if (Input.is_action_just_pressed("Click")):
-		_pickup_item(_bomb_spawner.instantiate())
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
