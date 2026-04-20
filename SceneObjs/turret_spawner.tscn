@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bojjeo886s6bu"]
+
+[ext_resource type="Script" uid="uid://ckijqqeiabeua" path="res://SceneObjs/turret_spawner.gd" id="1_j3tkb"]
+[ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/item_gui.tscn" id="2_bw0iu"]
+[ext_resource type="Texture2D" uid="uid://bivup58xsnbb3" path="res://Textures/Extracted/GunnerTurret.png" id="3_bw0iu"]
+
+[node name="TurretSpawner" type="Node3D" unique_id=660092153]
+script = ExtResource("1_j3tkb")
+
+[node name="GUI" parent="." unique_id=963375078 instance=ExtResource("2_bw0iu")]
+
+[node name="Icon" parent="GUI" index="0" unique_id=1208015621]
+texture = ExtResource("3_bw0iu")
+
+[editable path="GUI"]

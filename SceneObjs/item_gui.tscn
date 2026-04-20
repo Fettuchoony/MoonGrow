@@ -3,37 +3,33 @@
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_haauq"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="3_m1m0d"]
 
-[node name="GUI" type="Control" unique_id=1075007835]
-layout_mode = 3
-anchors_preset = 0
-size_flags_horizontal = 4
+[sub_resource type="LabelSettings" id="LabelSettings_gy1rs"]
+
+[node name="GUI" type="AspectRatioContainer" unique_id=963375078]
+offset_right = 32.0
+offset_bottom = 32.0
+size_flags_vertical = 3
+stretch_mode = 1
 
 [node name="Icon" type="TextureRect" parent="." unique_id=1208015621]
 texture_filter = 1
 texture_repeat = 1
-layout_mode = 1
-offset_right = 32.0
-offset_bottom = 32.0
+layout_mode = 2
 
 [node name="Hover" type="TextureRect" parent="." unique_id=1850286459]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 texture = ExtResource("2_haauq")
 
 [node name="Equipped" type="TextureRect" parent="." unique_id=667871841]
 visible = false
-layout_mode = 1
-offset_right = 32.0
-offset_bottom = 32.0
+layout_mode = 2
 texture = ExtResource("3_m1m0d")
 
 [node name="Amount" type="Label" parent="." unique_id=183295889]
-layout_mode = 1
-offset_right = 19.0
-offset_bottom = 23.0
+layout_mode = 2
+size_flags_vertical = 1
 text = "10"
+label_settings = SubResource("LabelSettings_gy1rs")
+horizontal_alignment = 2
+vertical_alignment = 2

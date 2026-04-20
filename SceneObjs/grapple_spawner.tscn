@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://crqv0yl5vps4c"]
+
+[ext_resource type="Script" uid="uid://ce2uli45bx3p1" path="res://SceneObjs/grapple_spawner.gd" id="1_hjs40"]
+[ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/item_gui.tscn" id="2_5ihcn"]
+[ext_resource type="Texture2D" uid="uid://ck57045tytmr8" path="res://Textures/Extracted/Grapple.png" id="3_5ihcn"]
+
+[node name="GrappleSpawner" type="Node3D" unique_id=1476799041]
+script = ExtResource("1_hjs40")
+
+[node name="GUI" parent="." unique_id=963375078 instance=ExtResource("2_5ihcn")]
+
+[node name="Icon" parent="GUI" index="0" unique_id=1208015621]
+texture = ExtResource("3_5ihcn")
+
+[editable path="GUI"]

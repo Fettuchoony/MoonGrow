@@ -50,17 +50,20 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 
 # Preload all items (Might be a better way to do this)
 @onready var _bomb_spawner = preload("res://SceneObjs/bomb_spawner.tscn")
+@onready var _grapple_spawner = preload("res://SceneObjs/grapple_spawner.tscn")
+@onready var _turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
 
 
 @export var item_cooldown_time : float = 0.2
 @export var debug:bool = false
+@export var give_all_items : bool = false
 
 func _ready() -> void:
 	# force health to refresh
 	_taskbar_items = [null,null,null,null,null,null,null,null]
 	_taskbar_containers = $GUI/TaskBar/HBoxContainer.get_children()
 	change_health(0)
-	_pickup_item(_bomb_spawner.instantiate())
+	_spawn_with_all_items()
 	_initialize_taskbar()
 	return
 	
@@ -191,7 +194,7 @@ func _on_character_area_detect_area_exited(area: Area3D) -> void:
 	#print_debug(event)
 
 # Recieves equip/unequip info from menu and applies to hotbar/character
-func _bind_item(item: Node3D) -> void:
+func _bind_item(item_gui: Control) -> void:
 	# Load textures onto hotbar
 	# Make sure our references are not lost
 	#if _taskbar_containers != null and target != null and target.is_passive == false:
@@ -217,8 +220,10 @@ func _bind_item(item: Node3D) -> void:
 		#_primary = target.name
 		#target.equipped_on_slot_num = -1
 		#_items_equipped[target.name] = true
-	_taskbar_items[_taskbar_index] = item
-	_taskbar_containers[_taskbar_index] = item.find_child("Icon")
+	#_taskbar_items[_taskbar_index] = item
+	#_taskbar_containers[_taskbar_index] = item.find_child("Icon")
+	#_taskbar_items[_taskbar_index].add_child(item_gui)
+	_taskbar_containers[_taskbar_index].add_child(item_gui.duplicate())
 	pass
 	# Refresh Inventory
 
@@ -307,10 +312,15 @@ func _initialize_taskbar() -> void:
 # Adds item to inventory and updates the menu accordingly
 func _pickup_item(item : Node3D) -> void:
 	for inv_item in _inventory:
+		# If item already exists, increment it
 		if inv_item.name == item.name:
 			inv_item.amount += 1
 			_menu._refresh_inventory()
 			return
 	_inventory.append(item)
 	_menu._refresh_inventory()
-	
+
+func _spawn_with_all_items() -> void:
+	_pickup_item(_bomb_spawner.instantiate())
+	_pickup_item(_grapple_spawner.instantiate())
+	_pickup_item(_turret_spawner.instantiate())

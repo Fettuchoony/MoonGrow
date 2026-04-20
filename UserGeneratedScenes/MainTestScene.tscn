@@ -105,12 +105,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.82957, 3.3314915, 319.426
 [node name="Entities" type="Node3D" parent="NavigationRegion3D" unique_id=1597244405]
 
 [node name="TestEnemy" type="RigidBody3D" parent="NavigationRegion3D/Entities" unique_id=871990744 instance=ExtResource("8_3f3uy")]
-transform = Transform3D(1.0628088, 0, -4.946799, 0, 5.059682, 0, 4.946799, 0, 1.0628088, 278.49542, -0.55391127, 277.01395)
+transform = Transform3D(1.0553643, 0, -4.9483924, 0, 5.059682, 0, 4.9483924, 0, 1.0553643, 278.4987, -0.5555789, 277.00485)
 collision_layer = 4
 axis_lock_angular_x = true
 axis_lock_angular_z = true
-linear_velocity = Vector3(3.3957055, -3.8484182, -1.4422436)
-angular_velocity = Vector3(0, -1.0863765, 0)
+linear_velocity = Vector3(3.399439, -3.8484182, -1.4336735)
+angular_velocity = Vector3(0, -1.0355434, 0)
 script = ExtResource("9_fxwcc")
 chargeup_time = 1.0
 
@@ -200,13 +200,13 @@ shape = SubResource("BoxShape3D_j4qnp")
 [node name="ImpactSound" type="AudioStreamPlayer3D" parent="VehicleBody3D" unique_id=55037437]
 
 [node name="Pivot" type="Node3D" parent="VehicleBody3D" unique_id=1085643325]
-transform = Transform3D(-4.371139e-08, 0.1197122, -0.99280864, 0, 0.99280864, 0.1197122, 1, 5.232786e-09, -4.3397044e-08, 2.1047134, 0.79517984, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.1047134, 0.79517984, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="VehicleBody3D/Pivot" unique_id=2045181959]
 spring_length = 8.0
 
 [node name="VehicleCam" type="Camera3D" parent="VehicleBody3D/Pivot/SpringArm3D" unique_id=1069298328]
-transform = Transform3D(1, 4.440892e-16, 7.1054274e-15, 0, 1, -7.450581e-09, -7.1054274e-15, 7.45058e-09, 1, 0, 0, 7.9999695)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 script = ExtResource("16_y4jdm")
 
 [node name="DrivingPos" type="Node3D" parent="VehicleBody3D" unique_id=193077149]
