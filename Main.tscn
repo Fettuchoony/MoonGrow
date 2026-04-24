@@ -429,8 +429,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.424, -1, -0.772)
 [connection signal="update_health_GUI" from="MainPlayer" to="MainPlayer/GUI/Health" method="health_gui_update"]
 [connection signal="area_entered" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_entered"]
 [connection signal="area_exited" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_exited"]
-[connection signal="_unbind_item" from="Menus" to="MainPlayer" method="_unbind_item"]
-[connection signal="bind_item" from="Menus" to="MainPlayer" method="_bind_item"]
 [connection signal="gui_input" from="Menus" to="MainPlayer" method="_on_menus_gui_input"]
 [connection signal="value_changed" from="Menus/TabContainer/Inventory/HSlider" to="Menus" method="_on_h_slider_value_changed"]
 [connection signal="button_down" from="Menus/Button" to="." method="save_game"]

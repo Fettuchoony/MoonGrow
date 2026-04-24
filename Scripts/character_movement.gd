@@ -37,7 +37,9 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 # This is a list of all items and if they are equipped
 @onready var _taskbar_items : Array[Node3D]
 @onready var _taskbar_containers : Array[Node]
-@onready var _taskbar_index : int = 0
+@onready var _current_taskbar_index : int = 0
+@onready var _taskbar_rects = $GUI/TaskBar/HBoxContainer.get_children()
+
 @onready var _inventory : Array[Node3D]
 @onready var _paused : bool
 @onready var _item_timer: float = 0
@@ -64,13 +66,14 @@ func _ready() -> void:
 	_taskbar_containers = $GUI/TaskBar/HBoxContainer.get_children()
 	change_health(0)
 	_spawn_with_all_items()
-	_initialize_taskbar()
+	_init_taskbar()
 	return
 	
 func _process(delta: float) -> void:
 	_item_timer += delta
 	use_item()
 	trigger_enemy_info()
+	_taskbar_scrolling()
 
 func _physics_process(delta: float) -> void:
 	_enter_vehicle_cooldown += delta
@@ -195,66 +198,30 @@ func _on_character_area_detect_area_exited(area: Area3D) -> void:
 
 # Recieves equip/unequip info from menu and applies to hotbar/character
 func _bind_item(item_gui: Control) -> void:
-	# Load textures onto hotbar
-	# Make sure our references are not lost
-	#if _taskbar_containers != null and target != null and target.is_passive == false:
-		#_taskbar_items[slot_num] = target.name
-		## Pass slot info to object script
-		#target.equipped_on_slot_num = slot_num
-		## Texture inventory slot
-		#var item_tex = _taskbar_containers[slot_num].find_child("ItemTexture")
-		#if item_tex != null:
-			#item_tex.texture = target.texture
-		#else:
-			#print("Error: item with no texture was added to taskbar?")
-		## Set item status to active, checked on refresh
-		#_items_equipped[target.name] = true
-		## Set texture filter to nearest to avoid blur
-		#_taskbar_containers[slot_num].find_child("TextureRect").set_texture_filter(1) 
-	## for primary and non QER items
-	#elif slot_num == -1 and not target.is_primary:
-		#target.equipped_on_slot_num = -1
-		#_items_equipped[target.name] = true
-		#print(target.name)
-	#elif target.is_primary == true:
-		#_primary = target.name
-		#target.equipped_on_slot_num = -1
-		#_items_equipped[target.name] = true
-	#_taskbar_items[_taskbar_index] = item
-	#_taskbar_containers[_taskbar_index] = item.find_child("Icon")
-	#_taskbar_items[_taskbar_index].add_child(item_gui)
-	_taskbar_containers[_taskbar_index].add_child(item_gui.duplicate())
+	# Search each taskbar slot for duplicates
+	for slot in _taskbar_containers:
+		var item_rect = slot.find_child(item_gui.name, true, false)
+		if item_rect != null:
+			item_rect.free()
+	var new_item_icon = item_gui.duplicate()
+	_taskbar_containers[_current_taskbar_index].add_child(new_item_icon)
+	#new_item_icon.find_child("Equipped").visible = false
 	pass
 	# Refresh Inventory
 
 # Clears the item from the hotbar	
-func _unbind_item(target: TextureRect) -> void:
-	#if target.equipped_on_slot_num != -1:
-		## Clear GUI of sprite
-		#_taskbar_containers[target.equipped_on_slot_num].find_child("ItemTexture").texture = _blank_item
-		## Clear from internal checker
-		#_taskbar_items[target.equipped_on_slot_num] = ""
-		## Clear from equip list
-		#_items_equipped[target.name] = false
-		## Clear item's tracking of its slot number
-		#target.equipped_on_slot_num = -1
-	#elif target.equipped_on_slot_num == -1:
-		## Clear from equip list
-		#_items_equipped[target.name] = false
+func _unbind_item(taskbar_index : int) -> void:
+	for control_node in _taskbar_containers[taskbar_index].get_children():
+		if control_node is AspectRatioContainer:
+			control_node.free()
+	var inv_icon = _menu._item_slots.find_child(_taskbar_containers[taskbar_index].name)
+	if inv_icon != null && inv_icon.find_child("Equipped") != null :
+		inv_icon.find_child("Equipped").visible = false
 	pass
 	
 func use_item() -> void:
-	#var indx = _menu._current_taskbar_index
-	#if _taskbar_items[indx] != "":
-		#trigger_item_idle.emit(_taskbar_items[indx])
-	#if (Input.is_action_just_pressed("Click")) and not _paused and _item_timer > item_cooldown_time:
-		## Checks which item is selected in the taskbar
-		#var curr_item : ItemSlot = _menu.find_child(_taskbar_items[indx])
-		#if curr_item == null:
-			#print("No item selected")
-		#else :
-			#curr_item.use_item(_taskbar_items[indx], _item_spawn_location)
-		#_item_timer = 0
+	#if Input.is_action_just_pressed("Click"):
+		#print(_taskbar_items[_current_taskbar_index])
 	pass
 	
 	
@@ -306,9 +273,6 @@ func pickup_and_lockon() -> void:
 		_held_item.being_held = false
 		_held_item = null
 
-func _initialize_taskbar() -> void:
-	pass
-
 # Adds item to inventory and updates the menu accordingly
 func _pickup_item(item : Node3D) -> void:
 	for inv_item in _inventory:
@@ -324,3 +288,28 @@ func _spawn_with_all_items() -> void:
 	_pickup_item(_bomb_spawner.instantiate())
 	_pickup_item(_grapple_spawner.instantiate())
 	_pickup_item(_turret_spawner.instantiate())
+
+# TODO: Find a way to make this use event instead of direct input?
+func _taskbar_scrolling() -> void:
+	if Input.is_action_just_released("ScrollDown"):
+		# Clear equip sprite from prev index
+		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
+		# Move index
+		_current_taskbar_index -= 1
+		if _current_taskbar_index < 0:
+			_current_taskbar_index = 8
+		# Reveal equip sprite for curr index of taskbar
+		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
+		#_currently_idleing = false
+		
+	if Input.is_action_just_released("ScrollUp"):
+		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
+		_current_taskbar_index += 1
+		if _current_taskbar_index > 8:
+			_current_taskbar_index = 0
+		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
+		#_currently_idleing = false
+	#_current_hovered_item_name = _player._taskbar_items[_current_taskbar_index]
+
+func _init_taskbar() -> void:
+	_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true

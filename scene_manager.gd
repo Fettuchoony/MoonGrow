@@ -25,7 +25,6 @@ func _ready() -> void:
 			#child.reparent(self) 
 	var level_scenes = get_tree().get_nodes_in_group("levels")
 	# Just assume the only loaded scene is indx 0
-	print(level_scenes)
 	current_scene = level_scenes[0]
 	preload_explosion()
 

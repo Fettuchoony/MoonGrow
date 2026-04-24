@@ -1,14 +1,9 @@
 extends Control
 
+const DEFAULT_ICON_SIZE = 32.0
 
-# Slot index indicated above statically
-signal bind_item(target : TextureRect, slot_index : int)
-
-# Unequip signal to player controller
-signal _unbind_item(target: TextureRect)
 
 @onready var _item_slots : Control = $TabContainer/Inventory/HFlowContainer
-@onready var _current_taskbar_index : int = 0
 @onready var current_focus_item : TextureRect
 @onready var _taskbar_rects = $"../MainPlayer/GUI/TaskBar/HBoxContainer".get_children()
 @onready var _equip_texture = preload("res://SceneObjs/equipped.tscn")
@@ -23,13 +18,11 @@ signal _unbind_item(target: TextureRect)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Create array of all children (items)
-	init_taskbar()
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	_taskbar_scrolling()
 	_execute_idles()
 	_item_hovering_and_selection_func()
 	
@@ -41,60 +34,6 @@ func _on_main_player_pause_menu() -> void:
 		visible = false
 	else:
 		visible = true
-
-## Equip handler
-#func _on_item_slot_gui_input(event: InputEvent, source: Control) -> void:
-	#var equip : TextureRect = source.find_child("Equipped")
-	## Primary and passives
-	#if event.is_action_pressed("Click"):
-		## Reassign curr item
-		#current_focus_item = source
-		## Unequip
-		#if source.equipped:
-			### TODO : Emit signal to player control
-			#equip.visible = false
-			#source.equipped = false
-			##source.equipped_on_slot_num = -1
-			#_unbind_item.emit(current_focus_item)
-			#_currently_idleing = false
-			#_current_hovered_item_name = ""
-		## Skip Equip prompt if it is a passive item
-		#if source.is_passive:
-			## Skip idle update
-			#equip.visible = true
-			#source.equipped = true
-			#bind_item.emit(current_focus_item, -1)
-		## Equip prompt brought up if item needs assignment
-		#else:
-			#equip.visible = true
-			#source.equipped = true
-			#bind_item.emit(source)
-			#_currently_idleing = true
-			#_current_hovered_item_name = current_focus_item.name
-
-# TODO: Find a way to make this use event instead of direct input?
-func _taskbar_scrolling() -> void:
-	if Input.is_action_just_released("ScrollDown"):
-		print("scrolling down")
-		# Clear equip sprite from prev index
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
-		# Move index
-		_current_taskbar_index -= 1
-		if _current_taskbar_index < 0:
-			_current_taskbar_index = 8
-		# Reveal equip sprite for curr index of taskbar
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
-		_currently_idleing = false
-		
-	if Input.is_action_just_released("ScrollUp"):
-		print("scrolling up")
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
-		_current_taskbar_index += 1
-		if _current_taskbar_index > 8:
-			_current_taskbar_index = 0
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
-		_currently_idleing = false
-	#_current_hovered_item_name = _player._taskbar_items[_current_taskbar_index]
 
 
 ## Executes all idle anims TODO: might replace with animgraph at some point?
@@ -116,8 +55,6 @@ func _execute_idles() -> void:
 	elif (_current_idle_obj != null && _current_idle_obj.place_mode == true):
 		_current_idle_obj.free()
 
-func init_taskbar() -> void:
-	_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
 
 func _refresh_inventory() -> void:
 	# These are reasserted here because sometimes refresh is called before this script readies
@@ -127,19 +64,23 @@ func _refresh_inventory() -> void:
 		return
 	# Remove old icons
 	for child in _item_slots.get_children():
-		child.queue_free()
+		child.free()
 	# Add new icons
 	var inv = _player._inventory
-	if inv == null: return
+	assert(inv != null, "Fatal error: inventory not refreshable")
 	for item in inv:
-		if item != null:
-			var item_gui : Control = item.find_child("GUI").duplicate()
-			var amount_label : Label = item_gui.get_node("Amount")
-			item_gui.name = item.name
-			# Update item count
-			if amount_label != null:
-				amount_label.text = str(item.amount)
-			_item_slots.add_child(item_gui)
+		var item_gui : Control = item.find_child("GUI", true, false).duplicate()
+		var amount_label : Label = item_gui.get_node("Amount")
+		var item_icon : TextureRect = item_gui.get_node("Icon")
+		# Rescale back to taskbar size instead of inv size 
+		item_icon.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
+		amount_label.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
+		item_gui.name = item.name
+		#print("item name = " + item_gui.name)
+		# Update item count
+		if amount_label != null:
+			amount_label.text = str(item.amount)
+		_item_slots.add_child(item_gui)
 
 func _item_hovering_and_selection_func() -> void:
 	# Make sure player connection good
@@ -154,12 +95,16 @@ func _item_hovering_and_selection_func() -> void:
 			slot_rect.position = slot.global_position
 			# Check if shifted rect is clicked, if so bind item
 			if Input.is_action_just_pressed("Click") and slot_rect.has_point(get_screen_transform() * get_local_mouse_position()):
+				var equip_tex : TextureRect = slot.find_child("Equipped")
+				# If item isnt equipped already:
+				slot.find_child("Equipped").visible = true
+				_player._unbind_item(_player._current_taskbar_index)
 				_player._bind_item(slot)
 
 # When GUI icons size change from the slider
 func _on_h_slider_value_changed(value: float) -> void:
 	# 32 is the default pixel art texture res
-	var new_size : float = 32.0 * value
+	var new_size : float = DEFAULT_ICON_SIZE * value
 	for item in _item_slots.get_children():
 		item.custom_minimum_size = Vector2(new_size, new_size)
 		for child in item.get_children():
@@ -168,5 +113,3 @@ func _on_h_slider_value_changed(value: float) -> void:
 				# divide by two because we dont want it to be too big
 				child.label_settings.font_size = new_size / 2
 		
-		print(item.scale)
-	
