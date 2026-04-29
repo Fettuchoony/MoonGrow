@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c4v07qkjcxnw1"]
 
+[ext_resource type="Script" uid="uid://bkjjtl1sudh21" path="res://SceneObjs/item_gui.gd" id="1_02y08"]
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_haauq"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="3_m1m0d"]
 
@@ -10,6 +11,7 @@ offset_right = 32.0
 offset_bottom = 32.0
 size_flags_vertical = 3
 stretch_mode = 1
+script = ExtResource("1_02y08")
 
 [node name="Icon" type="TextureRect" parent="." unique_id=1208015621]
 texture_filter = 1

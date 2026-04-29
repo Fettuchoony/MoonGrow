@@ -421,7 +421,7 @@ text = "SAVE
 environment = SubResource("Environment_w3rk5")
 
 [node name="MainTestScene" parent="." unique_id=869491980 instance=ExtResource("20_2gh4u")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.424, -1, -0.772)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3963816, -1.0000002, -0.8044402)
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 [connection signal="transfer_cam_to_player" from="MainPlayer" to="MainPlayer/CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]

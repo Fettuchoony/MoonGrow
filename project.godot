@@ -132,6 +132,7 @@ ScrollUp={
 3d_physics/layer_3="EnemyLayer"
 3d_physics/layer_4="GroundLoot"
 3d_physics/layer_5="Turret"
+3d_physics/layer_8="pickupable"
 3d_physics/layer_9="VehicleEnter"
 3d_physics/layer_10="BombDamage"
 3d_physics/layer_11="WallBomb"

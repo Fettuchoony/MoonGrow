@@ -5,9 +5,10 @@ const DEFAULT_ICON_SIZE = 32.0
 
 @onready var _item_slots : Control = $TabContainer/Inventory/HFlowContainer
 @onready var current_focus_item : TextureRect
+## The rects that contain the item icon
 @onready var _taskbar_rects = $"../MainPlayer/GUI/TaskBar/HBoxContainer".get_children()
 @onready var _equip_texture = preload("res://SceneObjs/equipped.tscn")
-@onready var _player = $"../MainPlayer"
+@onready var _player : CharacterBody3D = $"../MainPlayer"
 @onready var _current_hovered_item_name : String = ""
 @onready var turret_scene = preload("res://SceneObjs/turret_placement.tscn")
 @onready var placement_ray : RayCast3D = $"../MainPlayer/CameraPivot/SpringArm3D/Camera3D/PlacementRay"
@@ -62,9 +63,6 @@ func _refresh_inventory() -> void:
 	_player = $"../MainPlayer"
 	if _item_slots.get_children() == null:
 		return
-	# Remove old icons
-	for child in _item_slots.get_children():
-		child.free()
 	# Add new icons
 	var inv = _player._inventory
 	assert(inv != null, "Fatal error: inventory not refreshable")
@@ -72,19 +70,28 @@ func _refresh_inventory() -> void:
 		var item_gui : Control = item.find_child("GUI", true, false).duplicate()
 		var amount_label : Label = item_gui.get_node("Amount")
 		var item_icon : TextureRect = item_gui.get_node("Icon")
-		# Rescale back to taskbar size instead of inv size 
-		item_icon.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
-		amount_label.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
 		item_gui.name = item.name
+		item_gui.visible = true
 		#print("item name = " + item_gui.name)
 		# Update item count
 		if amount_label != null:
 			amount_label.text = str(item.amount)
-		_item_slots.add_child(item_gui)
+		var already_in_menu = false
+		for icon in _item_slots.get_children():
+			if icon.name == item.name: 
+				already_in_menu = true
+		# If the item is already in the inventory, just update it
+		## TODO: increment item count when picking up duplicates
+		if already_in_menu:
+			pass
+		# If the item is new to the inventory, add it
+		else:
+			_item_slots.add_child(item_gui)
+		# Do not scale taskbar rects
 
 func _item_hovering_and_selection_func() -> void:
 	# Make sure player connection good
-	if _item_slots != null && _player != null:
+	if _item_slots != null && _player != null && visible:
 		# Go through each item slot, these are generated on pickup_item in player script
 		for slot in _item_slots.get_children():
 			# Get the rect of the actual item
@@ -100,6 +107,14 @@ func _item_hovering_and_selection_func() -> void:
 				slot.find_child("Equipped").visible = true
 				_player._unbind_item(_player._current_taskbar_index)
 				_player._bind_item(slot)
+			var is_in_taskbar = false
+			for item in _player._taskbar_items:
+				if item == slot.name:
+					is_in_taskbar = true
+			if !is_in_taskbar:
+				slot.find_child("Equipped").visible = false
+			else:
+				slot.find_child("Equipped").visible = true
 
 # When GUI icons size change from the slider
 func _on_h_slider_value_changed(value: float) -> void:
@@ -112,4 +127,8 @@ func _on_h_slider_value_changed(value: float) -> void:
 			if child.name == "Amount":
 				# divide by two because we dont want it to be too big
 				child.label_settings.font_size = new_size / 2
+	for taskbar_rect in _taskbar_rects:
+		taskbar_rect.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
+		for child_rect in taskbar_rect.get_children():
+			child_rect.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
 		

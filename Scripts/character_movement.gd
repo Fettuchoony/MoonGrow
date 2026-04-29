@@ -34,8 +34,8 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _vehicle_info = null
 @onready var _enter_vehicle_cooldown:float = 0
 # TODO: Create item list/map of all names, items ID by exact string (lowercase)
-# This is a list of all items and if they are equipped
-@onready var _taskbar_items : Array[Node3D]
+# This is a list of all items and if they are equipped [name : taskbar index]
+@onready var _taskbar_items : Dictionary[String, Node3D]
 @onready var _taskbar_containers : Array[Node]
 @onready var _current_taskbar_index : int = 0
 @onready var _taskbar_rects = $GUI/TaskBar/HBoxContainer.get_children()
@@ -62,7 +62,6 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 
 func _ready() -> void:
 	# force health to refresh
-	_taskbar_items = [null,null,null,null,null,null,null,null]
 	_taskbar_containers = $GUI/TaskBar/HBoxContainer.get_children()
 	change_health(0)
 	_spawn_with_all_items()
@@ -71,7 +70,6 @@ func _ready() -> void:
 	
 func _process(delta: float) -> void:
 	_item_timer += delta
-	use_item()
 	trigger_enemy_info()
 	_taskbar_scrolling()
 
@@ -153,7 +151,7 @@ func movement_processing(delta: float) -> void:
 		#velocity.z = move_toward(velocity.z, 0, SPEED)
 		#
 	move_and_slide()
-	
+
 func handle_pausing() -> void:
 	# Pausing Functionality / Free mouse
 	if Input.is_action_just_pressed("Escape"):
@@ -205,23 +203,38 @@ func _bind_item(item_gui: Control) -> void:
 			item_rect.free()
 	var new_item_icon = item_gui.duplicate()
 	_taskbar_containers[_current_taskbar_index].add_child(new_item_icon)
+	for item in _inventory:
+		if item.name == item_gui.name:
+			_taskbar_items[item_gui.name] = item
+	# Check for duplicate in taskbar
+	#for i in range(9):
+		#if _taskbar_rects[i].find_child(item_gui.name) != null:
+			#_unbind_item(i)
 	#new_item_icon.find_child("Equipped").visible = false
 	pass
 	# Refresh Inventory
 
 # Clears the item from the hotbar	
 func _unbind_item(taskbar_index : int) -> void:
+	var target_name : String
+	if _taskbar_containers[taskbar_index].get_children().size() > 2: target_name = _taskbar_containers[taskbar_index].get_child(2).name
+	if target_name != null:
+		print("removing " + target_name)
+		_taskbar_items.erase(target_name)
 	for control_node in _taskbar_containers[taskbar_index].get_children():
 		if control_node is AspectRatioContainer:
 			control_node.free()
 	var inv_icon = _menu._item_slots.find_child(_taskbar_containers[taskbar_index].name)
 	if inv_icon != null && inv_icon.find_child("Equipped") != null :
 		inv_icon.find_child("Equipped").visible = false
+	_menu._refresh_inventory()
 	pass
 	
 func use_item() -> void:
-	#if Input.is_action_just_pressed("Click"):
-		#print(_taskbar_items[_current_taskbar_index])
+	if Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2:
+		var curr_item_name = _taskbar_rects[_current_taskbar_index].get_child(2).name
+		_taskbar_items[curr_item_name].trigger()
+		
 	pass
 	
 	
@@ -257,7 +270,8 @@ func _update_ground_pos():
 	
 func game_over() -> void:
 	pass
-	
+
+# Actually picking up the rigidbodies and moving them
 func pickup_and_lockon() -> void:
 	var col : RigidBody3D = _item_ray.get_collider()
 	# pickup
@@ -267,6 +281,7 @@ func pickup_and_lockon() -> void:
 		_held_item = col
 		_held_item.being_held = true
 		_held_item.hold_pos = _pickup_hold_location
+		print(_pickup_hold_location)
 	# put down
 	elif Input.is_action_just_pressed("RClick") and _held_item != null:
 		#print("put down: " + to_string(_held_item))
@@ -280,8 +295,14 @@ func _pickup_item(item : Node3D) -> void:
 		if inv_item.name == item.name:
 			inv_item.amount += 1
 			_menu._refresh_inventory()
+			# No need to instantiate more spawners than 1
+			item.free()
 			return
 	_inventory.append(item)
+	_item_spawn_location.add_child(item)
+	print("Item added")
+	# Make the GUI elements invisible
+	item.find_child("GUI").visible = false
 	_menu._refresh_inventory()
 
 func _spawn_with_all_items() -> void:
@@ -313,3 +334,11 @@ func _taskbar_scrolling() -> void:
 
 func _init_taskbar() -> void:
 	_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
+
+# Only to be ran at ready, preloads all starter items and assigns them to player
+func _init_items() -> void:
+	# Load the items
+	_bomb_spawner = preload("res://SceneObjs/bomb_spawner.tscn")
+	_grapple_spawner = preload("res://SceneObjs/grapple_spawner.tscn")
+	_turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
+	
