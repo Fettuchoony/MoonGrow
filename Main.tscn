@@ -45,7 +45,7 @@ script = ExtResource("1_2gh4u")
 enable_saving = true
 
 [node name="MainPlayer" type="CharacterBody3D" parent="." unique_id=1501440258 groups=["carry_on_load"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 270.6035, 1.2649469, 279.2255)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 308.39038, 1.2649469, 458.6411)
 disable_mode = 2
 collision_layer = 258
 script = ExtResource("1_uu6xs")

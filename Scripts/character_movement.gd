@@ -231,7 +231,7 @@ func _unbind_item(taskbar_index : int) -> void:
 	pass
 	
 func use_item() -> void:
-	if Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2:
+	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2:
 		var curr_item_name = _taskbar_rects[_current_taskbar_index].get_child(2).name
 		_taskbar_items[curr_item_name].trigger()
 		

@@ -10,10 +10,6 @@ var t_data
 var t_collider
 
 func _ready() -> void:
-	terrain = $HTerrain
-	t_data = terrain.get_data()
-	t_collider = terrain._collider
-	print(t_collider)
 	navigation_mesh = NavigationMesh.new()
 	navigation_mesh.agent_radius = 0.5
 	source_geometry = NavigationMeshSourceGeometryData3D.new()

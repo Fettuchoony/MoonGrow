@@ -10,6 +10,15 @@
 height = 22.968
 radius = 11.79
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ph50j"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.1764706)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hdy2w"]
+material = SubResource("StandardMaterial3D_ph50j")
+radius = 3.0
+height = 6.0
+
 [node name="gunner_turret" type="RigidBody3D" unique_id=2091475285]
 collision_layer = 8
 collision_mask = 129
@@ -31,3 +40,6 @@ collision_mask = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyDetect" unique_id=21061634]
 shape = SubResource("CylinderShape3D_hdy2w")
+
+[node name="DebugTargetBall" type="MeshInstance3D" parent="." unique_id=418315631]
+mesh = SubResource("SphereMesh_hdy2w")
