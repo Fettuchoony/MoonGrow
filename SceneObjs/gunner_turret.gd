@@ -7,7 +7,7 @@ static var DETECT_TIME_INTERVAL : float = 0.1
 # [Enemy node, distance enemy is from end of path] useful for detecting front/back enemy
 @onready var _current_reachable_enemies : Dictionary[Node3D, float]
 # Attack mode is which enemy to attack in group: first, middle, last, strongest, weakest
-@onready var _attack_mode : String = "first"
+@onready var _attack_mode : String = "last"
 @onready var _debug_target_ball : MeshInstance3D = $DebugTargetBall
 
 # These two variables are essential for every pickupable object
@@ -49,13 +49,24 @@ func _enemy_detection() -> void:
 		_enemy_detect_timer = 0
 
 func _turret_attack() -> void:
-	var curr_target_path_length : float = INF
 	var target : Node3D
-	# First
+	var curr_target_path_length : float
+	# Must be initialized different depending on mode for sorting
 	if _attack_mode == "first":
-		for enemy in _current_reachable_enemies:
+		curr_target_path_length = INF
+	elif _attack_mode == "last":
+		curr_target_path_length = -INF
+	# attack mode determines which enemy is targeted
+	for enemy in _current_reachable_enemies:
+		if _attack_mode == "first":
 			if _current_reachable_enemies[enemy] < curr_target_path_length:
 				target = enemy
+				curr_target_path_length = enemy.path_length
+		if _attack_mode == "last":
+			if _current_reachable_enemies[enemy] > curr_target_path_length:
+				target = enemy
+				curr_target_path_length = enemy.path_length
+	
 	if target != null:
 		_debug_target_ball.global_position = target.global_position
 	
