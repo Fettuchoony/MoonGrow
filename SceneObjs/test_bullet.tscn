@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cm5wgp2mbtjrw"]
+
+[ext_resource type="Texture2D" uid="uid://c77f5whuv6k1y" path="res://Textures/Extracted/Bullet.png" id="1_c6mht"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hicxt"]
+
+[node name="TestBullet" type="RigidBody3D" unique_id=969986019]
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1419300947]
+billboard = 2
+shaded = true
+double_sided = false
+texture_filter = 0
+texture = ExtResource("1_c6mht")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=613713668]
+transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
+shape = SubResource("SphereShape3D_hicxt")
