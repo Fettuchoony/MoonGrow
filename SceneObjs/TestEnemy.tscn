@@ -6,6 +6,7 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_516de"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_34rnb"]
+viewport_path = NodePath("Sprite3D/EnemyViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_516de"]
 
@@ -61,7 +62,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TargetPoint" type="Node3D" parent="." unique_id=590453167]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009374413, 0.36711717, -0.2420406)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01517396, 0.36711717, -0.39178085)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TargetPoint" unique_id=632597966]
 mesh = SubResource("BoxMesh_516de")

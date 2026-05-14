@@ -77,17 +77,23 @@ func _turret_attack() -> void:
 	# Actually firing
 	if target != null && _firing_timer > _firing_rate:
 		var target_pos = target.find_child("TargetPoint").global_position
+		_head_pivot.look_at(target_pos)
 		_debug_target_ball.global_position = target.global_position
 		var bullet = _bullet_scene.instantiate()
 		#look_at(target.global_position)
 		get_tree().root.add_child(bullet)
-		bullet._target_pos.x = target.global_position.x
-		bullet._target_pos.y = target.global_position.y
-		bullet._target_pos.z = target.global_position.z
+		var fire_pos = _firing_point.global_position
 		bullet.global_position = _firing_point.global_position
-		bullet._spawn_pos = bullet.global_position
+		#var dir = Vector2(fire_pos.x, fire_pos.z).direction_to(Vector2(target_pos.x, target_pos.z))
+		var velocity = 0.1
+		var difference = target_pos - fire_pos
+		#var y_vel = (target_pos.y - fire_pos.y) / flight_time + 4.8 * flight_time
+		#var t = (1.0/48.0) * (sqrt(5.0) * sqrt(5.0 * pow(velocity, 2) - 96.0 * (fire_pos.y - target_pos.y)) + 5.0 * velocity)
+		#var t = (1.0/48.0) * (5 * velocity - sqrt(5) * sqrt(5 * pow(velocity, 2) + 96 * (fire_pos.y - target_pos.y)))
+		var t = (-velocity - sqrt(pow(velocity, 2) - 4 * -4.8 * (fire_pos.y - target_pos.y))) / (2 * -4.8)
+		bullet.apply_impulse(Vector3(difference.x / t, velocity, difference.z/t))
+		print("bullet_vel: " + str(t))
 		_firing_timer = 0 
-		_head_pivot.look_at(target_pos)
 		
 		
 	
