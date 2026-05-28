@@ -4,7 +4,6 @@ static var LOADING_ZONES : String = "loading_masters"
 static var OUT_OF_BOUNDS : Vector3 = Vector3(99999, 99999, 99999)
 
 @onready var current_scene : Node3D
-@onready var explosion_preload = preload("res://SceneObjs/explosion_bomb.tscn")
 @onready var change_scene_to_file_next_frame : String = ""
 @onready var mutated_scenes = {}
 
@@ -26,17 +25,12 @@ func _ready() -> void:
 	var level_scenes = get_tree().get_nodes_in_group("levels")
 	# Just assume the only loaded scene is indx 0
 	current_scene = level_scenes[0]
-	preload_explosion()
+	prerender()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	_handle_loading()
-
-# Forces a render of the explosion at the start of the scene to prevent lag spike on first bomb instance
-func preload_explosion() -> void:
-	var explode = explosion_preload.instantiate()
-	explode.position = OUT_OF_BOUNDS
 
 func _handle_loading() -> void:
 	# This removes the scene changing from the physics process
@@ -80,3 +74,15 @@ func save_game() -> void:
 		var error = ResourceSaver.save(scene, "res://UserGeneratedScenes/save.tscn")
 		if error != OK:
 			push_error("An error occurred while executing main save to disk.")
+
+# Just pack this with instanced objects to preload them, idk if theres a better way
+func prerender() -> void:
+	pass
+	var prerender_objs = [preload("res://SceneObjs/ground_loot.tscn"), preload("res://SceneObjs/test_bullet.tscn"), preload("res://SceneObjs/explosion_bomb.tscn")]
+	for obj : Resource in prerender_objs:
+		if is_inside_tree():
+			var dummy = obj.instantiate()
+			print("loading: " + dummy.name)
+			add_child(dummy)
+			await get_tree().process_frame
+			dummy.queue_free()

@@ -10,7 +10,7 @@ var level_node : Node3D
 func _init() -> void:
 	icon = find_child("Icon")
 	gunner_turret_data = preload("res://SceneObjs/gunner_turret.tscn")
-	print("Created spawner for: " + str(gunner_turret_data))
+	
 	
 func _ready() -> void:
 	level_node = get_tree().get_nodes_in_group("levels")[0]

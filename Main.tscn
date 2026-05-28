@@ -40,7 +40,7 @@ sky = SubResource("Sky_hri7i")
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 
-[node name="Node3D" type="Node3D" unique_id=1688291202]
+[node name="MainScene" type="Node3D" unique_id=1688291202]
 script = ExtResource("1_2gh4u")
 enable_saving = true
 

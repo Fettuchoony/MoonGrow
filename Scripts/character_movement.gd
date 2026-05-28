@@ -24,10 +24,10 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _target = $CameraPivot/SpringArm3D/Camera3D/PlayerRay
 @onready var _debug_ball = $CameraPivot/SpringArm3D/Camera3D/PlayerRay/DebugBall
 @onready var _item_spawn_location = $ItemPivot/ItemSpawnSpot
-@onready var _blank_item : TextureRect = $BlankItem
 @onready var _pickup_hold_location : Node3D = $PickupPivot/ItemHoverSpot
 @onready var _held_item : RigidBody3D = null
 @onready var _can_enter_vehicle:bool = false
+@onready var _last_vehicle_entered : Node3D = null
 @onready var _in_vehicle:bool = false
 @onready var _mouse_mode:int = 2
 # Vehicle entrance should be the only collision option on layer 9
@@ -79,6 +79,7 @@ func _physics_process(delta: float) -> void:
 	handle_pausing()
 	enter_vehicle()
 	exit_vehicle()
+	while_driving()
 	if !_in_vehicle:
 		movement_processing(delta)
 	pickup_and_lockon()
@@ -87,23 +88,29 @@ func _physics_process(delta: float) -> void:
 
 # Displays UI for entering vehicle and handles user input and controller handover to vehicle script
 func enter_vehicle() -> void:
-	# TODO: UI implementation "Press F to enter vehicle"
-	
 	# Handles user input for transfering controls over to vehicle mode
 	if _can_enter_vehicle and Input.is_action_just_pressed("Interact") and !_in_vehicle and _enter_vehicle_cooldown > INTERACT_COOLDOWN_TIME:
-		print_debug("Player controller side camera transfer initiated")
-		_enter_vehicle_cooldown = 0
-		_in_vehicle = true
-		vehicle_entered.emit(self)
-		transfer_cam_to_vehicle.emit(_vehicle_info)
+		var vehicle_detect = $CharacterAreaDetect.get_overlapping_areas()
+		if vehicle_detect.size() > 0:
+			var vehicle = vehicle_detect[0].get_parent()
+			_last_vehicle_entered = vehicle
+			vehicle._vehicle_occupied = true
+			_enter_vehicle_cooldown = 0
+			_in_vehicle = true
+			vehicle_entered.emit(self)
+			transfer_cam_to_vehicle.emit(_vehicle_info)
 		
 func exit_vehicle() -> void:
-	if _in_vehicle and Input.is_action_just_pressed("Interact") and _enter_vehicle_cooldown > INTERACT_COOLDOWN_TIME:
-		_enter_vehicle_cooldown = 0
-		_in_vehicle = false
-		vehicle_exited.emit()
-		transfer_cam_to_player.emit(self)
+	if _in_vehicle and Input.is_action_just_pressed("Interact") and _enter_vehicle_cooldown > INTERACT_COOLDOWN_TIME && _last_vehicle_entered != null:
+			_last_vehicle_entered._vehicle_occupied = false
+			_enter_vehicle_cooldown = 0
+			_in_vehicle = false
+			vehicle_exited.emit()
+			transfer_cam_to_player.emit(self)
 		
+func while_driving() -> void:
+	if _last_vehicle_entered != null && _in_vehicle:
+		global_position = _last_vehicle_entered.global_position
 
 # Handles user input and player direction / cardinal movement/jumping
 func movement_processing(delta: float) -> void:

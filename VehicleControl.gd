@@ -10,7 +10,7 @@ const BRAKE_STRENGTH = 2.0
 var previous_speed := linear_velocity.length()
 var _steer_target := 0.0
 
-@onready var _driver_pos := $DrivingPos as Node3D
+@onready var _driver_pos : Vector3 = $DrivingPos.global_position
 @onready var _vehicle_occupied: bool = false
 @onready var desired_engine_pitch: float = $EngineSound.pitch_scale
 
@@ -49,6 +49,7 @@ func vehicle_controls(delta: float) -> void:
 	# Automatically accelerate when using touch controls (reversing overrides acceleration).
 	if Input.is_action_pressed(&"accelerate"):
 		# Increase engine force at low speeds to make the initial acceleration faster.
+		print("accelerate")
 		var speed := linear_velocity.length()
 		if speed < 5.0 and not is_zero_approx(speed):
 			engine_force = clampf(engine_force_value * 5.0 / speed, 0.0, 100.0)
@@ -75,14 +76,3 @@ func vehicle_controls(delta: float) -> void:
 	steering = move_toward(steering, _steer_target, STEER_SPEED * delta)
 
 	previous_speed = linear_velocity.length()
-
-# Called from player controller
-func _on_main_player_vehicle_entered(player: CharacterBody3D) -> void:
-	# move player to driver pos
-	player.position = _driver_pos.position
-	_vehicle_occupied = true
-
-# Called from player controller
-func _on_main_player_vehicle_exited() -> void:
-	# move player to exit pos
-	_vehicle_occupied = false

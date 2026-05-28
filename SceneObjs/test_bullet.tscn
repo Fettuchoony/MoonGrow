@@ -15,9 +15,14 @@ script = ExtResource("1_hicxt")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1419300947]
 transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
-billboard = 2
 shaded = true
-double_sided = false
+texture_filter = 0
+texture = ExtResource("1_c6mht")
+
+[node name="Sprite3D2" type="Sprite3D" parent="." unique_id=397005506]
+transform = Transform3D(2.5, 0, 0, 0, -1.09278474e-07, -2.5, 0, 2.5, -1.09278474e-07, 0, 0, 0)
+shaded = true
+alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("1_c6mht")
 
