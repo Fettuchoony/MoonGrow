@@ -27,7 +27,6 @@ var hold_pos
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("The Gunner turret has spawned")
 	being_held = false
 	hold_pos = global_position
 
@@ -92,6 +91,7 @@ func _turret_attack() -> void:
 		bullet._dmg = dmg
 		var fire_pos = _firing_point.global_position
 		bullet.global_position = _firing_point.global_position
+		bullet.look_at(target_pos)
 		var velocity = 1
 		var difference = target_pos - fire_pos
 		# TODO: I think target and fire pos should be swapped but this works better idk

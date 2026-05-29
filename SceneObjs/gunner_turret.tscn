@@ -24,7 +24,6 @@ size = Vector3(3, 3.21875, 3)
 collision_layer = 8
 collision_mask = 129
 script = ExtResource("1_ph50j")
-dmg = 10
 
 [node name="EnemyDetect" type="Area3D" parent="." unique_id=814179510]
 collision_layer = 0

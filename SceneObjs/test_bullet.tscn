@@ -3,10 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://c77f5whuv6k1y" path="res://Textures/Extracted/Bullet.png" id="1_c6mht"]
 [ext_resource type="Script" uid="uid://cnppe7r8xehwr" path="res://SceneObjs/test_bullet.gd" id="1_hicxt"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_hicxt"]
-radius = 1.306
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_hicxt"]
+height = 2.0161133
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8a1lp"]
+radius = 1.0
 
 [node name="TestBullet" type="RigidBody3D" unique_id=58096702]
 collision_layer = 0
@@ -14,21 +15,21 @@ collision_mask = 5
 script = ExtResource("1_hicxt")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1419300947]
-transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+transform = Transform3D(-1.09278474e-07, 0, 2.5, 0, 2.5, 0, -2.5, 0, -1.09278474e-07, 0, 0, 0)
 shaded = true
 texture_filter = 0
 texture = ExtResource("1_c6mht")
 
 [node name="Sprite3D2" type="Sprite3D" parent="." unique_id=397005506]
-transform = Transform3D(2.5, 0, 0, 0, -1.09278474e-07, -2.5, 0, 2.5, -1.09278474e-07, 0, 0, 0)
+transform = Transform3D(-1.09278474e-07, 2.5, -1.09278474e-07, 0, -1.09278474e-07, -2.5, -2.5, -1.09278474e-07, 4.7767136e-15, 0, 0, 0)
 shaded = true
 alpha_cut = 1
 texture_filter = 0
 texture = ExtResource("1_c6mht")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=613713668]
-transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0)
-shape = SubResource("SphereShape3D_hicxt")
+transform = Transform3D(3.6303022e-16, 8.305164e-09, 0.19, 0.19, -8.305164e-09, 0, 8.305164e-09, 0.19, -8.305164e-09, -6.691172e-11, 6.691172e-11, -0.0015307617)
+shape = SubResource("CapsuleShape3D_hicxt")
 
 [node name="DamageArea" type="Area3D" parent="." unique_id=976651188]
 collision_layer = 0

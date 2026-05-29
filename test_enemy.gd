@@ -156,7 +156,7 @@ func change_health(delta: int) -> void:
 	health += delta
 	# Cap health
 	health = min(health, max_health)
-	print(health)
+	#print(health)
 	# ded
 	if health <= 0:
 		queue_free()
@@ -170,5 +170,5 @@ func apply_knockback(origin: Vector3) -> void:
 # TODO: give money or something when enemy is killed
 func recieve_dmg(amt : int) -> void:
 	health -= amt
-	if health == 0:
+	if health <= 0:
 		queue_free()

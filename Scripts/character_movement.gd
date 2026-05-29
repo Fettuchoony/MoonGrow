@@ -53,6 +53,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _displaying_turret_gui : bool = false
 # Keep track of the gui being displayed
 @onready var _current_turret_gui : Control
+@onready var _camera : Camera3D = $CameraPivot/SpringArm3D/Camera3D
 
 # Preload all items (Might be a better way to do this)
 @onready var _turret_gui = preload("res://SceneObjs/info_upgrade_gui.tscn")
@@ -168,12 +169,20 @@ func movement_processing(delta: float) -> void:
 func handle_pausing() -> void:
 	# Pausing Functionality / Free mouse
 	if Input.is_action_just_pressed("Escape"):
-		_paused = !_paused
+		#_paused = !_paused
 		if _mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			_paused = true
+			_mouse_mode = Input.MOUSE_MODE_VISIBLE
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			pause_menu.emit()
+		elif _displaying_turret_gui:
+			_paused = true
 			_mouse_mode = Input.MOUSE_MODE_VISIBLE
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			pause_menu.emit()
 		else:
+			_paused = false
+			_camera.enable_movement = true
 			_mouse_mode = Input.MOUSE_MODE_CAPTURED
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			pause_menu.emit()
@@ -244,7 +253,7 @@ func _unbind_item(taskbar_index : int) -> void:
 	pass
 	
 func use_item() -> void:
-	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2:
+	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2 && !_displaying_turret_gui:
 		var curr_item_name = _taskbar_rects[_current_taskbar_index].get_child(2).name
 		_taskbar_items[curr_item_name].trigger()
 		
@@ -300,7 +309,6 @@ func pickup_and_lockon(delta : float) -> void:
 		#_held_item.angular_velocity.z = -_held_item.global_rotation.z
 		#TODO: Fix righting
 		#_held_item.rotation = Vector3(0, _held_item.rotation.y, 0)
-		print(_pickup_hold_location)
 	# put down
 	elif Input.is_action_just_pressed("RClick") and _held_item != null:
 		#print("put down: " + to_string(_held_item))
@@ -322,7 +330,6 @@ func _pickup_item(item : Node3D) -> void:
 			return
 	_inventory.append(item)
 	_item_spawn_location.add_child(item)
-	print("Item added")
 	# Make the GUI elements invisible
 	item.find_child("GUI").visible = false
 	_menu._refresh_inventory()
@@ -366,14 +373,37 @@ func _init_items() -> void:
 	
 func _upgrade_hover_ui() -> void:
 	var col = _aim_ray.get_collider()
-	# Trigger gui when hovering
-	if col != null && col.collision_layer == 8 && !_displaying_turret_gui:
+	# Trigger gui when hovering but dont free mouse
+	if col != null && col.collision_layer == 8 && !_displaying_turret_gui && !_paused:
 		_current_turret_gui = _turret_gui.instantiate()
 		get_tree().root.add_child(_current_turret_gui)
+		_current_turret_gui.init(col)
+		for perk in _current_turret_gui._tree.get_children():
+			perk._turret = col
 		_displaying_turret_gui = true
 		# Initialize the GUI
-		_current_turret_gui.init(col)
-	if (col == null || col.collision_layer != 8) && _displaying_turret_gui:
-		print("delete gui")
+	# Delete GUI when the player has the GUI up already and the game is puased or focus lost on turret
+	if (col == null || col.collision_layer != 8 || _paused) && _displaying_turret_gui:
 		_current_turret_gui.queue_free()
 		_displaying_turret_gui = false
+		# If exited with e press, recapture mouse
+		if !_paused:
+			_mouse_mode = Input.MOUSE_MODE_CAPTURED
+			Input.mouse_mode = _mouse_mode
+			_camera.enable_movement = true
+		# If exited with pause, keep mouse visible
+		else: 
+			_mouse_mode = Input.MOUSE_MODE_VISIBLE
+			Input.mouse_mode = _mouse_mode
+			_camera.enable_movement = false
+	# Handle edit prompt
+	if col != null && _displaying_turret_gui && Input.is_action_just_pressed("EItem"):
+		if _mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			_mouse_mode = Input.MOUSE_MODE_CAPTURED
+			_camera.enable_movement = true
+		else:
+			_mouse_mode = Input.MOUSE_MODE_VISIBLE
+			_camera.enable_movement = false
+		Input.mouse_mode = _mouse_mode
+		#_current_turret_gui.mouse_filter = 1
+		print("Click")

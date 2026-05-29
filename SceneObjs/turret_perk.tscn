@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://c75fat71jxywt"]
+
+[ext_resource type="Script" uid="uid://dlmn06lijg8m3" path="res://SceneObjs/turret_perk.gd" id="1_w6lo0"]
+[ext_resource type="Texture2D" uid="uid://boa50sslbynsx" path="res://Textures/Extracted/SamplePerkIcon.png" id="2_v2mru"]
+[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="3_unl8m"]
+[ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="4_nfhg3"]
+
+[node name="TurretPerk" type="Control" unique_id=1314575360]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w6lo0")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=912229873]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_v2mru")
+
+[node name="Equipped" type="TextureRect" parent="." unique_id=434954094]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_unl8m")
+
+[node name="Hover" type="TextureRect" parent="." unique_id=654311464]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_nfhg3")

@@ -11,7 +11,6 @@ func _ready() -> void:
 	_time_alive = 0
 	# Set by turret, default to 5
 	_death_time = 5
-	print("spawned")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -27,5 +26,4 @@ func _dmg_calc() -> void:
 	if _dmg_area.has_overlapping_bodies():
 		for col in _dmg_area.get_overlapping_bodies():
 			col.recieve_dmg(_dmg)
-			print(col.health)
 		queue_free()
