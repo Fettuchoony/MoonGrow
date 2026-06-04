@@ -35,12 +35,12 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _enter_vehicle_cooldown:float = 0
 # TODO: Create item list/map of all names, items ID by exact string (lowercase)
 # This is a list of all items and if they are equipped [name : taskbar index]
-@onready var _taskbar_items : Dictionary[String, Node3D]
+@onready var _taskbar_items : Dictionary[String, Control]
 @onready var _taskbar_containers : Array[Node]
 @onready var _current_taskbar_index : int = 0
 @onready var _taskbar_rects = $GUI/TaskBar/HBoxContainer.get_children()
 
-@onready var _inventory : Array[Node3D]
+@onready var _inventory : Array[Control]
 @onready var _paused : bool
 @onready var _item_timer: float = 0
 @onready var _aim_ray : RayCast3D = $CameraPivot/SpringArm3D/Camera3D/PlayerRay
@@ -60,6 +60,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _bomb_spawner = preload("res://SceneObjs/bomb_spawner.tscn")
 @onready var _grapple_spawner = preload("res://SceneObjs/grapple_spawner.tscn")
 @onready var _turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
+@onready var _augment = preload("res://SceneObjs/augment_generic.tscn")
 
 
 @export var item_cooldown_time : float = 0.2
@@ -297,7 +298,7 @@ func game_over() -> void:
 func pickup_and_lockon(delta : float) -> void:
 	var col : RigidBody3D = _item_ray.get_collider()
 	# pickup
-	if Input.is_action_just_pressed("RClick") and _held_item == null and col != null and col.collision_layer == 8:
+	if Input.is_action_just_pressed("EItem") and _held_item == null and col != null and col.collision_layer == 8:
 		# Reassign held item
 		#print_debug("picked up: " + to_string(_held_item))
 		_held_item = col
@@ -310,7 +311,7 @@ func pickup_and_lockon(delta : float) -> void:
 		#TODO: Fix righting
 		#_held_item.rotation = Vector3(0, _held_item.rotation.y, 0)
 	# put down
-	elif Input.is_action_just_pressed("RClick") and _held_item != null:
+	elif Input.is_action_just_pressed("EItem") and _held_item != null:
 		#print("put down: " + to_string(_held_item))
 		_held_item.being_held = false
 		_held_item = null
@@ -319,7 +320,7 @@ func pickup_and_lockon(delta : float) -> void:
 		_held_item.angular_velocity.z = -_held_item.rotation.z
 	
 # Adds item to inventory and updates the menu accordingly
-func _pickup_item(item : Node3D) -> void:
+func _pickup_item(item : Control) -> void:
 	for inv_item in _inventory:
 		# If item already exists, increment it
 		if inv_item.name == item.name:
@@ -331,13 +332,14 @@ func _pickup_item(item : Node3D) -> void:
 	_inventory.append(item)
 	_item_spawn_location.add_child(item)
 	# Make the GUI elements invisible
-	item.find_child("GUI").visible = false
+	item.visible = false
 	_menu._refresh_inventory()
 
 func _spawn_with_all_items() -> void:
 	_pickup_item(_bomb_spawner.instantiate())
 	_pickup_item(_grapple_spawner.instantiate())
 	_pickup_item(_turret_spawner.instantiate())
+	_pickup_item(_augment.instantiate())
 
 # TODO: Find a way to make this use event instead of direct input?
 func _taskbar_scrolling() -> void:
@@ -397,7 +399,7 @@ func _upgrade_hover_ui() -> void:
 			Input.mouse_mode = _mouse_mode
 			_camera.enable_movement = false
 	# Handle edit prompt
-	if col != null && _displaying_turret_gui && Input.is_action_just_pressed("EItem"):
+	if col != null && _displaying_turret_gui && Input.is_action_just_pressed("RClick"):
 		if _mouse_mode == Input.MOUSE_MODE_VISIBLE:
 			_mouse_mode = Input.MOUSE_MODE_CAPTURED
 			_camera.enable_movement = true

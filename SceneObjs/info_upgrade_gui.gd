@@ -1,4 +1,6 @@
 extends Control
+class_name TurretUpgrades
+
 
 # The turret the GUI is representing
 var _turret : Node3D

@@ -1,6 +1,6 @@
-extends Node3D
+extends Control
 
-var gunner_turret_data : Resource
+var target_item : Resource
 var level_node : Node3D
 
 @export var icon : TextureRect
@@ -9,7 +9,7 @@ var level_node : Node3D
 # Called when the node enters the scene tree for the first time.
 func _init() -> void:
 	icon = find_child("Icon")
-	gunner_turret_data = preload("res://SceneObjs/gunner_turret.tscn")
+	target_item = preload("res://SceneObjs/gunner_turret.tscn")
 	
 	
 func _ready() -> void:
@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 	
 func trigger() -> void:
 	#print(gunner_turret_data)
-	if gunner_turret_data != null:
-		var turret_obj = gunner_turret_data.instantiate()
+	if target_item != null:
+		var turret_obj = target_item.instantiate()
 		level_node.add_child(turret_obj)
 		turret_obj.global_position = get_parent().global_position

@@ -4,10 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/item_gui.tscn" id="2_g6cll"]
 [ext_resource type="Texture2D" uid="uid://c5lr88gvig1n2" path="res://Textures/Extracted/bomb.png" id="2_ygcvh"]
 
-[node name="BombSpawner" type="Node3D" unique_id=1988046956]
+[node name="BombSpawner" type="Control" unique_id=602140892]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_r12s0")
 
 [node name="GUI" parent="." unique_id=1075007835 instance=ExtResource("2_g6cll")]
+layout_mode = 0
 
 [node name="Icon" parent="GUI" index="0" unique_id=1208015621]
 texture = ExtResource("2_ygcvh")

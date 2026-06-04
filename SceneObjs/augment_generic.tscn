@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bydfw62k2opax"]
+
+[ext_resource type="Script" uid="uid://cj6it7nr3hato" path="res://SceneObjs/augments.gd" id="1_jis4q"]
+[ext_resource type="Texture2D" uid="uid://boa50sslbynsx" path="res://Textures/Extracted/SamplePerkIcon.png" id="2_xe8wu"]
+[ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="3_xe8wu"]
+[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="4_u4mka"]
+
+[node name="Augment" type="Control" unique_id=408754770]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jis4q")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=713070883]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xe8wu")
+
+[node name="Hover" type="TextureRect" parent="." unique_id=957353714]
+visible = false
+layout_mode = 0
+texture = ExtResource("3_xe8wu")
+
+[node name="Equipped" type="TextureRect" parent="." unique_id=2113987755]
+visible = false
+z_index = -5
+layout_mode = 0
+texture = ExtResource("4_u4mka")

@@ -13,6 +13,7 @@ const DEFAULT_ICON_SIZE = 32.0
 @onready var placement_ray : RayCast3D = $"../MainPlayer/CameraPivot/SpringArm3D/Camera3D/PlacementRay"
 @onready var _currently_idleing : bool = false
 @onready var _current_idle_obj = null
+@onready var _cursor_item = $"../MainPlayer/GUI/ItemHold"
 
 
 
@@ -31,6 +32,8 @@ func _process(_delta: float) -> void:
 # Player controller handles mouse unlocking 
 func _on_main_player_pause_menu() -> void:
 	if visible:
+		_cursor_item.visible = false
+		for child in _cursor_item.get_children(): child.queue_free()
 		visible = false
 	else:
 		visible = true
@@ -66,8 +69,8 @@ func _refresh_inventory() -> void:
 	var inv = _player._inventory
 	assert(inv != null, "Fatal error: inventory not refreshable")
 	for item in inv:
-		var item_gui : Control = item.find_child("GUI", true, false).duplicate()
-		var amount_label : Label = item_gui.get_node("Amount")
+		var item_gui : Control = item.duplicate()
+		var amount_label : Label = item_gui.find_child("Amount")
 		#var item_icon : TextureRect = item_gui.get_node("Icon")
 		item_gui.name = item.name
 		item_gui.visible = true
@@ -89,6 +92,11 @@ func _refresh_inventory() -> void:
 		# Do not scale taskbar rects
 
 func _item_hovering_and_selection_func() -> void:
+	# move cursor item to mouse, even if invisible atm
+	_cursor_item.position = get_screen_transform() * get_local_mouse_position()
+	# offset by size/2 to center icon on mopuse
+	if _cursor_item.visible == true:
+		_cursor_item.position -= Vector2(_cursor_item.get_child(0).size.x/2.0, _cursor_item.get_child(0).size.y/2.0)
 	# Make sure player connection good
 	if _item_slots != null && _player != null && visible:
 		# Go through each item slot, these are generated on pickup_item in player script
@@ -103,7 +111,12 @@ func _item_hovering_and_selection_func() -> void:
 			if Input.is_action_just_pressed("Click") and slot_rect.has_point(get_screen_transform() * get_local_mouse_position()):
 				# If item isnt equipped already:
 				slot.find_child("Equipped").visible = true
+				_cursor_item.visible = true
+				var floating_icon = slot.duplicate()
+				_cursor_item.add_child(floating_icon)
+				floating_icon.mouse_filter = MOUSE_FILTER_IGNORE
 				_player._unbind_item(_player._current_taskbar_index)
+				# Move to taskbar and augment controller
 				_player._bind_item(slot)
 			var is_in_taskbar = false
 			for item in _player._taskbar_items:

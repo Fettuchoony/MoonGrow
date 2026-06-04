@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name Turret
 
 static var DETECT_TIME_INTERVAL : float = 0.01
 static var COLLOQUIAL_NAME : String = "Gunner Turret"
@@ -16,6 +17,9 @@ static var COLLOQUIAL_NAME : String = "Gunner Turret"
 @onready var _head_pivot : Node3D = $TurretBase/HeadPivot
 @onready var _up_ref : Node3D = $TurretBase/UpRef
 @onready var target : Node3D
+
+# Added to by perk when clicked, used to populate upgrade gui with equip when created and avoid repeats
+@onready var _applied_upgrades : Dictionary[String, bool]
 
 @export var dmg : int = 1
 @export var firing_rate : float = 0.5

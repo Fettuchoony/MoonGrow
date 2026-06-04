@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://Scripts/character_movement.gd" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://Scripts/Player/camera_3d.gd" id="2_r0du0"]
 [ext_resource type="Texture2D" uid="uid://ccgykkk5ueg02" path="res://Textures/Extracted/ItemSlot.png" id="7_3b0ty"]
+[ext_resource type="Script" uid="uid://dlhhrhelqp8eu" path="res://taskbar_controller.gd" id="7_c6i3y"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="7_hhcpw"]
 [ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://item_pivot.gd" id="8_bg4s2"]
 [ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://health_GUI_update.gd" id="8_hri7i"]
@@ -186,6 +187,7 @@ offset_top = -40.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("7_c6i3y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainPlayer/GUI/TaskBar" unique_id=639279145]
 layout_mode = 1
@@ -309,6 +311,12 @@ texture = ExtResource("7_3b0ty")
 visible = false
 layout_mode = 2
 texture = ExtResource("15_fpfj3")
+
+[node name="ItemHold" type="Control" parent="MainPlayer/GUI" unique_id=361187350]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
 texture_filter = 1

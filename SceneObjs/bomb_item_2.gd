@@ -1,5 +1,6 @@
 extends RigidBody3D
 
+
 # This is to make the explosion a child of the global scene and be able to delete the bomb
 
 @onready var main : Node3D = $".."

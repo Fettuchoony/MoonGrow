@@ -4,10 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/item_gui.tscn" id="2_bw0iu"]
 [ext_resource type="Texture2D" uid="uid://bivup58xsnbb3" path="res://Textures/Extracted/GunnerTurret.png" id="3_bw0iu"]
 
-[node name="TurretSpawner" type="Node3D" unique_id=660092153]
+[node name="TurretSpawner" type="Control" unique_id=794274804]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_j3tkb")
 
 [node name="GUI" parent="." unique_id=963375078 instance=ExtResource("2_bw0iu")]
+layout_mode = 0
 
 [node name="Icon" parent="GUI" index="0" unique_id=1208015621]
 texture = ExtResource("3_bw0iu")
