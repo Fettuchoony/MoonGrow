@@ -6,11 +6,19 @@
 
 [node name="BombSpawner" type="Control" unique_id=602140892]
 layout_mode = 3
-anchors_preset = 0
+anchor_right = 0.056
+anchor_bottom = 0.09900001
+offset_right = -0.51200104
+offset_bottom = -0.15200806
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_r12s0")
+metadata/_edit_use_anchors_ = true
 
 [node name="GUI" parent="." unique_id=1075007835 instance=ExtResource("2_g6cll")]
-layout_mode = 0
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="Icon" parent="GUI" index="0" unique_id=1208015621]
 texture = ExtResource("2_ygcvh")

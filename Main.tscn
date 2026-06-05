@@ -350,16 +350,17 @@ transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676
 shadow_enabled = true
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("10_20pc6")
 
-[node name="TabContainer" type="TabContainer" parent="Menus" unique_id=263424285]
+[node name="MenuInv" type="TabContainer" parent="Menus" unique_id=263424285]
+visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
@@ -369,14 +370,15 @@ anchor_right = 0.9444444
 anchor_bottom = 0.8904321
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 current_tab = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Inventory" type="Control" parent="Menus/TabContainer" unique_id=1130945522]
+[node name="Inventory" type="Control" parent="Menus/MenuInv" unique_id=1130945522]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Menus/TabContainer/Inventory" unique_id=1338249059]
+[node name="HFlowContainer" type="HFlowContainer" parent="Menus/MenuInv/Inventory" unique_id=1338249059]
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 15
@@ -385,9 +387,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 last_wrap_alignment = 1
-metadata/_edit_use_anchors_ = true
 
-[node name="HSlider" type="HSlider" parent="Menus/TabContainer/Inventory" unique_id=1108591428]
+[node name="HSlider" type="HSlider" parent="Menus/MenuInv/Inventory" unique_id=1108591428]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -405,26 +406,26 @@ max_value = 10.0
 value = 1.0
 tick_count = 10
 
-[node name="Collectibles" type="Control" parent="Menus/TabContainer" unique_id=384906215]
-visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Button" type="Button" parent="Menus" unique_id=276920941]
+[node name="Button" type="Button" parent="Menus/MenuInv/Inventory" unique_id=276920941]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -72.0
-offset_top = -64.0
-offset_right = -8.0
-offset_bottom = -8.0
+offset_left = -8.0
+offset_top = 7.0
+offset_right = 56.0
+offset_bottom = 63.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "SAVE
 "
+
+[node name="Collectibles" type="Control" parent="Menus/MenuInv" unique_id=384906215]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=280029085]
 environment = SubResource("Environment_w3rk5")
@@ -439,5 +440,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3963816, -1.0000002, -0.804
 [connection signal="area_entered" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_entered"]
 [connection signal="area_exited" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_exited"]
 [connection signal="gui_input" from="Menus" to="MainPlayer" method="_on_menus_gui_input"]
-[connection signal="value_changed" from="Menus/TabContainer/Inventory/HSlider" to="Menus" method="_on_h_slider_value_changed"]
-[connection signal="button_down" from="Menus/Button" to="." method="save_game"]
+[connection signal="value_changed" from="Menus/MenuInv/Inventory/HSlider" to="Menus" method="_on_h_slider_value_changed"]
+[connection signal="button_down" from="Menus/MenuInv/Inventory/Button" to="." method="save_game"]

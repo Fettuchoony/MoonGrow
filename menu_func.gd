@@ -2,8 +2,8 @@ extends Control
 
 const DEFAULT_ICON_SIZE = 32.0
 
-
-@onready var _item_slots : Control = $TabContainer/Inventory/HFlowContainer
+@onready var inv_window : TabContainer = $MenuInv
+@onready var _item_slots : Control = $MenuInv/Inventory/HFlowContainer
 @onready var current_focus_item : TextureRect
 ## The rects that contain the item icon
 @onready var _taskbar_rects = $"../MainPlayer/GUI/TaskBar/HBoxContainer".get_children()
@@ -19,7 +19,7 @@ const DEFAULT_ICON_SIZE = 32.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	_on_h_slider_value_changed(1.0)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,12 +31,12 @@ func _process(_delta: float) -> void:
 # Player Controller sends a signal to toggle visibility
 # Player controller handles mouse unlocking 
 func _on_main_player_pause_menu() -> void:
-	if visible:
+	if inv_window.visible:
 		_cursor_item.visible = false
 		for child in _cursor_item.get_children(): child.queue_free()
-		visible = false
+		inv_window.visible = false
 	else:
-		visible = true
+		inv_window.visible = true
 
 
 ## Executes all idle anims TODO: might replace with animgraph at some point?
@@ -61,7 +61,7 @@ func _execute_idles() -> void:
 
 func _refresh_inventory() -> void:
 	# These are reasserted here because sometimes refresh is called before this script readies
-	_item_slots = $TabContainer/Inventory/HFlowContainer
+	_item_slots = $MenuInv/Inventory/HFlowContainer
 	_player = $"../MainPlayer"
 	if _item_slots.get_children() == null:
 		return
@@ -95,10 +95,10 @@ func _item_hovering_and_selection_func() -> void:
 	# move cursor item to mouse, even if invisible atm
 	_cursor_item.position = get_screen_transform() * get_local_mouse_position()
 	# offset by size/2 to center icon on mopuse
-	if _cursor_item.visible == true:
-		_cursor_item.position -= Vector2(_cursor_item.get_child(0).size.x/2.0, _cursor_item.get_child(0).size.y/2.0)
+	#if _cursor_item.visible == true:
+		#_cursor_item.position -= Vector2(_cursor_item.get_child(0).size.x/2.0, _cursor_item.get_child(0).size.y/2.0)
 	# Make sure player connection good
-	if _item_slots != null && _player != null && visible:
+	if _item_slots != null && _player != null && inv_window.visible:
 		# Go through each item slot, these are generated on pickup_item in player script
 		for slot in _item_slots.get_children():
 			# Get the rect of the actual item
@@ -115,9 +115,9 @@ func _item_hovering_and_selection_func() -> void:
 				var floating_icon = slot.duplicate()
 				_cursor_item.add_child(floating_icon)
 				floating_icon.mouse_filter = MOUSE_FILTER_IGNORE
-				_player._unbind_item(_player._current_taskbar_index)
-				# Move to taskbar and augment controller
-				_player._bind_item(slot)
+				#_player._unbind_item(_player._current_taskbar_index)
+				## Move to taskbar and augment controller
+				#_player._bind_item(slot)
 			var is_in_taskbar = false
 			for item in _player._taskbar_items:
 				if item == slot.name:

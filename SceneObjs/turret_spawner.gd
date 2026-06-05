@@ -19,9 +19,10 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 	
-func trigger() -> void:
+func trigger(_pos: Vector3) -> void:
 	#print(gunner_turret_data)
 	if target_item != null:
 		var turret_obj = target_item.instantiate()
 		level_node.add_child(turret_obj)
-		turret_obj.global_position = get_parent().global_position
+		
+		turret_obj.global_position = _pos

@@ -253,12 +253,10 @@ func _unbind_item(taskbar_index : int) -> void:
 	_menu._refresh_inventory()
 	pass
 	
+# SUPER hacky, should probably get rid of static index
 func use_item() -> void:
 	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2 && !_displaying_turret_gui:
-		var curr_item_name = _taskbar_rects[_current_taskbar_index].get_child(2).name
-		_taskbar_items[curr_item_name].trigger()
-		
-	pass
+		_taskbar_rects[_current_taskbar_index].get_child(2).trigger(_item_spawn_location.global_position)
 	
 	
 # TODO: add more params for signals from enemies for debuffs and stuff
@@ -378,14 +376,14 @@ func _upgrade_hover_ui() -> void:
 	# Trigger gui when hovering but dont free mouse
 	if col != null && col.collision_layer == 8 && !_displaying_turret_gui && !_paused:
 		_current_turret_gui = _turret_gui.instantiate()
-		get_tree().root.add_child(_current_turret_gui)
+		_menu.add_child(_current_turret_gui)
 		_current_turret_gui.init(col)
 		for perk in _current_turret_gui._tree.get_children():
 			perk._turret = col
 		_displaying_turret_gui = true
 		# Initialize the GUI
-	# Delete GUI when the player has the GUI up already and the game is puased or focus lost on turret
-	if (col == null || col.collision_layer != 8 || _paused) && _displaying_turret_gui:
+	# Delete GUI when the player has the GUI up already and focus lost on turret
+	if (col == null || col.collision_layer != 8) && _displaying_turret_gui:
 		_current_turret_gui.queue_free()
 		_displaying_turret_gui = false
 		# If exited with e press, recapture mouse
@@ -407,5 +405,6 @@ func _upgrade_hover_ui() -> void:
 			_mouse_mode = Input.MOUSE_MODE_VISIBLE
 			_camera.enable_movement = false
 		Input.mouse_mode = _mouse_mode
+		#_menu._on_main_player_pause_menu()
 		#_current_turret_gui.mouse_filter = 1
 		print("Click")
