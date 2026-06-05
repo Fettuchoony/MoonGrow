@@ -173,11 +173,7 @@ func handle_pausing() -> void:
 		#_paused = !_paused
 		if _mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_paused = true
-			_mouse_mode = Input.MOUSE_MODE_VISIBLE
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			pause_menu.emit()
-		elif _displaying_turret_gui:
-			_paused = true
+			_camera.enable_movement = false
 			_mouse_mode = Input.MOUSE_MODE_VISIBLE
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			pause_menu.emit()
@@ -256,7 +252,15 @@ func _unbind_item(taskbar_index : int) -> void:
 # SUPER hacky, should probably get rid of static index
 func use_item() -> void:
 	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2 && !_displaying_turret_gui:
-		_taskbar_rects[_current_taskbar_index].get_child(2).trigger(_item_spawn_location.global_position)
+		var curr_item = _taskbar_rects[_current_taskbar_index].get_child(2)
+		# trigger the current item
+		curr_item.trigger(_item_spawn_location.global_position)
+		for item in _inventory:
+			if item.name == curr_item.name:
+				item.amount = curr_item.amount
+				print("decrementing")
+				item.amount_label.text = str(item.amount)
+				_menu._refresh_inventory()
 	
 	
 # TODO: add more params for signals from enemies for debuffs and stuff
@@ -325,7 +329,7 @@ func _pickup_item(item : Control) -> void:
 			inv_item.amount += 1
 			_menu._refresh_inventory()
 			# No need to instantiate more spawners than 1
-			item.free()
+			item.queue_free()
 			return
 	_inventory.append(item)
 	_item_spawn_location.add_child(item)
@@ -381,30 +385,17 @@ func _upgrade_hover_ui() -> void:
 		for perk in _current_turret_gui._tree.get_children():
 			perk._turret = col
 		_displaying_turret_gui = true
-		# Initialize the GUI
-	# Delete GUI when the player has the GUI up already and focus lost on turret
-	if (col == null || col.collision_layer != 8) && _displaying_turret_gui:
-		_current_turret_gui.queue_free()
-		_displaying_turret_gui = false
-		# If exited with e press, recapture mouse
-		if !_paused:
-			_mouse_mode = Input.MOUSE_MODE_CAPTURED
-			Input.mouse_mode = _mouse_mode
-			_camera.enable_movement = true
-		# If exited with pause, keep mouse visible
-		else: 
-			_mouse_mode = Input.MOUSE_MODE_VISIBLE
-			Input.mouse_mode = _mouse_mode
-			_camera.enable_movement = false
-	# Handle edit prompt
-	if col != null && _displaying_turret_gui && Input.is_action_just_pressed("RClick"):
-		if _mouse_mode == Input.MOUSE_MODE_VISIBLE:
+	if _displaying_turret_gui:
+		if col == null || col.collision_layer != 8:
 			_mouse_mode = Input.MOUSE_MODE_CAPTURED
 			_camera.enable_movement = true
-		else:
-			_mouse_mode = Input.MOUSE_MODE_VISIBLE
-			_camera.enable_movement = false
+			_displaying_turret_gui = false
+			if _current_turret_gui != null:
+				_current_turret_gui.queue_free()
+			# Exit pause aswell if walking away (QOL I think)
+			if _paused:
+				_paused = false
+				_camera.enable_movement = true
+				_mouse_mode = Input.MOUSE_MODE_CAPTURED
+				pause_menu.emit()
 		Input.mouse_mode = _mouse_mode
-		#_menu._on_main_player_pause_menu()
-		#_current_turret_gui.mouse_filter = 1
-		print("Click")
