@@ -130,7 +130,18 @@ func _handle_upgrade_input() -> void:
 			else: 
 				slot.find_child("Hover").visible = false
 			var already_toggled : bool = false
-			if Input.is_action_just_pressed("Click") and slot_rect.has_point(_menu.get_screen_transform() * _menu.get_local_mouse_position()) && cursor_item.get_child_count() != 0 && cursor_item.get_child(0) is Augment:
+			
+			# Flags
+			var clicked : bool = Input.is_action_just_pressed("Click")
+			var within_rect : bool = slot_rect.has_point(_menu.get_screen_transform() * _menu.get_local_mouse_position())
+			var cursor_holding_item : bool = cursor_item.get_child_count() != 0
+			var held_item_is_augment : bool = false
+			if cursor_holding_item: held_item_is_augment = cursor_item.get_child(0) is Augment
+			var slot_occupied : bool = slot.get_child(2).get_child_count() != 0
+			
+			# ADD CASE
+			# Cursor item set, put on empty space
+			if clicked && within_rect && cursor_holding_item && held_item_is_augment && !slot_occupied:
 						print_debug("Adding augment: " + cursor_item.get_child(0).name + " to " + ui._turret_name.text)
 						var grab_item = cursor_item.get_child(0)
 						applied_upgrades[slot_num] = grab_item
@@ -138,35 +149,30 @@ func _handle_upgrade_input() -> void:
 						
 						#_player._remove_item(cursor_item.get_child(0))
 						grab_item.reparent(slot_augment_spot)
-						grab_item.position = slot.global_position
+						grab_item.global_position = slot.global_position
 						already_toggled = true
 						print(grab_item.global_position)
-			slot_num += 1
-		
-		#for slot in _perk_slots:
-			#var slot_augment_spot = slot.find_child("Augment")
-			#var slot_rect = slot.get_rect()
-			#slot_rect.position = slot.global_position
-			#var cursor_item = _menu._cursor_item
-			## Hovering func
-			#if slot_rect.has_point(get_screen_transform() * get_local_mouse_position()):
-				#slot.find_child("Hover").visible = true
-			#else: 
-				#slot.find_child("Hover").visible = false
-			#var already_toggled : bool = false
+						
+			# REMOVE CASE
+			# No cursor item, but augment clicked and slot isnt empty
+			if clicked && within_rect && !cursor_holding_item && slot_occupied:
+				var grab_item = slot.get_child(2).get_child(0)
+				applied_upgrades.erase(slot_num)
+				grab_item.reparent(cursor_item)
+				grab_item.global_position = cursor_item.global_position
 			
-			# Assignment func
-			# If: clicked, within slot rect, cursor is holding an item, and the item is an augment:
-			#if Input.is_action_just_pressed("Click") and slot_rect.has_point(get_screen_transform() * get_local_mouse_position()) && cursor_item.get_child_count() != 0 && cursor_item.get_child(0) is Augment:
-				#print_debug("Adding augment: " + cursor_item.get_child(0).name + " to " + _turret_name.text)
-				#var dupe = cursor_item.get_child(0).duplicate(DUPLICATE_INTERNAL_STATE)
-				#_turret.applied_upgrades[slot_num] = dupe
-				#print(_turret.applied_upgrades)
-				#
-				##_player._remove_item(cursor_item.get_child(0))
-				#dupe.global_position = slot.global_position
-				#slot_augment_spot.add_child(dupe)
-				#already_toggled = true
+			# SWAP CASE
+			# Cursor item set, put on occupied space
+			if clicked && within_rect && cursor_holding_item && slot_occupied:
+				var cursor_augment = cursor_item.get_child(0)
+				var slot_augment = slot.get_child(2).get_child(0)
+				applied_upgrades[slot_num] = cursor_augment
+				slot_augment.global_position = cursor_item.global_position
+				cursor_item.global_position = slot_augment_spot.global_position
+				cursor_augment.reparent(slot_augment_spot)
+				slot_augment.reparent(cursor_item)
+			
+			slot_num += 1
 
 func change_turret_mode(mode : String) -> void:
 	_attack_mode = mode

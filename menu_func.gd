@@ -19,7 +19,8 @@ const DEFAULT_ICON_SIZE = 32.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_on_h_slider_value_changed(1.0)
+	#_on_h_slider_value_changed(1.0)
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,7 +35,7 @@ func _on_main_player_pause_menu() -> void:
 	if inv_window.visible:
 		_cursor_item.visible = false
 		for child in _cursor_item.get_children(): 
-			_player._pickup_item(child)
+			if child is Augment: _player._pickup_item(child)
 			child.queue_free()
 		inv_window.visible = false
 	else:
@@ -119,9 +120,10 @@ func _item_hovering_and_selection_func() -> void:
 				if _cursor_item.get_child_count() != 0:
 					# Only augment increment because turret amount doesnt decrease until use
 					if _cursor_item.get_child(0) is Augment:
-						var item_dupe = _cursor_item.get_child(0).duplicate(DUPLICATE_INTERNAL_STATE)
-						_player._pickup_item(item_dupe)
-					_cursor_item.get_child(0).queue_free()
+						var grab_item = _cursor_item.get_child(0)
+						_player._pickup_item(grab_item)
+					else:
+						_cursor_item.get_child(0).queue_free()
 				# If item isnt equipped already:
 				slot.find_child("Equipped").visible = true
 				_cursor_item.visible = true
@@ -146,18 +148,18 @@ func _item_hovering_and_selection_func() -> void:
 				slot.find_child("Equipped").visible = true
 
 # When GUI icons size change from the slider
-func _on_h_slider_value_changed(value: float) -> void:
-	# 32 is the default pixel art texture res
-	var new_size : float = DEFAULT_ICON_SIZE * value
-	for item in _item_slots.get_children():
-		item.custom_minimum_size = Vector2(new_size, new_size)
-		for child in item.get_children():
-			child.custom_minimum_size = Vector2(new_size, new_size)
-			if child.name == "Amount":
-				# divide by two because we dont want it to be too big
-				child.label_settings.font_size = new_size / 2
-	for taskbar_rect in _taskbar_rects:
-		taskbar_rect.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
-		for child_rect in taskbar_rect.get_children():
-			child_rect.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
+#func _on_h_slider_value_changed(value: float) -> void:
+	## 32 is the default pixel art texture res
+	#var new_size : float = DEFAULT_ICON_SIZE * value
+	#for item in _item_slots.get_children():
+		#item.custom_minimum_size = Vector2(new_size, new_size)
+		#for child in item.get_children():
+			#child.custom_minimum_size = Vector2(new_size, new_size)
+			#if child.name == "Amount":
+				## divide by two because we dont want it to be too big
+				#child.label_settings.font_size = new_size / 2
+	#for taskbar_rect in _taskbar_rects:
+		#taskbar_rect.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
+		#for child_rect in taskbar_rect.get_children():
+			#child_rect.custom_minimum_size = Vector2(DEFAULT_ICON_SIZE, DEFAULT_ICON_SIZE)
 		

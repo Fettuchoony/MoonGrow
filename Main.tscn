@@ -315,9 +315,8 @@ texture = ExtResource("15_fpfj3")
 [node name="ItemHold" type="Control" parent="MainPlayer/GUI" unique_id=361187350]
 visible = false
 z_index = 10
+layout_mode = 1
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
 texture_filter = 1
@@ -361,7 +360,6 @@ mouse_filter = 2
 script = ExtResource("10_20pc6")
 
 [node name="MenuInv" type="TabContainer" parent="Menus" unique_id=263424285]
-visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
@@ -379,15 +377,21 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Menus/MenuInv/Inventory" unique_id=1338249059]
-layout_direction = 2
+[node name="HFlowContainer" type="HFlowContainer" parent="Menus/MenuInv/Inventory" unique_id=1580511368]
+texture_filter = 1
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.009367098
+anchor_top = 0.017578032
+anchor_right = 0.9843292
+anchor_bottom = 0.14970991
+offset_left = 0.0799942
+offset_top = 0.0019950867
+offset_right = -0.096069336
+offset_bottom = -0.118011475
 grow_horizontal = 2
 grow_vertical = 2
-last_wrap_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="HSlider" type="HSlider" parent="Menus/MenuInv/Inventory" unique_id=1108591428]
 layout_mode = 1

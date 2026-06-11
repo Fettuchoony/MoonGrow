@@ -7,57 +7,39 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_u4mka"]
 
-[node name="Augment" type="Control" unique_id=408754770]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Augment" type="AspectRatioContainer" unique_id=176626787]
+anchors_preset = -1
+anchor_right = 0.1
+anchor_bottom = 0.2
+offset_right = 12.799995
+offset_bottom = -1.6000061
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
+stretch_mode = 3
 script = ExtResource("1_jis4q")
+item_name = "DMG1"
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="TextureRect" parent="." unique_id=713070883]
 texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 texture = ExtResource("2_xe8wu")
 
 [node name="Hover" type="TextureRect" parent="." unique_id=957353714]
 visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 texture = ExtResource("3_xe8wu")
+expand_mode = 4
 
 [node name="Equipped" type="TextureRect" parent="." unique_id=2113987755]
 visible = false
 z_index = -5
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 texture = ExtResource("4_u4mka")
 
 [node name="Amount" type="Label" parent="." unique_id=1424742538]
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -19.0
-offset_top = -23.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 2
 size_flags_vertical = 1
 text = "10"
 label_settings = SubResource("LabelSettings_u4mka")
