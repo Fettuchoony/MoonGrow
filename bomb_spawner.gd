@@ -1,4 +1,4 @@
-extends PanelContainer
+class_name BombSpawner extends PanelContainer
 
 @export var item_name = "bomb"
 

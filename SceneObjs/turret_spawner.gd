@@ -1,5 +1,4 @@
-extends PanelContainer
-class_name Item
+class_name TurretSpawner extends PanelContainer
 
 var target_item : Resource
 var level_node : Node3D
@@ -9,14 +8,11 @@ var level_node : Node3D
 @export var item_name = "base_turret"
 @export var icon : TextureRect
 @export var amount : int = 5
-
-# Called when the node enters the scene tree for the first time.
-func _init() -> void:
-	icon = find_child("Icon")
-	target_item = preload("res://SceneObjs/gunner_turret.tscn")
 	
 	
 func _ready() -> void:
+	icon = find_child("Icon")
+	target_item = preload("res://SceneObjs/gunner_turret.tscn")
 	level_node = get_tree().get_nodes_in_group("levels")[0]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

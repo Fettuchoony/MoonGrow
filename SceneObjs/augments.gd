@@ -1,5 +1,4 @@
-extends PanelContainer
-class_name Augment
+class_name Augment extends AspectRatioContainer
 
 @onready var hover = $Hover
 

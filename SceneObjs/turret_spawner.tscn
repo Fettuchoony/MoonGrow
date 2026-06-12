@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bw0iu"]
 
-[node name="TurretSpawner" type="PanelContainer" unique_id=1847876787]
+[node name="TurretSpawner" type="PanelContainer" unique_id=1933711644]
 anchors_preset = -1
 anchor_right = 0.105902776
 anchor_bottom = 0.2

@@ -1,4 +1,4 @@
-extends PanelContainer
+class_name GrappleSpawner extends PanelContainer
 
 @export var item_name = "grapple"
 

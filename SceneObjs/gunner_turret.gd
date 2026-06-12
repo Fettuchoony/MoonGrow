@@ -136,7 +136,9 @@ func _handle_upgrade_input() -> void:
 			var within_rect : bool = slot_rect.has_point(_menu.get_screen_transform() * _menu.get_local_mouse_position())
 			var cursor_holding_item : bool = cursor_item.get_child_count() != 0
 			var held_item_is_augment : bool = false
-			if cursor_holding_item: held_item_is_augment = cursor_item.get_child(0) is Augment
+			if cursor_holding_item: 
+				held_item_is_augment = cursor_item.get_child(0) is Augment
+				cursor_item.get_child(0).set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
 			var slot_occupied : bool = slot.get_child(2).get_child_count() != 0
 			
 			# ADD CASE

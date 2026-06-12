@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xfv6e"]
 
-[node name="BombSpawner" type="PanelContainer" unique_id=706844038]
+[node name="BombSpawner" type="PanelContainer" unique_id=1269056263]
 anchors_preset = -1
 anchor_right = 0.1
 anchor_bottom = 0.2
@@ -16,6 +16,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_xfv6e")
 script = ExtResource("1_r12s0")
+metadata/_custom_type_script = "uid://b8nv1hd418umd"
 metadata/_edit_use_anchors_ = true
 
 [node name="GUI" parent="." unique_id=1075007835 instance=ExtResource("2_g6cll")]

@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Item
 
 
 const MAX_SPEED = 3.5
@@ -40,7 +41,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _current_taskbar_index : int = 0
 @onready var _taskbar_rects = $GUI/TaskBar/HBoxContainer.get_children()
 
-@onready var _inventory : Array[PanelContainer]
+@onready var _inventory : Array
 @onready var _paused : bool
 @onready var _item_timer: float = 0
 @onready var _aim_ray : RayCast3D = $CameraPivot/SpringArm3D/Camera3D/PlayerRay
@@ -324,18 +325,18 @@ func pickup_and_lockon(delta : float) -> void:
 		_held_item.angular_velocity.z = -_held_item.rotation.z
 	
 # Adds item to inventory and updates the menu accordingly
-func _pickup_item(item : PanelContainer) -> void:
+func _pickup_item(item) -> void:
 	for inv_item in _inventory:
 		# If item already exists, increment it
 		if inv_item != null && inv_item.item_name == item.item_name:
-			print("repeat item added, incrementing: " + inv_item.name)
+			print("repeat item added, incrementing: " + str(inv_item))
 			inv_item.amount += 1
 			print(inv_item.amount)
 			_menu._refresh_inventory()
 			# No need to instantiate more spawners than 1
 			item.queue_free()
 			return
-	print("new item added, adding: " + item.name)
+	print("new item added, adding: " + str(item))
 	_inventory.append(item)
 	#_item_spawn_location.add_child(item)
 	# Make the GUI elements invisible
@@ -355,13 +356,13 @@ func _remove_item(item : Control) -> void:
 			return
 
 func _spawn_with_all_items() -> void:
-	_pickup_item(_bomb_spawner.instantiate())
-	_pickup_item(_grapple_spawner.instantiate())
-	_pickup_item(_turret_spawner.instantiate())
-	_pickup_item(_augment.instantiate())
-	_pickup_item(_augment.instantiate())
-	_pickup_item(_augment.instantiate())
-	_pickup_item(_augment.instantiate())
+	_pickup_item(_bomb_spawner.instantiate() as BombSpawner)
+	_pickup_item(_grapple_spawner.instantiate() as GrappleSpawner)
+	_pickup_item(_turret_spawner.instantiate() as TurretSpawner)
+	_pickup_item(_augment.instantiate() as Augment)
+	_pickup_item(_augment.instantiate() as Augment)
+	_pickup_item(_augment.instantiate() as Augment)
+	_pickup_item(_augment.instantiate() as Augment)
 
 # TODO: Find a way to make this use event instead of direct input?
 func _taskbar_scrolling() -> void:

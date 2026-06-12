@@ -5,11 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="3_xe8wu"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="4_u4mka"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u4mka"]
-
 [sub_resource type="LabelSettings" id="LabelSettings_u4mka"]
 
-[node name="Augment" type="PanelContainer" unique_id=1919439542]
+[node name="Augment" type="AspectRatioContainer" unique_id=1229253214]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -17,9 +15,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = SubResource("StyleBoxEmpty_u4mka")
 script = ExtResource("1_jis4q")
-item_name = "DMG1"
+item_name = "dmg0"
 
 [node name="Icon" type="TextureRect" parent="." unique_id=713070883]
 texture_filter = 1

@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8il20"]
 
-[node name="GrappleSpawner" type="PanelContainer" unique_id=1326934426]
+[node name="GrappleSpawner" type="PanelContainer" unique_id=1378566282]
 anchors_preset = -1
 anchor_right = 0.1
 anchor_bottom = 0.2
@@ -16,6 +16,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_8il20")
 script = ExtResource("1_hjs40")
+metadata/_custom_type_script = "uid://ce2uli45bx3p1"
 metadata/_edit_use_anchors_ = true
 
 [node name="GUI" parent="." unique_id=963375078 instance=ExtResource("2_5ihcn")]

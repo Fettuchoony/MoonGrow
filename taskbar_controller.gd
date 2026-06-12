@@ -25,11 +25,11 @@ func _process(delta: float) -> void:
 		# Check if shifted rect is clicked, if so bind item
 		# Dont let augments be put in task bar, they only go in turrets
 		if clicked && in_rect && holding_item_in_cursor && !is_augment:
+			#print(_menu._cursor_item.get_child(0))
 			# if there is already something in the slot
 			if item_slot_filled:
 				item_slot.get_child(2).queue_free()
 			_menu._cursor_item.get_child(0).reparent(item_slot)
-			print(_menu._cursor_item)
 		elif clicked && in_rect && !holding_item_in_cursor && item_slot_filled:
 			item_slot.get_child(2).reparent(_menu._cursor_item)
 		

@@ -3,7 +3,7 @@ extends Control
 const DEFAULT_ICON_SIZE = 32.0
 
 @onready var inv_window : TabContainer = $MenuInv
-@onready var _item_slots : Control = $MenuInv/Inventory/HFlowContainer
+@onready var _item_slots = $MenuInv/Inventory/HFlowContainer
 @onready var current_focus_item : TextureRect
 ## The rects that contain the item icon
 @onready var _taskbar_rects = $"../MainPlayer/GUI/TaskBar/HBoxContainer".get_children()
@@ -15,6 +15,7 @@ const DEFAULT_ICON_SIZE = 32.0
 @onready var _current_idle_obj = null
 @onready var _cursor_item = $"../MainPlayer/GUI/ItemHold"
 
+@onready var debug
 
 
 # Called when the node enters the scene tree for the first time.
@@ -128,8 +129,10 @@ func _item_hovering_and_selection_func() -> void:
 				# If item isnt equipped already:
 				slot.find_child("Equipped").visible = true
 				_cursor_item.visible = true
-				var floating_icon = slot.duplicate(DUPLICATE_INTERNAL_STATE)
+				var floating_icon = slot.duplicate()
+				debug = floating_icon
 				_cursor_item.add_child(floating_icon)
+				floating_icon.set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
 				if slot is Augment:
 					floating_icon._floating = true
 					floating_icon.amount = 1
