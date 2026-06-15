@@ -18,7 +18,6 @@ func _ready() -> void:
 	_dmg = $Panel/VBoxContainer/Dmg
 	_fire_rate = $Panel/VBoxContainer/FireRate
 	_player = get_parent().get_parent().find_child("MainPlayer")
-	update_info()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,9 +25,9 @@ func _process(delta: float) -> void:
 	pass
 
 # Modifies base stats with upgrades and updates display
-func update_info() -> void:
+func update_info(current_proj : ProjectileSpawner) -> void:
 	_turret = get_parent()
 	_turret_name.text = _turret.COLLOQUIAL_NAME + str(int(Time.get_ticks_msec() / 1000.0))
-	_dmg.text = "Damage: " + str(_turret.dmg)
-	_fire_rate.text = "Fire Rate: " + str(_turret.firing_rate)
+	_dmg.text = "Damage: " + str(current_proj.get_dmg())
+	_fire_rate.text = "Fire Rate: " + str(current_proj.get_firerate())
 	

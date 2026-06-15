@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b8nv1hd418umd" path="res://bomb_spawner.gd" id="1_r12s0"]
 [ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/item_gui.tscn" id="2_g6cll"]
+[ext_resource type="PackedScene" uid="uid://cu2jndt5i2kgt" path="res://SceneObjs/bomb_item2.tscn" id="2_o0fyn"]
 [ext_resource type="Texture2D" uid="uid://c5lr88gvig1n2" path="res://Textures/Extracted/bomb.png" id="2_ygcvh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xfv6e"]
@@ -16,6 +17,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_xfv6e")
 script = ExtResource("1_r12s0")
+projectile = ExtResource("2_o0fyn")
 metadata/_custom_type_script = "uid://b8nv1hd418umd"
 metadata/_edit_use_anchors_ = true
 

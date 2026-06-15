@@ -16,7 +16,7 @@ static var COLLOQUIAL_NAME : String = "Gunner Turret"
 @onready var _firing_timer : float = 0
 @onready var _head_pivot : Node3D = $TurretBase/HeadPivot
 @onready var _up_ref : Node3D = $TurretBase/UpRef
-@onready var _current_projectile : Projectile
+@onready var _current_projectile : ProjectileSpawner
 @onready var target : Node3D
 
 @onready var _menu : Control
@@ -25,9 +25,6 @@ static var COLLOQUIAL_NAME : String = "Gunner Turret"
 # Added to by perk when clicked, used to populate upgrade gui with equip when created and avoid repeats
 # Key : Slot #, Value : Upgrade
 @onready var applied_upgrades : Dictionary[int, Control]
-
-@export var dmg : int = 1
-@export var firing_rate : float = 0.5
 
 
 # These two variables are essential for every pickupable object
@@ -97,23 +94,20 @@ func _turret_attack() -> void:
 				target = enemy
 				curr_target_path_length = enemy.path_length
 	# Actually firing
-	if target != null && _firing_timer > firing_rate:
+	if target != null && _current_projectile != null && _firing_timer > _current_projectile.get_firerate():
 		var target_pos = target.find_child("TargetPoint").global_position
-		var bullet = _bullet_scene.instantiate()
-		get_tree().root.add_child(bullet)
-		# Set projectile damage
-		bullet._dmg = dmg
 		var fire_pos = _firing_point.global_position
-		bullet.global_position = _firing_point.global_position
-		bullet.look_at(target_pos)
-		var velocity = 1
-		var difference = target_pos - fire_pos
-		# TODO: I think target and fire pos should be swapped but this works better idk
-		var t = (-velocity - sqrt(abs(pow(velocity, 2.0) - 4.0 * -4.8 * (target_pos.y - fire_pos.y)))) / (2.0 * -4.8)
-		var future_enemy_pos : Vector3 = target_pos + (t * target.linear_velocity)
-		_debug_target_ball.global_position = future_enemy_pos
-		var future_t = (-velocity - sqrt(abs(pow(velocity, 2.0) - 4.0 * -4.8 * (target_pos.y - fire_pos.y)))) / (2.0 * -4.8)
-		bullet.apply_impulse(Vector3(difference.x / future_t, velocity, difference.z/future_t))
+		_current_projectile.fire(fire_pos, target_pos)
+		#bullet.global_position = _firing_point.global_position
+		#bullet.look_at(target_pos)
+		#var velocity = 1
+		#var difference = target_pos - fire_pos
+		## TODO: I think target and fire pos should be swapped but this works better idk
+		#var t = (-velocity - sqrt(abs(pow(velocity, 2.0) - 4.0 * -4.8 * (target_pos.y - fire_pos.y)))) / (2.0 * -4.8)
+		#var future_enemy_pos : Vector3 = target_pos + (t * target.linear_velocity)
+		#_debug_target_ball.global_position = future_enemy_pos
+		#var future_t = (-velocity - sqrt(abs(pow(velocity, 2.0) - 4.0 * -4.8 * (target_pos.y - fire_pos.y)))) / (2.0 * -4.8)
+		#bullet.apply_impulse(Vector3(difference.x / future_t, velocity, difference.z/future_t))
 		_firing_timer = 0 
 		
 func _handle_upgrade_input() -> void:
@@ -137,9 +131,11 @@ func _handle_upgrade_input() -> void:
 			var within_rect : bool = slot_rect.has_point(_menu.get_screen_transform() * _menu.get_local_mouse_position())
 			var cursor_holding_item : bool = cursor_item.get_child_count() != 0
 			var held_item_is_augment : bool = false
+			var held_item_is_projectile : bool = false
 			if cursor_holding_item: 
 				held_item_is_augment = cursor_item.get_child(0) is Augment
 				cursor_item.get_child(0).set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
+				held_item_is_projectile = cursor_item.get_child(0) is ProjectileSpawner
 			var slot_occupied : bool = slot.get_child(2).get_child_count() != 0
 			
 			# ADD CASE
@@ -151,6 +147,7 @@ func _handle_upgrade_input() -> void:
 				grab_item.reparent(slot_augment_spot)
 				grab_item.global_position = slot.global_position
 				already_toggled = true
+				if held_item_is_projectile: _current_projectile = grab_item
 				update_turret_stats()
 						
 			# REMOVE CASE
@@ -160,6 +157,7 @@ func _handle_upgrade_input() -> void:
 				applied_upgrades.erase(slot_num)
 				grab_item.reparent(cursor_item)
 				grab_item.global_position = cursor_item.global_position
+				if grab_item is ProjectileSpawner: _current_projectile = null
 				update_turret_stats()
 			
 			# SWAP CASE
@@ -167,6 +165,8 @@ func _handle_upgrade_input() -> void:
 			if clicked && within_rect && cursor_holding_item && slot_occupied:
 				var cursor_augment = cursor_item.get_child(0)
 				var slot_augment = slot.get_child(2).get_child(0)
+				_current_projectile = null
+				if cursor_augment is ProjectileSpawner: _current_projectile = cursor_augment
 				applied_upgrades[slot_num] = cursor_augment
 				slot_augment.global_position = cursor_item.global_position
 				cursor_item.global_position = slot_augment_spot.global_position
@@ -181,13 +181,21 @@ func change_turret_mode(mode : String) -> void:
 
 # On augment change, update turret with new stats
 func update_turret_stats() -> void:
-	print("updating turret gui to reflect stat change")
-	if _current_projectile != null:
-		# Modify the projectile
-		for augment in applied_upgrades.values():
-			if augment is ProjectileModifier:
-				dmg += augment.delta_dmg
-				print(dmg)
+	#print("updating turret gui to reflect stat change")
+	#if _current_projectile != null:
+		## Modify the projectile
+		#for augment in applied_upgrades.values():
+			#if augment is ProjectileModifier:
+				#dmg += augment.delta_dmg
+				#print(dmg)
+			#if augment is ProjectileSpawner:
+				#_current_projectile = augment
 				
 	# Visually updates ui with new stats
-	ui.update_info()
+	if _current_projectile != null:
+		ui.update_info(_current_projectile)
+
+func apply_augments_to_projectile(proj : ProjectileSpawner) -> void:
+	for augment in applied_upgrades.values():
+		if augment is ProjectileModifier:
+			augment.modify_proj(proj)

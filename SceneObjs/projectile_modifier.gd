@@ -16,3 +16,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	super(delta)
+
+# Takes a projectile and adds its deltas
+func modify_proj(proj : ProjectileSpawner):
+	proj.base_dmg += delta_dmg
+	proj.base_firerate += delta_firerate

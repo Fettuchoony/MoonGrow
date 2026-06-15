@@ -1,4 +1,4 @@
-extends RigidBody3D
+class_name Bullet extends RigidBody3D
 
 var _dmg_area : Area3D
 var _death_time : float
