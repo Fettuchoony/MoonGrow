@@ -256,13 +256,11 @@ func _unbind_item(taskbar_index : int) -> void:
 func use_item() -> void:
 	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2 && !_displaying_turret_gui:
 		var curr_item = _taskbar_rects[_current_taskbar_index].get_child(2)
-		print(curr_item.amount)
 		# trigger the current item
 		curr_item.trigger(_item_spawn_location.global_position)
 		for item in _inventory:
 			if item != null && item.name == curr_item.name:
 				item.amount = curr_item.amount
-				print("decrementing")
 				item.amount_label.text = str(item.amount)
 				_menu._refresh_inventory()
 	
@@ -355,6 +353,11 @@ func _remove_item(item : Control) -> void:
 				_inventory.erase(inv_item)
 			_menu._refresh_inventory()
 			return
+	#for rect in _taskbar_rects:
+		#if rect.get_child_count() > 2 && rect.get_child(2).item_name == item.item_name:
+			#print("dupe removal taskbar")
+			#rect.get_child(2).queue_free()
+		
 
 func _spawn_with_all_items() -> void:
 	_pickup_item(_bomb_spawner.instantiate() as BombSpawner)

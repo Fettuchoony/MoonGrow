@@ -113,7 +113,7 @@ func _turret_attack() -> void:
 func _handle_upgrade_input() -> void:
 	if _menu != null:
 		var slot_num = 0
-		for slot in ui._perk_slots:
+		for slot in ui._perk_slot_matrix.get_children():
 			# Where all the augments sit in each slot so theyre easily referenced as child 0
 			var slot_augment_spot = slot.find_child("Augment")
 			var slot_rect = slot.get_rect()
@@ -162,7 +162,7 @@ func _handle_upgrade_input() -> void:
 			
 			# SWAP CASE
 			# Cursor item set, put on occupied space
-			if clicked && within_rect && cursor_holding_item && slot_occupied:
+			if clicked && within_rect && cursor_holding_item && slot_occupied && held_item_is_augment:
 				var cursor_augment = cursor_item.get_child(0)
 				var slot_augment = slot.get_child(2).get_child(0)
 				_current_projectile = null
@@ -193,7 +193,12 @@ func update_turret_stats() -> void:
 				
 	# Visually updates ui with new stats
 	if _current_projectile != null:
+		print("Applying augments")
+		_current_projectile.reset()
+		apply_augments_to_projectile(_current_projectile)
 		ui.update_info(_current_projectile)
+	else:
+		ui.update_info(null)
 
 func apply_augments_to_projectile(proj : ProjectileSpawner) -> void:
 	for augment in applied_upgrades.values():

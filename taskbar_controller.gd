@@ -22,6 +22,7 @@ func _process(delta: float) -> void:
 		if holding_item_in_cursor: is_augment = _menu._cursor_item.get_child(0) is Augment
 		var item_slot_filled : bool = item_slot.get_child_count() > 2
 		
+			
 		# Check if shifted rect is clicked, if so bind item
 		# Dont let augments be put in task bar, they only go in turrets
 		if clicked && in_rect && holding_item_in_cursor && !is_augment:

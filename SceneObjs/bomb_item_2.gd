@@ -22,7 +22,7 @@ class_name Bomb extends RigidBody3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("Firing bomb")
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,20 +43,11 @@ func explode() -> void:
 		# Apply effects of the passed spawner
 		if projectile_effect != null:
 			projectile_effect.apply_effects_to_enemy(col)
-		col.change_health(-1)
-		var distance : float = col.global_position.distance_to(global_position)
-		var knockback_scalar : float = knockback_strength / (distance + 0.1)
-		var knockback_dir : Vector3 = global_position.direction_to(col.global_position)
-		if knockback_dir.y > 1:
-			knockback_dir.y = 1
-		# Give it some upward velocity
-		
 		# Knockback
-		# Scale knockback relevant to how close the bomb is
 		if col is RigidBody3D:
-			col.apply_knockback(global_position)
-		elif col is CharacterBody3D:
-			col.velocity += knockback_scalar * knockback_dir
+			col.apply_knockback(global_position, knockback_strength)
+		#elif col is CharacterBody3D:
+			#col.velocity += knockback_scalar * knockback_dir
 	var explosion = explosion_fog.instantiate()
 	explosion.position = position
 	main.add_child(explosion)

@@ -13,6 +13,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_6r8k6")
 script = ExtResource("1_jowd6")
+delta_dmg = 1
 
 [node name="GUI" parent="." unique_id=963375078 instance=ExtResource("3_6r8k6")]
 layout_mode = 2

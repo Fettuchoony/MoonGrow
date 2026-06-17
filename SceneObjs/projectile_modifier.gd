@@ -19,5 +19,5 @@ func _process(delta: float) -> void:
 
 # Takes a projectile and adds its deltas
 func modify_proj(proj : ProjectileSpawner):
-	proj.base_dmg += delta_dmg
-	proj.base_firerate += delta_firerate
+	proj.added_dmg += delta_dmg
+	proj.added_firerate += delta_firerate

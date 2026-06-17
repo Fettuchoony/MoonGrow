@@ -41,7 +41,6 @@ func _physics_process(delta: float) -> void:
 	health_sprite_timer += delta
 	time_since_target_update += delta
 	
-
 func _on_velocity_computed(safe_velocity: Vector3):
 	linear_velocity = safe_velocity
 
@@ -89,6 +88,7 @@ func health_gui_update(updated_health: int, updated_max: int) -> void:
 		temp_health -= 2
 
 func change_health(delta: int) -> void:
+	print(name + " took " + str(delta) + " dmg")
 	health += delta
 	# Cap health
 	health = min(health, max_health)
@@ -100,8 +100,8 @@ func change_health(delta: int) -> void:
 	# Send info to the health GUI
 	health_gui_update(health, max_health)
 
-func apply_knockback(origin: Vector3) -> void:
-	apply_impulse(10 * origin.direction_to(global_position) / (origin.distance_to(global_position) + 0.01))
+func apply_knockback(origin: Vector3, knockback_strength : float = 1.0) -> void:
+	apply_impulse(knockback_strength * (1 / origin.distance_to(global_position)) * origin.direction_to(global_position))
 
 func _update_healthbar() -> void:
 	if health_sprite_timer > HEALTH_SHOW_TIME:

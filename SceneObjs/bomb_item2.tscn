@@ -118,7 +118,6 @@ animations = [{
 collision_layer = 0
 physics_material_override = SubResource("PhysicsMaterial_t7jsh")
 script = ExtResource("1_t7jsh")
-knockback_strength = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050016734]
 shape = SubResource("SphereShape3D_mq8ln")

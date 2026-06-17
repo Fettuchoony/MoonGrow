@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://s5rp7i4aj5gp"]
 
 [ext_resource type="Script" uid="uid://cl3ibjx8x237a" path="res://SceneObjs/info_upgrade_gui.gd" id="1_5k0yb"]
-[ext_resource type="PackedScene" uid="uid://cflvbyc7lnyyb" path="res://SceneObjs/upgrade_slot.tscn" id="2_5a165"]
 
 [node name="InfoUpgradeGUI" type="Control" unique_id=224699318]
 layout_mode = 3
@@ -92,30 +91,3 @@ offset_bottom = -0.118011475
 grow_horizontal = 2
 grow_vertical = 2
 columns = 3
-
-[node name="UpgradeSlot" parent="UpgradeMatrix" unique_id=1281232128 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot2" parent="UpgradeMatrix" unique_id=1721542495 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot3" parent="UpgradeMatrix" unique_id=427265677 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot4" parent="UpgradeMatrix" unique_id=1127845225 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot5" parent="UpgradeMatrix" unique_id=1901760920 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot6" parent="UpgradeMatrix" unique_id=245235680 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot7" parent="UpgradeMatrix" unique_id=153835688 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot8" parent="UpgradeMatrix" unique_id=2126467416 instance=ExtResource("2_5a165")]
-layout_mode = 2
-
-[node name="UpgradeSlot9" parent="UpgradeMatrix" unique_id=1575531650 instance=ExtResource("2_5a165")]
-layout_mode = 2

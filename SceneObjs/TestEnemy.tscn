@@ -18,6 +18,8 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_516de")
 chargeup_time = 1.0
+health = 50
+max_health = 50
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1773027660]
 shape = SubResource("SphereShape3D_516de")

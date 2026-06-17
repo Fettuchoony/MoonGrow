@@ -28,12 +28,12 @@ material = SubResource("StandardMaterial3D_lgesf")
 script = ExtResource("1_b1867")
 
 [node name="ExplosionVolume" type="FogVolume" parent="." unique_id=2085098846]
-size = Vector3(1, 1, 1)
+size = Vector3(0.01, 0.01, 0.01)
 shape = 0
 material = ExtResource("2_aiphu")
 
 [node name="SmokeVolume" type="FogVolume" parent="." unique_id=2092430051]
-size = Vector3(1, 1, 1)
+size = Vector3(0.01, 0.01, 0.01)
 shape = 0
 material = ExtResource("3_h3hbg")
 

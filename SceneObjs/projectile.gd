@@ -29,7 +29,7 @@ func apply_effects_to_enemy(enemy : Enemy) -> void:
 	enemy.change_health(-base_dmg - added_dmg)
 
 func get_dmg() -> int:
-	return base_dmg + added_firerate
+	return base_dmg + added_dmg
 
 func get_firerate() -> float:
 	return base_firerate + added_firerate
@@ -37,14 +37,18 @@ func get_firerate() -> float:
 func fire(fire_pos : Vector3, target_enemy : Enemy) -> void:
 	var proj_obj : RigidBody3D = projectile.instantiate()
 	# Add copy of spawner just for the stats to carry into projectile
-	var self_duplicate : ProjectileSpawner = self.duplicate()
-	self_duplicate.visible = false
-	proj_obj.add_child(self_duplicate)
-	print(get_tree().root)
+	#var self_duplicate : ProjectileSpawner = self.duplicate(7)
+	#self_duplicate.visible = false
+	#proj_obj.add_child(self_duplicate)
 	get_tree().root.get_child(0).add_child(proj_obj)
 	proj_obj.global_position = fire_pos
+	proj_obj.projectile_effect = self
 	proj_obj.flight_behaviour(target_enemy)
 
 # This exists to be overriden by specific projectile
 func flight_behaviour(target_enemy : Enemy) -> void:
 	print("Cannot find prjectile " + name + " flight behaviour, falling back to default")
+
+func reset() -> void:
+	added_dmg = 0
+	added_firerate = 0.0
