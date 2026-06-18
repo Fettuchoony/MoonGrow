@@ -1,4 +1,4 @@
-class_name ProjectileSpawner extends Augment
+class_name ProjectileSpawner extends Item
 # Determines the projectile of the turret, TODO: only one allowed?
 
 # Base: Projectile's base stats with no augmentation, NEVER MUTATED

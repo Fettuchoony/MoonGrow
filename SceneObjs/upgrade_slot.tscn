@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cflvbyc7lnyyb"]
 
+[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="1_fn4q3"]
 [ext_resource type="Texture2D" uid="uid://ccgykkk5ueg02" path="res://Textures/Extracted/ItemSlot.png" id="1_hcij3"]
+[ext_resource type="Script" uid="uid://bybmr44r82wqn" path="res://SceneObjs/upgrade_slot.gd" id="1_ujp0d"]
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_71qlw"]
 
 [node name="UpgradeSlot" type="AspectRatioContainer" unique_id=56989139]
@@ -11,7 +13,14 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_ujp0d")
 metadata/_edit_use_anchors_ = true
+
+[node name="Equipped" type="TextureRect" parent="." unique_id=1354884936]
+visible = false
+z_index = -5
+layout_mode = 2
+texture = ExtResource("1_fn4q3")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1529539511]
 texture_filter = 1

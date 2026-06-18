@@ -1,10 +1,9 @@
 [gd_scene format=3 uid="uid://bydfw62k2opax"]
 
-[ext_resource type="Script" uid="uid://cj6it7nr3hato" path="res://SceneObjs/augments.gd" id="1_jis4q"]
+[ext_resource type="Script" uid="uid://cj6it7nr3hato" path="res://SceneObjs/item.gd" id="1_jis4q"]
 [ext_resource type="PackedScene" uid="uid://cs6wbakqxnb75" path="res://SceneObjs/icon.tscn" id="2_5n682"]
 [ext_resource type="PackedScene" uid="uid://crrn2uepe0xk5" path="res://SceneObjs/hover.tscn" id="3_2a7vl"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="4_u4mka"]
-[ext_resource type="PackedScene" uid="uid://c6l64grro8ee3" path="res://SceneObjs/amount.tscn" id="5_1rfad"]
 
 [node name="Augment" type="PanelContainer" unique_id=923075710]
 anchors_preset = 15
@@ -28,6 +27,3 @@ visible = false
 z_index = -5
 layout_mode = 2
 texture = ExtResource("4_u4mka")
-
-[node name="Amount" parent="." unique_id=277902726 instance=ExtResource("5_1rfad")]
-layout_mode = 2

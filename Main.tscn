@@ -3,14 +3,14 @@
 [ext_resource type="Script" uid="uid://exycttr6jbdy" path="res://scene_manager.gd" id="1_2gh4u"]
 [ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://Scripts/character_movement.gd" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://Scripts/Player/camera_3d.gd" id="2_r0du0"]
-[ext_resource type="Texture2D" uid="uid://ccgykkk5ueg02" path="res://Textures/Extracted/ItemSlot.png" id="7_3b0ty"]
 [ext_resource type="Script" uid="uid://dlhhrhelqp8eu" path="res://taskbar_controller.gd" id="7_c6i3y"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="7_hhcpw"]
 [ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://item_pivot.gd" id="8_bg4s2"]
+[ext_resource type="PackedScene" uid="uid://cflvbyc7lnyyb" path="res://SceneObjs/upgrade_slot.tscn" id="8_c6i3y"]
 [ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://health_GUI_update.gd" id="8_hri7i"]
 [ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/heart_module.tscn" id="9_sqvbp"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://menu_func.gd" id="10_20pc6"]
-[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="15_fpfj3"]
+[ext_resource type="Script" uid="uid://ciknhhiw8fpbi" path="res://item_hold.gd" id="10_c2ibq"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/MainTestScene.tscn" id="20_2gh4u"]
 [ext_resource type="Texture2D" uid="uid://5vqebth03c5p" path="res://Textures/Extracted/BlankItem.png" id="22_3b0ty"]
 
@@ -191,130 +191,47 @@ script = ExtResource("7_c6i3y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainPlayer/GUI/TaskBar" unique_id=639279145]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -512.0
-offset_top = -80.195
-offset_right = 512.0
-offset_bottom = -16.195
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = -1
+anchor_left = -6.225
+anchor_top = -1.005
+anchor_right = 7.275
+anchor_bottom = 0.595
+offset_top = 0.005001068
+offset_bottom = 0.0049991608
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Item0" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1718488073]
+[node name="UpgradeSlot" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=56989139 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item0" unique_id=1698104186]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item0" unique_id=1280306635]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item1" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=429085980]
+[node name="UpgradeSlot2" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1389057160 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item1" unique_id=1681701401]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item1" unique_id=827656527]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item2" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=327249214]
+[node name="UpgradeSlot3" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=972330564 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item2" unique_id=1902200561]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item2" unique_id=122135696]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item3" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=646481262]
+[node name="UpgradeSlot4" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=2003454997 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item3" unique_id=423264637]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item3" unique_id=185528547]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item4" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1311662755]
+[node name="UpgradeSlot5" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=14092609 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item4" unique_id=57406113]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item4" unique_id=675767787]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item5" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1499960039]
+[node name="UpgradeSlot6" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=930793215 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item5" unique_id=867402755]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item5" unique_id=1276323843]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item6" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1295354678]
+[node name="UpgradeSlot7" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1359309432 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item6" unique_id=1069400374]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item6" unique_id=1395278385]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item7" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1417329061]
+[node name="UpgradeSlot8" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1708636612 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item7" unique_id=1722156783]
+[node name="UpgradeSlot9" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=590097654 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item7" unique_id=31851012]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item8" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=382375371]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item8" unique_id=810089468]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item8" unique_id=494073420]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
 
 [node name="ItemHold" type="AspectRatioContainer" parent="MainPlayer/GUI" unique_id=1863207805]
 z_index = 10
 layout_mode = 1
+script = ExtResource("10_c2ibq")
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
 texture_filter = 1

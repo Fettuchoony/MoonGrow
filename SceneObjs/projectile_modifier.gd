@@ -1,4 +1,4 @@
-class_name ProjectileModifier extends Augment
+class_name ProjectileModifier extends Item
 # Modifies properties of projectiles, projectile is determined by the turret's Projectile augment
 
 # Deltas: changes to the given projectile

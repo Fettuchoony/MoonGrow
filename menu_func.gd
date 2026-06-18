@@ -36,7 +36,7 @@ func _on_main_player_pause_menu() -> void:
 	if inv_window.visible:
 		_cursor_item.visible = false
 		for child in _cursor_item.get_children(): 
-			if child is Augment: _player._pickup_item(child)
+			if child is Item: _player._pickup_item(child)
 			child.queue_free()
 		inv_window.visible = false
 	else:
@@ -78,14 +78,10 @@ func _refresh_inventory() -> void:
 				item.reparent(_item_slots)
 			else:
 				_item_slots.add_child(item)
-			var amount_label : Label = item.find_child("Amount")
 			#var item_icon : TextureRect = item_gui.get_node("Icon")
 			#item_gui.name = item.name
 			item.visible = true
 			#print("item name = " + item_gui.name)
-			# Update item count
-			if amount_label != null:
-				amount_label.text = str(item.amount)
 			var already_in_menu = false
 			for icon in _item_slots.get_children():
 				if icon.name == item.name: 
@@ -100,57 +96,58 @@ func _refresh_inventory() -> void:
 			# Do not scale taskbar rects
 
 func _item_hovering_and_selection_func() -> void:
-	# move cursor item to mouse, even if invisible atm
-	_cursor_item.position = get_screen_transform() * get_local_mouse_position()
-	# offset by size/2 to center icon on mopuse
-	#if _cursor_item.visible == true:
-		#_cursor_item.position -= Vector2(_cursor_item.get_child(0).size.x/2.0, _cursor_item.get_child(0).size.y/2.0)
-	# Make sure player connection good
-	if _item_slots != null && _player != null && inv_window.visible:
-		# Go through each item slot, these are generated on pickup_item in player script
-		for slot in _item_slots.get_children():
-			# Get the rect of the actual item
-			var slot_icon : TextureRect =  slot.find_child("Icon")
-
-			assert(slot_icon != null)
-			var slot_rect = slot_icon.get_rect()
-			# Shift rect to position so click aligns
-			slot_rect.position = slot.global_position
-			# Check if shifted rect is clicked, if so bind item, also check if cursor already holding item
-			if Input.is_action_just_pressed("Click") and slot_rect.has_point(get_screen_transform() * get_local_mouse_position()):
-				# check if item is already being held, if so return it to inv and delete from cursor
-				if _cursor_item.get_child_count() != 0:
-					# Only augment increment because turret amount doesnt decrease until use
-					if _cursor_item.get_child(0) is Augment:
-						var grab_item = _cursor_item.get_child(0)
-						## TODO: Check if this should b duplicate or not
-						_player._pickup_item(grab_item)
-					else:
-						_cursor_item.get_child(0).queue_free()
-				# If item isnt equipped already:
-				slot.find_child("Equipped").visible = true
-				_cursor_item.visible = true
-				var floating_icon = slot.duplicate()
-				debug = floating_icon
-				_cursor_item.add_child(floating_icon)
-				floating_icon.set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
-				if slot is Augment:
-					floating_icon._floating = true
-					floating_icon.amount = 1
-					floating_icon.find_child("Amount").visible = false
-				floating_icon.name = slot.name
-				floating_icon.mouse_filter = MOUSE_FILTER_IGNORE
-				#_player._unbind_item(_player._current_taskbar_index)
-				## Move to taskbar and augment controller
-				#_player._bind_item(slot)
-			var is_in_taskbar = false
-			for item in _player._taskbar_items:
-				if item == slot.name:
-					is_in_taskbar = true
-			if !is_in_taskbar:
-				slot.find_child("Equipped").visible = false
-			else:
-				slot.find_child("Equipped").visible = true
+	pass
+	## move cursor item to mouse, even if invisible atm
+	#_cursor_item.position = get_screen_transform() * get_local_mouse_position()
+	## offset by size/2 to center icon on mopuse
+	##if _cursor_item.visible == true:
+		##_cursor_item.position -= Vector2(_cursor_item.get_child(0).size.x/2.0, _cursor_item.get_child(0).size.y/2.0)
+	## Make sure player connection good
+	#if _item_slots != null && _player != null && inv_window.visible:
+		## Go through each item slot, these are generated on pickup_item in player script
+		#for slot in _item_slots.get_children():
+			## Get the rect of the actual item
+			#var slot_icon : TextureRect =  slot.find_child("Icon")
+			#
+			#assert(slot_icon != null)
+			#var slot_rect = slot_icon.get_rect()
+			## Shift rect to position so click aligns
+			#slot_rect.position = slot.global_position
+			## Check if shifted rect is clicked, if so bind item, also check if cursor already holding item
+			#if Input.is_action_just_pressed("Click") and slot_rect.has_point(get_screen_transform() * get_local_mouse_position()):
+				## check if item is already being held, if so return it to inv and delete from cursor
+				#if _cursor_item.get_child_count() != 0:
+					## Only augment increment because turret amount doesnt decrease until use
+					#if _cursor_item.get_child(0) is Augment:
+						#var grab_item = _cursor_item.get_child(0)
+						### TODO: Check if this should b duplicate or not
+						#_player._pickup_item(grab_item)
+					#else:
+						#_cursor_item.get_child(0).queue_free()
+				## If item isnt equipped already:
+				#slot.find_child("Equipped").visible = true
+				#_cursor_item.visible = true
+				#var floating_icon = slot.duplicate()
+				#debug = floating_icon
+				#_cursor_item.add_child(floating_icon)
+				#floating_icon.set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
+				#if slot is Augment:
+					#floating_icon._floating = true
+					#floating_icon.amount = 1
+					#floating_icon.find_child("Amount").visible = false
+				#floating_icon.name = slot.name
+				#floating_icon.mouse_filter = MOUSE_FILTER_IGNORE
+				##_player._unbind_item(_player._current_taskbar_index)
+				### Move to taskbar and augment controller
+				##_player._bind_item(slot)
+			#var is_in_taskbar = false
+			#for item in _player._taskbar_items:
+				#if item == slot.name:
+					#is_in_taskbar = true
+			#if !is_in_taskbar:
+				#slot.find_child("Equipped").visible = false
+			#else:
+				#slot.find_child("Equipped").visible = true
 
 # When GUI icons size change from the slider
 #func _on_h_slider_value_changed(value: float) -> void:

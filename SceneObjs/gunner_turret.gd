@@ -133,7 +133,7 @@ func _handle_upgrade_input() -> void:
 			var held_item_is_augment : bool = false
 			var held_item_is_projectile : bool = false
 			if cursor_holding_item: 
-				held_item_is_augment = cursor_item.get_child(0) is Augment
+				held_item_is_augment = cursor_item.get_child(0) is Item
 				cursor_item.get_child(0).set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
 				held_item_is_projectile = cursor_item.get_child(0) is ProjectileSpawner
 			var slot_occupied : bool = slot.get_child(2).get_child_count() != 0

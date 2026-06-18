@@ -1,5 +1,4 @@
-extends CharacterBody3D
-class_name Item
+class_name Player extends CharacterBody3D
 
 
 const MAX_SPEED = 3.5
@@ -254,15 +253,10 @@ func _unbind_item(taskbar_index : int) -> void:
 	
 # SUPER hacky, should probably get rid of static index
 func use_item() -> void:
-	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2 && !_displaying_turret_gui:
-		var curr_item = _taskbar_rects[_current_taskbar_index].get_child(2)
+	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].find_child("Augment").get_child_count() > 0 && !_displaying_turret_gui:
+		var curr_item = _taskbar_rects[_current_taskbar_index].find_child("Augment").get_child(0)
 		# trigger the current item
 		curr_item.trigger(_item_spawn_location.global_position)
-		for item in _inventory:
-			if item != null && item.name == curr_item.name:
-				item.amount = curr_item.amount
-				item.amount_label.text = str(item.amount)
-				_menu._refresh_inventory()
 	
 	
 # TODO: add more params for signals from enemies for debuffs and stuff
@@ -325,16 +319,6 @@ func pickup_and_lockon(delta : float) -> void:
 	
 # Adds item to inventory and updates the menu accordingly
 func _pickup_item(item) -> void:
-	for inv_item in _inventory:
-		# If item already exists, increment it
-		if inv_item != null && inv_item.item_name == item.item_name:
-			print("repeat item added, incrementing: " + str(inv_item))
-			inv_item.amount += 1
-			print(inv_item.amount)
-			_menu._refresh_inventory()
-			# No need to instantiate more spawners than 1
-			item.queue_free()
-			return
 	print("new item added, adding: " + str(item))
 	_inventory.append(item)
 	#_item_spawn_location.add_child(item)
@@ -347,10 +331,7 @@ func _remove_item(item : Control) -> void:
 		# If item already exists, increment it
 		if inv_item.item_name == item.item_name:
 			print("item found, decrementing: " + inv_item.name)
-			inv_item.amount -= 1
-			print(inv_item.amount)
-			if inv_item.amount <= 0:
-				_inventory.erase(inv_item)
+			_inventory.erase(inv_item)
 			_menu._refresh_inventory()
 			return
 	#for rect in _taskbar_rects:
@@ -398,7 +379,8 @@ func _init_items() -> void:
 	_bomb_spawner = preload("res://SceneObjs/bomb_spawner.tscn")
 	_grapple_spawner = preload("res://SceneObjs/grapple_spawner.tscn")
 	_turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
-	
+
+# Handles displaying the turret uprgade screen
 func _upgrade_hover_ui() -> void:
 	var col = _aim_ray.get_collider()
 	# Trigger gui when hovering but dont free mouse
