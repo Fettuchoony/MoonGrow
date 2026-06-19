@@ -33,6 +33,7 @@ enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
 carry_on_load="Carry this object into other \"levels\". Applied to character, car, items, etc..."
 loading_masters="The objects that hold scene loaders as children"
 levels="All Node3D levels"
+items=""
 
 [input]
 

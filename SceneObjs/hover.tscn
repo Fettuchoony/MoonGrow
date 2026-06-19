@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://crrn2uepe0xk5"]
+
+[ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="1_swoyt"]
+
+[node name="Hover" type="TextureRect" unique_id=1656730688]
+visible = false
+texture = ExtResource("1_swoyt")

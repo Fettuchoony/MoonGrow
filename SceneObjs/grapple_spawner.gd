@@ -1,4 +1,5 @@
-extends Node3D
+class_name GrappleSpawner extends Item
+
 
 
 @export var icon : TextureRect
@@ -6,8 +7,9 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	super()
 	icon = find_child("Icon")
-	
+	item_name = "grapple"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

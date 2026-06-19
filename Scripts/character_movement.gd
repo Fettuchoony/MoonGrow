@@ -1,4 +1,4 @@
-extends CharacterBody3D
+class_name Player extends CharacterBody3D
 
 
 const MAX_SPEED = 3.5
@@ -35,12 +35,12 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _enter_vehicle_cooldown:float = 0
 # TODO: Create item list/map of all names, items ID by exact string (lowercase)
 # This is a list of all items and if they are equipped [name : taskbar index]
-@onready var _taskbar_items : Dictionary[String, Node3D]
+@onready var _taskbar_items : Dictionary[String, Control]
 @onready var _taskbar_containers : Array[Node]
 @onready var _current_taskbar_index : int = 0
 @onready var _taskbar_rects = $GUI/TaskBar/HBoxContainer.get_children()
 
-@onready var _inventory : Array[Node3D]
+@onready var _inventory : Array
 @onready var _paused : bool
 @onready var _item_timer: float = 0
 @onready var _aim_ray : RayCast3D = $CameraPivot/SpringArm3D/Camera3D/PlayerRay
@@ -60,6 +60,8 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _bomb_spawner = preload("res://SceneObjs/bomb_spawner.tscn")
 @onready var _grapple_spawner = preload("res://SceneObjs/grapple_spawner.tscn")
 @onready var _turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
+@onready var _augment = preload("res://SceneObjs/augment_generic.tscn")
+@onready var _dmg_mod_tier1 = preload("res://SceneObjs/dmg_mod_tier1.tscn")
 
 
 @export var item_cooldown_time : float = 0.2
@@ -169,17 +171,14 @@ func movement_processing(delta: float) -> void:
 func handle_pausing() -> void:
 	# Pausing Functionality / Free mouse
 	if Input.is_action_just_pressed("Escape"):
-		#_paused = !_paused
+		# if not paused, then pause
 		if _mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			_paused = true
+			_camera.enable_movement = false
 			_mouse_mode = Input.MOUSE_MODE_VISIBLE
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			pause_menu.emit()
-		elif _displaying_turret_gui:
-			_paused = true
-			_mouse_mode = Input.MOUSE_MODE_VISIBLE
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			pause_menu.emit()
+		# if paused, then unpause, return held item to inv
 		else:
 			_paused = false
 			_camera.enable_movement = true
@@ -244,7 +243,7 @@ func _unbind_item(taskbar_index : int) -> void:
 		print("removing " + target_name)
 		_taskbar_items.erase(target_name)
 	for control_node in _taskbar_containers[taskbar_index].get_children():
-		if control_node is AspectRatioContainer:
+		if control_node is PanelContainer:
 			control_node.free()
 	var inv_icon = _menu._item_slots.find_child(_taskbar_containers[taskbar_index].name)
 	if inv_icon != null && inv_icon.find_child("Equipped") != null :
@@ -252,12 +251,12 @@ func _unbind_item(taskbar_index : int) -> void:
 	_menu._refresh_inventory()
 	pass
 	
+# SUPER hacky, should probably get rid of static index
 func use_item() -> void:
-	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].get_children().size() > 2 && !_displaying_turret_gui:
-		var curr_item_name = _taskbar_rects[_current_taskbar_index].get_child(2).name
-		_taskbar_items[curr_item_name].trigger()
-		
-	pass
+	if !_paused && Input.is_action_just_pressed("Click") && _taskbar_rects[_current_taskbar_index].find_child("Augment").get_child_count() > 0 && !_displaying_turret_gui:
+		var curr_item = _taskbar_rects[_current_taskbar_index].find_child("Augment").get_child(0)
+		# trigger the current item
+		curr_item.trigger(_item_spawn_location.global_position)
 	
 	
 # TODO: add more params for signals from enemies for debuffs and stuff
@@ -297,7 +296,7 @@ func game_over() -> void:
 func pickup_and_lockon(delta : float) -> void:
 	var col : RigidBody3D = _item_ray.get_collider()
 	# pickup
-	if Input.is_action_just_pressed("RClick") and _held_item == null and col != null and col.collision_layer == 8:
+	if Input.is_action_just_pressed("EItem") and _held_item == null and col != null and col.collision_layer == 8:
 		# Reassign held item
 		#print_debug("picked up: " + to_string(_held_item))
 		_held_item = col
@@ -310,7 +309,7 @@ func pickup_and_lockon(delta : float) -> void:
 		#TODO: Fix righting
 		#_held_item.rotation = Vector3(0, _held_item.rotation.y, 0)
 	# put down
-	elif Input.is_action_just_pressed("RClick") and _held_item != null:
+	elif Input.is_action_just_pressed("EItem") and _held_item != null:
 		#print("put down: " + to_string(_held_item))
 		_held_item.being_held = false
 		_held_item = null
@@ -319,25 +318,35 @@ func pickup_and_lockon(delta : float) -> void:
 		_held_item.angular_velocity.z = -_held_item.rotation.z
 	
 # Adds item to inventory and updates the menu accordingly
-func _pickup_item(item : Node3D) -> void:
-	for inv_item in _inventory:
-		# If item already exists, increment it
-		if inv_item.name == item.name:
-			inv_item.amount += 1
-			_menu._refresh_inventory()
-			# No need to instantiate more spawners than 1
-			item.free()
-			return
+func _pickup_item(item) -> void:
+	print("new item added, adding: " + str(item))
 	_inventory.append(item)
-	_item_spawn_location.add_child(item)
+	#_item_spawn_location.add_child(item)
 	# Make the GUI elements invisible
-	item.find_child("GUI").visible = false
+	item.visible = false
 	_menu._refresh_inventory()
 
+func _remove_item(item : Control) -> void:
+	for inv_item in _inventory:
+		# If item already exists, increment it
+		if inv_item.item_name == item.item_name:
+			print("item found, decrementing: " + inv_item.name)
+			_inventory.erase(inv_item)
+			_menu._refresh_inventory()
+			return
+	#for rect in _taskbar_rects:
+		#if rect.get_child_count() > 2 && rect.get_child(2).item_name == item.item_name:
+			#print("dupe removal taskbar")
+			#rect.get_child(2).queue_free()
+		
+
 func _spawn_with_all_items() -> void:
-	_pickup_item(_bomb_spawner.instantiate())
-	_pickup_item(_grapple_spawner.instantiate())
-	_pickup_item(_turret_spawner.instantiate())
+	_pickup_item(_bomb_spawner.instantiate() as BombSpawner)
+	_pickup_item(_grapple_spawner.instantiate() as GrappleSpawner)
+	_pickup_item(_turret_spawner.instantiate() as TurretSpawner)
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
 
 # TODO: Find a way to make this use event instead of direct input?
 func _taskbar_scrolling() -> void:
@@ -370,40 +379,28 @@ func _init_items() -> void:
 	_bomb_spawner = preload("res://SceneObjs/bomb_spawner.tscn")
 	_grapple_spawner = preload("res://SceneObjs/grapple_spawner.tscn")
 	_turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
-	
+
+# Handles displaying the turret uprgade screen
 func _upgrade_hover_ui() -> void:
 	var col = _aim_ray.get_collider()
 	# Trigger gui when hovering but dont free mouse
 	if col != null && col.collision_layer == 8 && !_displaying_turret_gui && !_paused:
-		_current_turret_gui = _turret_gui.instantiate()
-		get_tree().root.add_child(_current_turret_gui)
-		_current_turret_gui.init(col)
-		for perk in _current_turret_gui._tree.get_children():
-			perk._turret = col
+		_current_turret_gui = col.ui
+		col._menu = _menu
+		#_current_turret_gui.populate_upgrade_slots()
 		_displaying_turret_gui = true
-		# Initialize the GUI
-	# Delete GUI when the player has the GUI up already and the game is puased or focus lost on turret
-	if (col == null || col.collision_layer != 8 || _paused) && _displaying_turret_gui:
-		_current_turret_gui.queue_free()
-		_displaying_turret_gui = false
-		# If exited with e press, recapture mouse
-		if !_paused:
-			_mouse_mode = Input.MOUSE_MODE_CAPTURED
-			Input.mouse_mode = _mouse_mode
-			_camera.enable_movement = true
-		# If exited with pause, keep mouse visible
-		else: 
-			_mouse_mode = Input.MOUSE_MODE_VISIBLE
-			Input.mouse_mode = _mouse_mode
-			_camera.enable_movement = false
-	# Handle edit prompt
-	if col != null && _displaying_turret_gui && Input.is_action_just_pressed("EItem"):
-		if _mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		_current_turret_gui.visible = true
+	if _displaying_turret_gui:
+		_current_turret_gui._menu = _menu
+		if col == null || col.collision_layer != 8:
 			_mouse_mode = Input.MOUSE_MODE_CAPTURED
 			_camera.enable_movement = true
-		else:
-			_mouse_mode = Input.MOUSE_MODE_VISIBLE
-			_camera.enable_movement = false
+			_displaying_turret_gui = false
+			_current_turret_gui.visible = false
+			# Exit pause aswell if walking away (QOL I think)
+			if _paused:
+				_paused = false
+				_camera.enable_movement = true
+				_mouse_mode = Input.MOUSE_MODE_CAPTURED
+				pause_menu.emit()
 		Input.mouse_mode = _mouse_mode
-		#_current_turret_gui.mouse_filter = 1
-		print("Click")

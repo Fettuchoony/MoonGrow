@@ -1,5 +1,7 @@
 extends Node3D
 
+
+
 @onready var time : float = 0
 @onready var player : Node3D = $"../../../../../MainPlayer"
 @onready var start_pos : Vector3 = global_position

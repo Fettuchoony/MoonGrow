@@ -13,6 +13,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+		
 
 # Signal from PlayerMovement that lets GUI know of change
 func health_gui_update(updated_health: int, updated_max: int) -> void:

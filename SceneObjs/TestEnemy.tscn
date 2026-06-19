@@ -17,8 +17,9 @@ axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_516de")
-movement_speed = 0.0
 chargeup_time = 1.0
+health = 50
+max_health = 50
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1773027660]
 shape = SubResource("SphereShape3D_516de")
@@ -63,6 +64,7 @@ grow_vertical = 2
 
 [node name="TargetPoint" type="Node3D" parent="." unique_id=590453167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01517396, 0.36711717, -0.39178085)
+visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TargetPoint" unique_id=632597966]
 mesh = SubResource("BoxMesh_516de")

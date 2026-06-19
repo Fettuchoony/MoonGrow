@@ -53,6 +53,11 @@ albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_dvtkr"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_dvtkr"]
+size = Vector3(2.18, 0.065, 2.09)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vm1e4"]
+
 [node name="MainTestScene" type="Node3D" unique_id=869491980 groups=["levels"]]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=808804662]
@@ -216,3 +221,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 305.39374, 0, 369.97974)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Castle" unique_id=1698980549]
 mesh = SubResource("SphereMesh_dvtkr")
+
+[node name="LoadPlatform" type="StaticBody3D" parent="." unique_id=1497271702]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -500, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LoadPlatform" unique_id=1761045167]
+shape = SubResource("BoxShape3D_dvtkr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LoadPlatform" unique_id=1870739243]
+mesh = SubResource("PlaneMesh_vm1e4")

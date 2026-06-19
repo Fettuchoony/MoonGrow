@@ -4,12 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_haauq"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="3_m1m0d"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_gy1rs"]
-
 [node name="GUI" type="AspectRatioContainer" unique_id=963375078]
-offset_right = 32.0
-offset_bottom = 32.0
-size_flags_vertical = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1088.0
+offset_bottom = -584.0
+grow_horizontal = 2
+grow_vertical = 2
 stretch_mode = 1
 script = ExtResource("1_02y08")
 
@@ -28,11 +30,3 @@ visible = false
 z_index = -5
 layout_mode = 2
 texture = ExtResource("3_m1m0d")
-
-[node name="Amount" type="Label" parent="." unique_id=183295889]
-layout_mode = 2
-size_flags_vertical = 1
-text = "10"
-label_settings = SubResource("LabelSettings_gy1rs")
-horizontal_alignment = 2
-vertical_alignment = 2

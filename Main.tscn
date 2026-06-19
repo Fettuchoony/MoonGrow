@@ -3,13 +3,14 @@
 [ext_resource type="Script" uid="uid://exycttr6jbdy" path="res://scene_manager.gd" id="1_2gh4u"]
 [ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://Scripts/character_movement.gd" id="1_uu6xs"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://Scripts/Player/camera_3d.gd" id="2_r0du0"]
-[ext_resource type="Texture2D" uid="uid://ccgykkk5ueg02" path="res://Textures/Extracted/ItemSlot.png" id="7_3b0ty"]
+[ext_resource type="Script" uid="uid://dlhhrhelqp8eu" path="res://taskbar_controller.gd" id="7_c6i3y"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="7_hhcpw"]
 [ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://item_pivot.gd" id="8_bg4s2"]
+[ext_resource type="PackedScene" uid="uid://cflvbyc7lnyyb" path="res://SceneObjs/upgrade_slot.tscn" id="8_c6i3y"]
 [ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://health_GUI_update.gd" id="8_hri7i"]
 [ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/heart_module.tscn" id="9_sqvbp"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://menu_func.gd" id="10_20pc6"]
-[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="15_fpfj3"]
+[ext_resource type="Script" uid="uid://ciknhhiw8fpbi" path="res://item_hold.gd" id="10_c2ibq"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/MainTestScene.tscn" id="20_2gh4u"]
 [ext_resource type="Texture2D" uid="uid://5vqebth03c5p" path="res://Textures/Extracted/BlankItem.png" id="22_3b0ty"]
 
@@ -186,129 +187,57 @@ offset_top = -40.0
 offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("7_c6i3y")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MainPlayer/GUI/TaskBar" unique_id=639279145]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -512.0
-offset_top = -80.195
-offset_right = 512.0
-offset_bottom = -16.195
-grow_horizontal = 2
-grow_vertical = 0
+anchors_preset = -1
+anchor_left = -6.225
+anchor_top = -1.005
+anchor_right = 7.275
+anchor_bottom = 0.595
+offset_top = 0.005001068
+offset_bottom = 0.0049991608
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Item0" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1718488073]
+[node name="UpgradeSlot" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=56989139 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item0" unique_id=1698104186]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item0" unique_id=1280306635]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item1" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=429085980]
+[node name="UpgradeSlot2" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1389057160 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item1" unique_id=1681701401]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item1" unique_id=827656527]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item2" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=327249214]
+[node name="UpgradeSlot3" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=972330564 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item2" unique_id=1902200561]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item2" unique_id=122135696]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item3" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=646481262]
+[node name="UpgradeSlot4" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=2003454997 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item3" unique_id=423264637]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item3" unique_id=185528547]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item4" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1311662755]
+[node name="UpgradeSlot5" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=14092609 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item4" unique_id=57406113]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item4" unique_id=675767787]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item5" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1499960039]
+[node name="UpgradeSlot6" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=930793215 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item5" unique_id=867402755]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item5" unique_id=1276323843]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item6" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1295354678]
+[node name="UpgradeSlot7" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1359309432 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item6" unique_id=1069400374]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item6" unique_id=1395278385]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item7" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1417329061]
+[node name="UpgradeSlot8" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=1708636612 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item7" unique_id=1722156783]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item7" unique_id=31851012]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
-
-[node name="Item8" type="AspectRatioContainer" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=382375371]
+[node name="UpgradeSlot9" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=590097654 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item8" unique_id=810089468]
-layout_mode = 2
-texture = ExtResource("7_3b0ty")
-
-[node name="Equipped" type="TextureRect" parent="MainPlayer/GUI/TaskBar/HBoxContainer/Item8" unique_id=494073420]
-visible = false
-layout_mode = 2
-texture = ExtResource("15_fpfj3")
+[node name="ItemHold" type="AspectRatioContainer" parent="MainPlayer/GUI" unique_id=1863207805]
+z_index = 10
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.054631073
+anchor_bottom = 0.09876543
+offset_right = 1.0650024
+stretch_mode = 0
+script = ExtResource("10_c2ibq")
+metadata/_edit_use_anchors_ = true
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
 texture_filter = 1
@@ -342,44 +271,52 @@ transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676
 shadow_enabled = true
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("10_20pc6")
 
-[node name="TabContainer" type="TabContainer" parent="Menus" unique_id=263424285]
+[node name="MenuInv" type="TabContainer" parent="Menus" unique_id=263424285]
+visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.055555556
 anchor_top = 0.10185185
-anchor_right = 0.9444444
-anchor_bottom = 0.8904321
+anchor_right = 0.6041667
+anchor_bottom = 0.8518519
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 current_tab = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Inventory" type="Control" parent="Menus/TabContainer" unique_id=1130945522]
+[node name="Inventory" type="Control" parent="Menus/MenuInv" unique_id=1130945522]
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="HFlowContainer" type="HFlowContainer" parent="Menus/TabContainer/Inventory" unique_id=1338249059]
-layout_direction = 2
+[node name="HFlowContainer" type="GridContainer" parent="Menus/MenuInv/Inventory" unique_id=1597129537]
+texture_filter = 1
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.009367098
+anchor_top = 0.017578032
+anchor_right = 0.9843292
+anchor_bottom = 0.14970991
+offset_left = 0.0799942
+offset_top = 0.0019950867
+offset_right = -0.096069336
+offset_bottom = -0.118011475
 grow_horizontal = 2
 grow_vertical = 2
-last_wrap_alignment = 1
+columns = 10
 metadata/_edit_use_anchors_ = true
 
-[node name="HSlider" type="HSlider" parent="Menus/TabContainer/Inventory" unique_id=1108591428]
+[node name="HSlider" type="HSlider" parent="Menus/MenuInv/Inventory" unique_id=1108591428]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -397,26 +334,27 @@ max_value = 10.0
 value = 1.0
 tick_count = 10
 
-[node name="Collectibles" type="Control" parent="Menus/TabContainer" unique_id=384906215]
+[node name="Button" type="Button" parent="Menus/MenuInv/Inventory" unique_id=276920941]
 visible = false
-layout_mode = 2
-metadata/_tab_index = 1
-
-[node name="Button" type="Button" parent="Menus" unique_id=276920941]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -72.0
-offset_top = -64.0
-offset_right = -8.0
-offset_bottom = -8.0
+offset_left = -8.0
+offset_top = 7.0
+offset_right = 56.0
+offset_bottom = 63.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "SAVE
 "
+
+[node name="Collectibles" type="Control" parent="Menus/MenuInv" unique_id=384906215]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=280029085]
 environment = SubResource("Environment_w3rk5")
@@ -431,5 +369,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3963816, -1.0000002, -0.804
 [connection signal="area_entered" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_entered"]
 [connection signal="area_exited" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_exited"]
 [connection signal="gui_input" from="Menus" to="MainPlayer" method="_on_menus_gui_input"]
-[connection signal="value_changed" from="Menus/TabContainer/Inventory/HSlider" to="Menus" method="_on_h_slider_value_changed"]
-[connection signal="button_down" from="Menus/Button" to="." method="save_game"]
+[connection signal="value_changed" from="Menus/MenuInv/Inventory/HSlider" to="Menus" method="_on_h_slider_value_changed"]
+[connection signal="button_down" from="Menus/MenuInv/Inventory/Button" to="." method="save_game"]

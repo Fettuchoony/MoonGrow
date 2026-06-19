@@ -27,7 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bq5j1ifonkp51" path="res://Textures/Extracted/BombAnim/BombActive24.png" id="25_0u7iq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_t7jsh"]
-bounce = 0.6
+bounce = 0.39
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mq8ln"]
 
@@ -115,23 +115,22 @@ animations = [{
 }]
 
 [node name="BombItem2" type="RigidBody3D" unique_id=909770987]
-collision_layer = 129
-collision_mask = 3
+collision_layer = 0
 physics_material_override = SubResource("PhysicsMaterial_t7jsh")
 script = ExtResource("1_t7jsh")
-knockback_strength = 10.0
-throw_strength = 5.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1050016734]
 shape = SubResource("SphereShape3D_mq8ln")
 
 [node name="WallDeleteBox" type="Area3D" parent="." unique_id=1778398381]
+collision_layer = 0
 collision_mask = 1024
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WallDeleteBox" unique_id=1788082500]
 shape = SubResource("SphereShape3D_ls3ic")
 
 [node name="DamageBox" type="Area3D" parent="." unique_id=592322129]
+collision_layer = 0
 collision_mask = 518
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DamageBox" unique_id=980016176]

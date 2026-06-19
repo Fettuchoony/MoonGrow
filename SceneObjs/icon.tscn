@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cs6wbakqxnb75"]
+
+[ext_resource type="Texture2D" uid="uid://boa50sslbynsx" path="res://Textures/Extracted/SamplePerkIcon.png" id="1_6dlyn"]
+
+[node name="Icon" type="TextureRect" unique_id=2142126244]
+texture_filter = 1
+texture = ExtResource("1_6dlyn")

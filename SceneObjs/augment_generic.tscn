@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bydfw62k2opax"]
+
+[ext_resource type="Script" uid="uid://cj6it7nr3hato" path="res://SceneObjs/item.gd" id="1_jis4q"]
+[ext_resource type="PackedScene" uid="uid://cs6wbakqxnb75" path="res://SceneObjs/icon.tscn" id="2_5n682"]
+[ext_resource type="PackedScene" uid="uid://crrn2uepe0xk5" path="res://SceneObjs/hover.tscn" id="3_2a7vl"]
+[ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="4_u4mka"]
+
+[node name="Augment" type="PanelContainer" unique_id=923075710]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_jis4q")
+item_name = "dmg0"
+
+[node name="Icon" parent="." unique_id=2142126244 instance=ExtResource("2_5n682")]
+layout_mode = 2
+
+[node name="Hover" parent="." unique_id=1656730688 instance=ExtResource("3_2a7vl")]
+layout_mode = 2
+
+[node name="Equipped" type="TextureRect" parent="." unique_id=2113987755]
+visible = false
+z_index = -5
+layout_mode = 2
+texture = ExtResource("4_u4mka")

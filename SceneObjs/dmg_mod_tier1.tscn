@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cwnamsvmevn2j"]
+
+[ext_resource type="Script" uid="uid://cqxfgsalnehth" path="res://SceneObjs/projectile_modifier.gd" id="1_jowd6"]
+[ext_resource type="Texture2D" uid="uid://boa50sslbynsx" path="res://Textures/Extracted/SamplePerkIcon.png" id="2_r7faq"]
+[ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/item_gui.tscn" id="3_6r8k6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6r8k6"]
+
+[node name="DmgModTier1" type="PanelContainer" unique_id=896875203]
+offset_right = 19.0
+offset_bottom = 23.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6r8k6")
+script = ExtResource("1_jowd6")
+delta_dmg = 1
+
+[node name="GUI" parent="." unique_id=963375078 instance=ExtResource("3_6r8k6")]
+layout_mode = 2
+
+[node name="Icon" parent="GUI" index="0" unique_id=1208015621]
+texture = ExtResource("2_r7faq")
+
+[editable path="GUI"]
