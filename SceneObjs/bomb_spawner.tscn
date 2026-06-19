@@ -5,14 +5,19 @@
 [ext_resource type="PackedScene" uid="uid://cu2jndt5i2kgt" path="res://SceneObjs/bomb_item2.tscn" id="2_o0fyn"]
 [ext_resource type="Texture2D" uid="uid://c5lr88gvig1n2" path="res://Textures/Extracted/bomb.png" id="2_ygcvh"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xfv6e"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ygcvh"]
 
 [node name="BombSpawner" type="PanelContainer" unique_id=1269056263]
-offset_right = 32.0
-offset_bottom = 32.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_xfv6e")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1120.0
+offset_bottom = -616.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ygcvh")
 script = ExtResource("1_r12s0")
 projectile = ExtResource("2_o0fyn")
 metadata/_custom_type_script = "uid://b8nv1hd418umd"

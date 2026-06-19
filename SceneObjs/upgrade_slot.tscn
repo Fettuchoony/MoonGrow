@@ -22,7 +22,7 @@ z_index = -5
 layout_mode = 2
 texture = ExtResource("1_fn4q3")
 
-[node name="Background" type="TextureRect" parent="." unique_id=1529539511 groups=["items"]]
+[node name="Background" type="TextureRect" parent="." unique_id=1529539511]
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 2

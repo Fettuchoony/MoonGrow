@@ -10,10 +10,6 @@
 [ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://health_GUI_update.gd" id="8_hri7i"]
 [ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/heart_module.tscn" id="9_sqvbp"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://menu_func.gd" id="10_20pc6"]
-[ext_resource type="Script" uid="uid://ciknhhiw8fpbi" path="res://item_hold.gd" id="10_c2ibq"]
-[ext_resource type="PackedScene" uid="uid://s5rp7i4aj5gp" path="res://SceneObjs/info_upgrade_gui.tscn" id="14_fpfj3"]
-[ext_resource type="PackedScene" uid="uid://cwnamsvmevn2j" path="res://SceneObjs/dmg_mod_tier1.tscn" id="15_sc1dx"]
-[ext_resource type="PackedScene" uid="uid://bojjeo886s6bu" path="res://SceneObjs/turret_spawner.tscn" id="16_kjvhd"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/MainTestScene.tscn" id="20_2gh4u"]
 [ext_resource type="Texture2D" uid="uid://5vqebth03c5p" path="res://Textures/Extracted/BlankItem.png" id="22_3b0ty"]
 
@@ -231,14 +227,14 @@ layout_mode = 2
 [node name="UpgradeSlot9" parent="MainPlayer/GUI/TaskBar/HBoxContainer" unique_id=590097654 instance=ExtResource("8_c6i3y")]
 layout_mode = 2
 
-[node name="ItemHold" type="AspectRatioContainer" parent="MainPlayer/GUI" unique_id=1863207805]
-z_index = 10
-layout_mode = 1
-offset_left = -32.0
-offset_top = -32.0
-offset_right = 32.0
-offset_bottom = 32.0
-script = ExtResource("10_c2ibq")
+[node name="ItemHold" parent="MainPlayer/GUI" unique_id=518983134 instance=ExtResource("8_c6i3y")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+_is_cursor_slot = true
+
+[node name="Background" parent="MainPlayer/GUI/ItemHold" index="1" unique_id=1529539511]
+visible = false
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
 texture_filter = 1
@@ -282,6 +278,7 @@ mouse_filter = 2
 script = ExtResource("10_20pc6")
 
 [node name="MenuInv" type="TabContainer" parent="Menus" unique_id=263424285]
+visible = false
 texture_filter = 1
 layout_mode = 1
 anchors_preset = -1
@@ -304,6 +301,7 @@ metadata/_tab_index = 0
 texture_filter = 1
 layout_direction = 2
 layout_mode = 2
+size_flags_vertical = 0
 columns = 10
 metadata/_edit_use_anchors_ = true
 
@@ -318,42 +316,6 @@ environment = SubResource("Environment_w3rk5")
 [node name="MainTestScene" parent="." unique_id=869491980 instance=ExtResource("20_2gh4u")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3963816, -1.0000002, -0.8044402)
 
-[node name="TestTurretUI" parent="." unique_id=224699318 instance=ExtResource("14_fpfj3")]
-visible = false
-
-[node name="UpgradeSlot" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="0" unique_id=182614406 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="DmgModTier1" parent="TestTurretUI/UpgradeMatrix/UpgradeSlot" unique_id=896875203 instance=ExtResource("15_sc1dx")]
-layout_mode = 2
-
-[node name="UpgradeSlot2" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="1" unique_id=661229382 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="TurretSpawner" parent="TestTurretUI/UpgradeMatrix/UpgradeSlot2" unique_id=395023359 instance=ExtResource("16_kjvhd")]
-layout_mode = 2
-
-[node name="UpgradeSlot3" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="2" unique_id=1057347953 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="UpgradeSlot4" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="3" unique_id=584968807 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="UpgradeSlot5" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="4" unique_id=435444476 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="UpgradeSlot6" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="5" unique_id=1565217463 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="UpgradeSlot7" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="6" unique_id=863563015 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="UpgradeSlot8" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="7" unique_id=786906485 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
-[node name="UpgradeSlot9" parent="TestTurretUI/UpgradeMatrix" parent_id_path=PackedInt32Array(224699318, 1601751868) index="8" unique_id=319260326 instance=ExtResource("8_c6i3y")]
-layout_mode = 2
-
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 [connection signal="transfer_cam_to_player" from="MainPlayer" to="MainPlayer/CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]
 [connection signal="transfer_cam_to_vehicle" from="MainPlayer" to="MainPlayer/CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_vehicle"]
@@ -362,4 +324,4 @@ layout_mode = 2
 [connection signal="area_exited" from="MainPlayer/CharacterAreaDetect" to="MainPlayer" method="_on_character_area_detect_area_exited"]
 [connection signal="gui_input" from="Menus" to="MainPlayer" method="_on_menus_gui_input"]
 
-[editable path="TestTurretUI"]
+[editable path="MainPlayer/GUI/ItemHold"]

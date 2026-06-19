@@ -1,7 +1,7 @@
 # This class is now doing a lot of heavy lifting, controls its pickup/placement and spawns
 class_name Item extends PanelContainer
 
-@onready var _cursor_slot = get_tree().root.get_child(0).find_child("ItemHold")
+@onready var _cursor_slot = get_tree().root.get_child(0).find_child("ItemHold").find_child("Augment")
 
 @onready var _gui : AspectRatioContainer = $GUI
 @onready var _hover : TextureRect = $GUI/Hover
@@ -51,9 +51,9 @@ func _input(event: InputEvent) -> void:
 		var rect = get_rect()
 		rect.position = global_position
 		# When clicked
-		if rect.has_point(get_screen_transform() * get_local_mouse_position()) && get_parent().name != _cursor_slot.name:
+		if rect.has_point(get_screen_transform() * get_local_mouse_position()):
 			if _cursor_slot.get_child_count() > 0:
-				_cursor_slot.get_child(0).move(get_parent())
+				_cursor_slot.get_child(0).move()
 			move(_cursor_slot)
 
 # Used for moving the item somewhere
@@ -71,11 +71,18 @@ func move(new_parent : Control = fallback_location) -> void:
 # Item slots can request an item
 func _request_item_for_slot(slot : Control) -> void:
 	if !_stored:
+		print("signal recieved")
 		move(slot)
 
 
 func _adjust_rect() -> void:
-	pass
+	set_anchors_preset(Control.PRESET_FULL_RECT)
 	#size = Vector2(128.0, 128.0)
-	#size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	#size_flags_vertical = Control.SIZE_EXPAND_FILL
+	size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	size_flags_vertical = Control.SIZE_EXPAND_FILL
+	position = Vector2.ZERO
+	offset_bottom = 0
+	offset_left = 0
+	offset_right = 0
+	offset_top = 0
+	

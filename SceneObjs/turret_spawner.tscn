@@ -7,6 +7,11 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bw0iu"]
 
 [node name="TurretSpawner" type="PanelContainer" unique_id=1933711644 node_paths=PackedStringArray("icon")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 2
 size_flags_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_bw0iu")
@@ -21,7 +26,6 @@ layout_mode = 2
 
 [node name="Icon" parent="GUI" index="0" unique_id=1208015621]
 texture = ExtResource("3_bw0iu")
-expand_mode = 2
 
 [node name="Hover" parent="GUI" index="1" unique_id=1850286459]
 expand_mode = 2
