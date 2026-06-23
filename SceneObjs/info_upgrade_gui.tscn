@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cl3ibjx8x237a" path="res://SceneObjs/info_upgrade_gui.gd" id="1_5k0yb"]
 
 [node name="InfoUpgradeGUI" type="Control" unique_id=224699318]
+z_index = -5
 layout_mode = 3
 anchor_left = 0.61081254
 anchor_top = 0.09860495
@@ -78,16 +79,14 @@ layout_mode = 2
 
 [node name="UpgradeMatrix" type="GridContainer" parent="." unique_id=1601751868]
 texture_filter = 1
+layout_direction = 2
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.135
-anchor_top = 0.074
-anchor_right = 0.8880001
-anchor_bottom = 0.634
-offset_left = 0.07999802
-offset_top = 0.0019989014
-offset_right = -0.09603882
-offset_bottom = -0.118011475
+anchor_left = 0.50130546
+anchor_top = 0.37621832
+anchor_right = 0.50130546
+anchor_bottom = 0.37621832
 grow_horizontal = 2
 grow_vertical = 2
-columns = 3
+columns = 6
+metadata/_edit_use_anchors_ = true

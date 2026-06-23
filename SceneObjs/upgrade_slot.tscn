@@ -4,8 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://ccgykkk5ueg02" path="res://Textures/Extracted/ItemSlot.png" id="1_hcij3"]
 [ext_resource type="Script" uid="uid://bybmr44r82wqn" path="res://SceneObjs/upgrade_slot.gd" id="1_ujp0d"]
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_71qlw"]
+[ext_resource type="Texture2D" uid="uid://dxi0xm77pf8y" path="res://Textures/Extracted/DeadSlot.png" id="3_yt0hg"]
 
 [node name="UpgradeSlot" type="AspectRatioContainer" unique_id=56989139]
+z_index = 1
 anchors_preset = -1
 anchor_right = 0.055555556
 anchor_bottom = 0.09876543
@@ -18,11 +20,18 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Equipped" type="TextureRect" parent="." unique_id=1354884936]
 visible = false
-z_index = -5
+z_index = 1
 layout_mode = 2
 texture = ExtResource("1_fn4q3")
 
+[node name="DeadSlot" type="TextureRect" parent="." unique_id=153666193]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("3_yt0hg")
+
 [node name="Background" type="TextureRect" parent="." unique_id=1529539511]
+z_index = -1
 texture_filter = 1
 texture_repeat = 1
 layout_mode = 2
@@ -30,9 +39,11 @@ texture = ExtResource("1_hcij3")
 
 [node name="Hover" type="TextureRect" parent="." unique_id=1066704362]
 visible = false
+z_index = 1
 texture_filter = 1
 layout_mode = 2
 texture = ExtResource("2_71qlw")
 
 [node name="Augment" type="Control" parent="." unique_id=656048136]
+z_index = 2
 layout_mode = 2

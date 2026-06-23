@@ -231,6 +231,10 @@ layout_mode = 2
 visible = false
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 _is_cursor_slot = true
 
 [node name="Background" parent="MainPlayer/GUI/ItemHold" index="1" unique_id=1529539511]
@@ -268,6 +272,7 @@ transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676
 shadow_enabled = true
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
+z_index = -5
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

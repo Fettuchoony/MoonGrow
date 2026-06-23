@@ -34,9 +34,9 @@ func _process(_delta: float) -> void:
 func _on_main_player_pause_menu() -> void:
 	if inv_window.visible:
 		_cursor_item.visible = false
-		for child in _cursor_item.get_children(): 
-			if child is Item: 
-				child.move()
+		if _cursor_item._augment_slot.get_child_count() > 0:
+			_cursor_item._augment_slot.get_child(0).move()
+			get_tree().call_group("turrets", "update_turret_stats")
 		inv_window.visible = false
 	else:
 		inv_window.visible = true

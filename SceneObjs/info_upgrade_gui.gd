@@ -2,10 +2,10 @@ extends Control
 class_name TurretUpgrades
 
 @onready var _slot_resource = preload("res://SceneObjs/upgrade_slot.tscn")
-@onready var _perk_slot_matrix : GridContainer = $UpgradeMatrix
+@onready var perk_slot_matrix : GridContainer = $UpgradeMatrix
 
 # The turret the GUI is representing
-var _turret : Node3D
+var _turret : Turret
 
 var _turret_name : Label 
 var _dmg : Label
@@ -15,6 +15,7 @@ var _menu : Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	_turret = get_parent()
 	_turret_name = $TurretName
 	_dmg = $Panel/VBoxContainer/Dmg
 	_fire_rate = $Panel/VBoxContainer/FireRate
@@ -38,5 +39,16 @@ func update_info(current_proj : ProjectileSpawner) -> void:
 		_fire_rate.text = ""
 
 func _populate_slots() -> void:
-	for i in range(pow(_perk_slot_matrix.columns, 2)):
-		_perk_slot_matrix.add_child(_slot_resource.instantiate())
+	var population_chance = 1.0
+	for i in range(pow(perk_slot_matrix.columns, 2)):
+		var new_slot : ItemSlot = _slot_resource.instantiate()
+		perk_slot_matrix.add_child(new_slot)
+		new_slot.is_turret_slot = true
+		new_slot.toggle_slot_lock()
+		if randf() < population_chance:
+			print("Creating slot at pop chance: " + str(population_chance) + " and index: " + str(i))
+			population_chance *= _turret.turret_value
+			new_slot.toggle_slot_lock()
+	perk_slot_matrix.get_children().shuffle()
+	
+		

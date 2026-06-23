@@ -57,23 +57,26 @@ func _input(event: InputEvent) -> void:
 			move(_cursor_slot)
 
 # Used for moving the item somewhere
-func move(new_parent : Control = fallback_location) -> void:
+func move(new_parent = fallback_location) -> void:
 	#if _cursor_slot.get_child_count() > 0:
 		#var cursor_item : Item = _cursor_slot.get_child(0)
 		#cursor_item.reparent(get_parent())
-	print("moving " + name + " from parent " + get_parent().name)
+	#print("moving " + name + " from parent " + get_parent().name)
+	
 	reparent(new_parent)
-	print("to: " + get_parent().name)
+	#print("to: " + get_parent().name)
 	position = Vector2.ZERO
 	_stored = !_stored
 	_adjust_rect()
+	print(new_parent)
 
 # Item slots can request an item
 func _request_item_for_slot(slot : Control) -> void:
 	if !_stored:
 		print("signal recieved")
 		move(slot)
-
+		if slot.get_parent().is_turret_slot:
+			get_tree().call_group("turrets", "update_turret_stats")
 
 func _adjust_rect() -> void:
 	set_anchors_preset(Control.PRESET_FULL_RECT)
