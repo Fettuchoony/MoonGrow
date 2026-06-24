@@ -16,14 +16,14 @@ static var COLLOQUIAL_NAME : String = "Gunner Turret"
 @onready var _firing_timer : float = 0
 @onready var _head_pivot : Node3D = $TurretBase/HeadPivot
 @onready var _up_ref : Node3D = $TurretBase/UpRef
-@onready var _current_projectile : ProjectileSpawner
+@onready var _current_projectiles : Array[ProjectileSpawner]
 @onready var target : Node3D
 
 @onready var _menu : Control
 @onready var ui : Control
 
 # Probably change how this works eventually
-@onready var turret_value : float = 0.95
+@onready var turret_value : float = 1.0
 
 
 # Added to by perk when clicked, used to populate upgrade gui with equip when created and avoid repeats
@@ -97,11 +97,12 @@ func _turret_attack() -> void:
 				target = enemy
 				curr_target_path_length = enemy.path_length
 	# Actually firing
-	if target != null && _current_projectile != null && _firing_timer > _current_projectile.get_firerate():
-		var target_pos = target.find_child("TargetPoint").global_position
-		var fire_pos = _firing_point.global_position
-		_current_projectile.fire(fire_pos, target)
-		_firing_timer = 0 
+	for proj in _current_projectiles:
+		if target != null && proj != null && _firing_timer > proj.get_firerate():
+			var target_pos = target.find_child("TargetPoint").global_position
+			var fire_pos = _firing_point.global_position
+			proj.fire(fire_pos, target)
+			_firing_timer = 0 
 		
 
 func change_turret_mode(mode : String) -> void:
@@ -119,20 +120,38 @@ func update_turret_stats() -> void:
 			#if augment is ProjectileSpawner:
 				#_current_projectile = augment
 	applied_upgrades.clear()
+	_current_projectiles.clear()
+	#_current_projectile = null
 	var i : int = 0
+	# iterate through the slots in the turret grabbing projectiles and normal modifiers
 	for slot in ui.perk_slot_matrix.get_children():
 		var curr_item : Item = slot.get_item_in_slot()
 		if curr_item is ProjectileSpawner:
-			_current_projectile = curr_item
-		elif curr_item is ProjectileModifier:
 			applied_upgrades[i] = curr_item
+			_current_projectiles.append(curr_item)
+			if _current_projectiles.size() > 1:
+				curr_item.invalid.visible = true
+		
+		if curr_item is ProjectileModifier:
+			applied_upgrades[i] = curr_item
+		i += 1
+	
+	i = 0
+	# Meta modifier loop, performed after because it mods the mods
+	for slot in ui.perk_slot_matrix.get_children():
+		var curr_item : Item = slot.get_item_in_slot()
+		if curr_item is SpecialModifier:
+			curr_item.trigger_special_effect(ui, i)
+		i += 1
+	
 	
 	# Visually updates ui with new stats
-	if _current_projectile != null:
+	if _current_projectiles.size() > 0:
 		print("Applying augments")
-		_current_projectile.reset()
-		apply_augments_to_projectile(_current_projectile)
-		ui.update_info(_current_projectile)
+		for proj in _current_projectiles:
+			proj.reset()
+			apply_augments_to_projectile(proj)
+			ui.update_info(proj)
 	else:
 		ui.update_info(null)
 

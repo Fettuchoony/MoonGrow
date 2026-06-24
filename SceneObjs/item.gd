@@ -5,6 +5,7 @@ class_name Item extends PanelContainer
 
 @onready var _gui : AspectRatioContainer = $GUI
 @onready var _hover : TextureRect = $GUI/Hover
+@onready var invalid : TextureRect = $GUI/Invalid
 @onready var _stored : bool = true
 
 # Amount of the item available
@@ -53,6 +54,7 @@ func _input(event: InputEvent) -> void:
 		# When clicked
 		if rect.has_point(get_screen_transform() * get_local_mouse_position()):
 			if _cursor_slot.get_child_count() > 0:
+				invalid.visible = false
 				_cursor_slot.get_child(0).move()
 			move(_cursor_slot)
 
@@ -62,7 +64,7 @@ func move(new_parent = fallback_location) -> void:
 		#var cursor_item : Item = _cursor_slot.get_child(0)
 		#cursor_item.reparent(get_parent())
 	#print("moving " + name + " from parent " + get_parent().name)
-	
+	#invalid.visible = false
 	reparent(new_parent)
 	#print("to: " + get_parent().name)
 	position = Vector2.ZERO

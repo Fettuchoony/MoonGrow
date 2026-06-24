@@ -27,6 +27,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+#TODO: make this work with multiple projectiles
 # Modifies base stats with upgrades and updates display
 func update_info(current_proj : ProjectileSpawner) -> void:
 	if current_proj != null:
@@ -38,6 +39,7 @@ func update_info(current_proj : ProjectileSpawner) -> void:
 		_dmg.text = ""
 		_fire_rate.text = ""
 
+# Runs on ready, creates the slots
 func _populate_slots() -> void:
 	var population_chance = 1.0
 	for i in range(pow(perk_slot_matrix.columns, 2)):
@@ -50,5 +52,28 @@ func _populate_slots() -> void:
 			population_chance *= _turret.turret_value
 			new_slot.toggle_slot_lock()
 	perk_slot_matrix.get_children().shuffle()
+
+# Invalidates/validates all slots in slots row not inclusive of given slot
+func set_projectiles_in_row(slot_num : int, enabled : bool = true) -> void:
+	var grid_height = perk_slot_matrix.columns
+	var row = slot_num / grid_height
+	var slots = perk_slot_matrix.get_children()
+
+	# Row neighbors
+	for i in range(perk_slot_matrix.columns):
+		var curr_num : int = (i + row) * grid_height
+		print(str(curr_num))
+		if curr_num != slot_num && _turret.applied_upgrades.has(curr_num) && _turret.applied_upgrades[curr_num] is ProjectileSpawner && slots[curr_num].get_item_in_slot() != null:
+			slots[curr_num].get_item_in_slot().invalid.visible = !enabled
+
+# Invalidates/validates all slots in slots column not inclusive of given slot
+func set_projectiles_in_column(slot_num : int, enabled : bool = true) -> void:
+	var grid_height = perk_slot_matrix.columns
+	var column = slot_num % grid_height
+	var slots = perk_slot_matrix.get_children()
 	
-		
+	# Columnal neighbors
+	for i in range(perk_slot_matrix.columns):
+		var curr_num : int = (i + column) * grid_height #TODO:  % pow(grid_height, 2)
+		if curr_num != slot_num && _turret.applied_upgrades.has(curr_num) && _turret.applied_upgrades[curr_num] is ProjectileSpawner && slots[curr_num].get_item_in_slot() != null:
+			slots[curr_num].get_item_in_slot().invalid.visible = !enabled

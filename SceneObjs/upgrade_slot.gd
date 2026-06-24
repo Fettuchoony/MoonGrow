@@ -4,6 +4,8 @@ class_name ItemSlot extends AspectRatioContainer
 @onready var _augment_slot = $Augment
 @onready var lock_background = $DeadSlot
 @onready var is_turret_slot : bool = false
+@onready var can_hold_projectile : bool = true
+
 
 @export var _is_cursor_slot = false
 @export var is_locked = false
@@ -26,7 +28,7 @@ func _input(event: InputEvent) -> void:
 	if !_is_cursor_slot && !is_locked:
 		var slot_rect = get_rect()
 		slot_rect.position = global_position
-		if event.is_action_pressed("Click") && _cursor_slot.get_child_count() > 0 && slot_rect.has_point(get_screen_transform() * get_local_mouse_position()) && _augment_slot.get_child_count() == 0:
+		if event.is_action_pressed("Click") && _cursor_slot.get_child_count() > 0 && slot_rect.has_point(get_screen_transform() * get_local_mouse_position()) && _augment_slot.get_child_count() == 0 && can_hold_projectile:
 			print("sending signal to all items")
 			get_tree().call_group("items", "_request_item_for_slot", _augment_slot)
 			get_tree().call_group("turrets", "update_turret_stats")

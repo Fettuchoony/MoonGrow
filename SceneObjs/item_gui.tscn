@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bkjjtl1sudh21" path="res://SceneObjs/item_gui.gd" id="1_02y08"]
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_haauq"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="3_m1m0d"]
+[ext_resource type="Texture2D" uid="uid://b6drxmtpbctju" path="res://Textures/Extracted/Inavlid.png" id="4_haauq"]
 
 [node name="GUI" type="AspectRatioContainer" unique_id=963375078]
 anchors_preset = 15
@@ -31,3 +32,8 @@ visible = false
 z_index = -5
 layout_mode = 2
 texture = ExtResource("3_m1m0d")
+
+[node name="Invalid" type="TextureRect" parent="." unique_id=484273790]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_haauq")

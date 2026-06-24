@@ -237,7 +237,7 @@ grow_horizontal = 1
 grow_vertical = 1
 _is_cursor_slot = true
 
-[node name="Background" parent="MainPlayer/GUI/ItemHold" index="1" unique_id=1529539511]
+[node name="Background" parent="MainPlayer/GUI/ItemHold" index="2" unique_id=1529539511]
 visible = false
 
 [node name="BlankItem" type="TextureRect" parent="MainPlayer" unique_id=477814736]
