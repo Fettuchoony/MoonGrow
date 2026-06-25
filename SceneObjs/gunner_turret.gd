@@ -38,7 +38,6 @@ var hold_pos
 func _ready() -> void:
 	being_held = false
 	hold_pos = global_position
-	print(get_parent())
 	var ui_tscn = load("res://SceneObjs/info_upgrade_gui.tscn")
 	ui = ui_tscn.instantiate()
 	add_child(ui)
@@ -120,7 +119,7 @@ func update_turret_stats() -> void:
 	#_current_projectile = null
 	var i : int = 0
 	# iterate through the slots in the turret grabbing projectiles and normal modifiers
-	for slot in ui.perk_slot_matrix.get_children():
+	for slot in ui._grid.get_children():
 		var curr_item : Item = slot.get_item_in_slot()
 		if curr_item is ProjectileSpawner:
 			applied_upgrades[i] = curr_item
@@ -137,7 +136,7 @@ func update_turret_stats() -> void:
 	
 	i = 0
 	# Meta modifier loop, performed after because it mods the mods
-	for slot in ui.perk_slot_matrix.get_children():
+	for slot in ui._grid.get_children():
 		var curr_item : Item = slot.get_item_in_slot()
 		if curr_item is SpecialModifier:
 			curr_item.trigger_special_effect(ui, i)
@@ -146,7 +145,6 @@ func update_turret_stats() -> void:
 	
 	# Visually updates ui with new stats and applys the upgrades to projectiles
 	if _current_projectiles.size() > 0:
-		print("Applying augments")
 		for proj in _current_projectiles:
 			proj.reset()
 			# TODO: this only works under projectiles condition ie: This projectile only upgrades items in same row

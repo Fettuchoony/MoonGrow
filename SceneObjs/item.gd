@@ -74,6 +74,7 @@ func move(new_parent = fallback_location) -> void:
 	# Find out if this item is being put in turret so it can interact with neighbors
 	if new_parent is ItemSlot && new_parent.is_turret_slot:
 		in_turret = true
+		# Grab the other slots in the turret
 		near_slots = new_parent.get_parent().get_children()
 	else:
 		in_turret = false
