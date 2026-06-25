@@ -62,6 +62,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _turret_spawner = preload("res://SceneObjs/turret_spawner.tscn")
 @onready var _augment = preload("res://SceneObjs/augment_generic.tscn")
 @onready var _dmg_mod_tier1 = preload("res://SceneObjs/dmg_mod_tier1.tscn")
+@onready var _horizontal_scatter = preload("res://SceneObjs/horizontal_scatter.tscn")
 
 
 @export var item_cooldown_time : float = 0.2
@@ -342,8 +343,10 @@ func _remove_item(item : Control) -> void:
 
 func _spawn_with_all_items() -> void:
 	_pickup_item(_bomb_spawner.instantiate() as BombSpawner)
+	_pickup_item(_bomb_spawner.instantiate() as BombSpawner)
 	_pickup_item(_grapple_spawner.instantiate() as GrappleSpawner)
 	_pickup_item(_turret_spawner.instantiate() as TurretSpawner)
+	_pickup_item(_horizontal_scatter.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())

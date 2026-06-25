@@ -13,14 +13,17 @@ static var COLLOQUIAL_NAME : String = "Gunner Turret"
 @onready var _debug_target_ball : MeshInstance3D = $DebugTargetBall
 @onready var _bullet_scene = preload("res://SceneObjs/test_bullet.tscn")
 @onready var _firing_point : Node3D = $TurretBase/HeadPivot/TurretHead/FiringPoint
-@onready var _firing_timer : float = 0
 @onready var _head_pivot : Node3D = $TurretBase/HeadPivot
 @onready var _up_ref : Node3D = $TurretBase/UpRef
-@onready var _current_projectile : ProjectileSpawner
+@onready var _current_projectiles : Array[ProjectileSpawner]
 @onready var target : Node3D
 
 @onready var _menu : Control
 @onready var ui : Control
+
+# Probably change how this works eventually
+@onready var turret_value : float = 1.0
+
 
 # Added to by perk when clicked, used to populate upgrade gui with equip when created and avoid repeats
 # Key : Slot #, Value : Upgrade
@@ -36,14 +39,13 @@ func _ready() -> void:
 	being_held = false
 	hold_pos = global_position
 	print(get_parent())
-	var ui_tscn = preload("res://SceneObjs/info_upgrade_gui.tscn")
+	var ui_tscn = load("res://SceneObjs/info_upgrade_gui.tscn")
 	ui = ui_tscn.instantiate()
 	add_child(ui)
 	ui.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	_handle_upgrade_input()
 	if target != null:
 		
 		_head_pivot.look_at(target.global_position, _up_ref.global_position - global_position)
@@ -55,7 +57,6 @@ func _physics_process(delta: float) -> void:
 	_pickup_func()
 	_enemy_detection()
 	_turret_attack()
-	_firing_timer += delta
 	
 
 # This makes the object pickupable by the player, needs to be added to every appropriate obj
@@ -94,87 +95,11 @@ func _turret_attack() -> void:
 				target = enemy
 				curr_target_path_length = enemy.path_length
 	# Actually firing
-	if target != null && _current_projectile != null && _firing_timer > _current_projectile.get_firerate():
-		var target_pos = target.find_child("TargetPoint").global_position
-		var fire_pos = _firing_point.global_position
-		_current_projectile.fire(fire_pos, target)
-		#bullet.global_position = _firing_point.global_position
-		#bullet.look_at(target_pos)
-		#var velocity = 1
-		#var difference = target_pos - fire_pos
-		## TODO: I think target and fire pos should be swapped but this works better idk
-		#var t = (-velocity - sqrt(abs(pow(velocity, 2.0) - 4.0 * -4.8 * (target_pos.y - fire_pos.y)))) / (2.0 * -4.8)
-		#var future_enemy_pos : Vector3 = target_pos + (t * target.linear_velocity)
-		#_debug_target_ball.global_position = future_enemy_pos
-		#var future_t = (-velocity - sqrt(abs(pow(velocity, 2.0) - 4.0 * -4.8 * (target_pos.y - fire_pos.y)))) / (2.0 * -4.8)
-		#bullet.apply_impulse(Vector3(difference.x / future_t, velocity, difference.z/future_t))
-		_firing_timer = 0 
+	for proj in _current_projectiles:
+		if target != null && proj != null && !proj.invalid.visible:
+			var fire_pos = _firing_point.global_position
+			proj.fire(fire_pos, target)
 		
-func _handle_upgrade_input() -> void:
-	if _menu != null:
-		var slot_num = 0
-		for slot in ui._perk_slot_matrix.get_children():
-			# Where all the augments sit in each slot so theyre easily referenced as child 0
-			var slot_augment_spot = slot.find_child("Augment")
-			var slot_rect = slot.get_rect()
-			slot_rect.position = slot.global_position
-			var cursor_item = _menu._cursor_item
-			# Hovering func
-			if slot_rect.has_point(_menu.get_screen_transform() * _menu.get_local_mouse_position()):
-				slot.find_child("Hover").visible = true
-			else: 
-				slot.find_child("Hover").visible = false
-			var already_toggled : bool = false
-			
-			# Flags
-			var clicked : bool = Input.is_action_just_pressed("Click")
-			var within_rect : bool = slot_rect.has_point(_menu.get_screen_transform() * _menu.get_local_mouse_position())
-			var cursor_holding_item : bool = cursor_item.get_child_count() != 0
-			var held_item_is_augment : bool = false
-			var held_item_is_projectile : bool = false
-			if cursor_holding_item: 
-				held_item_is_augment = cursor_item.get_child(0) is Item
-				cursor_item.get_child(0).set_anchors_and_offsets_preset(Control.LayoutPreset.PRESET_FULL_RECT)
-				held_item_is_projectile = cursor_item.get_child(0) is ProjectileSpawner
-			var slot_occupied : bool = slot.get_child(2).get_child_count() != 0
-			
-			# ADD CASE
-			# Cursor item set, put on empty space
-			if clicked && within_rect && cursor_holding_item && held_item_is_augment && !slot_occupied:
-				print_debug("Adding augment: " + cursor_item.get_child(0).name + " to " + ui._turret_name.text)
-				var grab_item = cursor_item.get_child(0)
-				applied_upgrades[slot_num] = grab_item
-				grab_item.reparent(slot_augment_spot)
-				grab_item.global_position = slot.global_position
-				already_toggled = true
-				if held_item_is_projectile: _current_projectile = grab_item
-				update_turret_stats()
-						
-			# REMOVE CASE
-			# No cursor item, but augment clicked and slot isnt empty
-			if clicked && within_rect && !cursor_holding_item && slot_occupied:
-				var grab_item = slot.get_child(2).get_child(0)
-				applied_upgrades.erase(slot_num)
-				grab_item.reparent(cursor_item)
-				grab_item.global_position = cursor_item.global_position
-				if grab_item is ProjectileSpawner: _current_projectile = null
-				update_turret_stats()
-			
-			# SWAP CASE
-			# Cursor item set, put on occupied space
-			if clicked && within_rect && cursor_holding_item && slot_occupied && held_item_is_augment:
-				var cursor_augment = cursor_item.get_child(0)
-				var slot_augment = slot.get_child(2).get_child(0)
-				_current_projectile = null
-				if cursor_augment is ProjectileSpawner: _current_projectile = cursor_augment
-				applied_upgrades[slot_num] = cursor_augment
-				slot_augment.global_position = cursor_item.global_position
-				cursor_item.global_position = slot_augment_spot.global_position
-				cursor_augment.reparent(slot_augment_spot)
-				slot_augment.reparent(cursor_item)
-				update_turret_stats()
-			
-			slot_num += 1
 
 func change_turret_mode(mode : String) -> void:
 	_attack_mode = mode
@@ -190,17 +115,49 @@ func update_turret_stats() -> void:
 				#print(dmg)
 			#if augment is ProjectileSpawner:
 				#_current_projectile = augment
-				
-	# Visually updates ui with new stats
-	if _current_projectile != null:
+	applied_upgrades.clear()
+	_current_projectiles.clear()
+	#_current_projectile = null
+	var i : int = 0
+	# iterate through the slots in the turret grabbing projectiles and normal modifiers
+	for slot in ui.perk_slot_matrix.get_children():
+		var curr_item : Item = slot.get_item_in_slot()
+		if curr_item is ProjectileSpawner:
+			applied_upgrades[i] = curr_item
+			_current_projectiles.append(curr_item)
+		
+		if curr_item is ProjectileModifier:
+			applied_upgrades[i] = curr_item
+		i += 1
+	
+	# Disable all projectiles if theres more than one, can only be undone by special modifiers
+	if _current_projectiles.size() > 1:
+		for projectile in _current_projectiles:
+			projectile.invalid.visible = true
+	
+	i = 0
+	# Meta modifier loop, performed after because it mods the mods
+	for slot in ui.perk_slot_matrix.get_children():
+		var curr_item : Item = slot.get_item_in_slot()
+		if curr_item is SpecialModifier:
+			curr_item.trigger_special_effect(ui, i)
+		i += 1
+	
+	
+	# Visually updates ui with new stats and applys the upgrades to projectiles
+	if _current_projectiles.size() > 0:
 		print("Applying augments")
-		_current_projectile.reset()
-		apply_augments_to_projectile(_current_projectile)
-		ui.update_info(_current_projectile)
+		for proj in _current_projectiles:
+			proj.reset()
+			# TODO: this only works under projectiles condition ie: This projectile only upgrades items in same row
+			apply_augments_to_projectile(proj)
+			ui.update_info(proj)
 	else:
 		ui.update_info(null)
 
 func apply_augments_to_projectile(proj : ProjectileSpawner) -> void:
+	# TODO: loop through dictionary with int i so you can pass slot number and grid height to projectile
+	# Projectile can then calculate if it should modify the object or not
 	for augment in applied_upgrades.values():
 		if augment is ProjectileModifier:
 			augment.modify_proj(proj)

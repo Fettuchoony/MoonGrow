@@ -34,6 +34,7 @@ carry_on_load="Carry this object into other \"levels\". Applied to character, ca
 loading_masters="The objects that hold scene loaders as children"
 levels="All Node3D levels"
 items=""
+turrets="All turrets"
 
 [input]
 
