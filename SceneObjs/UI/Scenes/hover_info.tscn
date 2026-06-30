@@ -9,19 +9,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("1_bh7f8")
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=529749175]
 z_index = 10
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 0.5
-offset_right = -0.35202026
-offset_bottom = -0.2000122
-grow_vertical = 2
+anchor_right = 0.25694445
+anchor_bottom = 0.6157407
+metadata/_edit_use_anchors_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=221221675]
 z_index = 1

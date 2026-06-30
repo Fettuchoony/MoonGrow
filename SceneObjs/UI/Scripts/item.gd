@@ -45,7 +45,6 @@ static var HOVER_INFO_WAIT_TIME : float = 0.4
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	item_name = name
 	_adjust_rect()
 	add_to_group("items")
 	fallback_location = get_parent()

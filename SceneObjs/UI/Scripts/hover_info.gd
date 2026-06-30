@@ -22,8 +22,9 @@ func update_data(item : Item = null) -> void:
 	
 	
 	# Item class specific actions TODO: Add more cases for any new item classes, like probably going to add active items at some point
+	_label_array = _label_container.get_children()
 	if item is ProjectileModifier:
-		_label_array = _label_container.get_children()
+		pass
 	elif item is ProjectileSpawner:
 		pass
 	elif item is SpecialModifier:
