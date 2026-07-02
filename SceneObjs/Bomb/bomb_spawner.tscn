@@ -17,6 +17,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ygcvh")
 script = ExtResource("1_r12s0")
+base_dmg = 20
 projectile = ExtResource("2_o0fyn")
 item_name = "Bombs"
 metadata/_custom_type_script = "uid://b8nv1hd418umd"

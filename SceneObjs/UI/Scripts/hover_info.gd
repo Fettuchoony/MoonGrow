@@ -1,9 +1,11 @@
 class_name HoverInfo extends Control
 
 @onready var _panel = $Panel
+@onready var _quality : float = 1.0
+@onready var _quality_label : Label = $Quality
+@onready var _quality_color : Color = Color.WHITE
 @onready var _item_name : Label = $Panel/ScrollContainer/LabelContainer/ItemName
 @onready var _item_info : Label = $Panel/ScrollContainer/LabelContainer/ItemInfo
-@onready var _stats_field : Label = $Panel/ScrollContainer/LabelContainer/Statsfield
 @onready var _label_container : VBoxContainer = $Panel/ScrollContainer/LabelContainer
 @onready var _label_array : Array[Node]
 
@@ -19,13 +21,23 @@ func _process(delta: float) -> void:
 
 # Called with after adding this to scene tree. ie: add_child(this HoverInfo) then HoverInfo.update_data(corresponding Item)
 func update_data(item : Item = null) -> void:
+	_quality = item._quality
 	_item_name.text = item.item_name
+	_quality_label.text = item.quality_name
+	_quality_color = item.quality_color
+	_item_name.label_settings.font_color = _quality_color
 	
 	
 	# Item class specific actions TODO: Add more cases for any new item classes, like probably going to add active items at some point
-	_label_array = _label_container.get_children()
 	if item is ProjectileModifier:
-		pass
+		# instantiate labels TODO: the range should be how many fields there are for a modifier
+		for i in range(10):
+			var new_label = Label.new()
+			_label_array.append(new_label)
+			_label_container.add_child(new_label)
+		
+		
+		_label_array[0].text = str(int(item.delta_dmg / _quality)) + " --> " + str(item.delta_dmg)
 	elif item is ProjectileSpawner:
 		pass
 	elif item is SpecialModifier:
@@ -36,7 +48,7 @@ func _position_window() -> void:
 	var window_offset = Vector2(10.0, 10.0)
 	var pos = mouse_pos + window_offset
 	var screen_rect = get_viewport_rect()
-	var info_rect = _panel.get_rect()
+	var info_rect = get_rect()
 	if mouse_pos.x + window_offset.x + info_rect.size.x > screen_rect.size.x:
 		pos = Vector2(screen_rect.size.x - info_rect.size.x, clampf(mouse_pos.y + window_offset.y, 0.0, screen_rect.size.y - info_rect.size.y))
 	if mouse_pos.y + window_offset.y + info_rect.size.y > screen_rect.size.y:

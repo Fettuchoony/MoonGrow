@@ -2,9 +2,6 @@ class_name ProjectileModifier extends Item
 # Modifies properties of projectiles, projectile is determined by the turret's Projectile augment
 
 
-var _quality : float = 1.0
-var quality_name : String = "Common"
-
 @onready var _quality_rects = $Qualities.get_children()
 
 # Deltas: changes to the given projectile
@@ -36,6 +33,7 @@ var quality_name : String = "Common"
 func _ready() -> void:
 	super()
 	roll_quality()
+	_modify_deltas()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -47,8 +45,8 @@ func _input(event: InputEvent) -> void:
 
 # Takes a projectile and adds its deltas
 func modify_proj(proj : ProjectileSpawner):
-	proj.added_dmg += _quality * delta_dmg
-	proj.added_firerate += _quality * delta_firerate
+	proj.added_dmg += delta_dmg
+	proj.added_firerate += delta_firerate
 
 # TODO: as the game progresses, the chance to get higher rolls goes up so the player does not get god gear at the start of the game
 func roll_quality() -> void:
@@ -58,29 +56,36 @@ func roll_quality() -> void:
 	var roll : float = randf()
 	if roll <= common_quality_cutoff:
 		_quality = common_quality_mult
-		quality_name = "Common (" + str(common_quality_mult) + ")"
+		quality_name = "Common (x" + str(common_quality_mult) + ")"
+		quality_color = Color.WHITE
 		
 	elif roll <= uncommon_quality_cutoff:
 		_quality = uncommon_quality_mult
-		quality_name = "Uncommon" + str(uncommon_quality_mult) + ")"
+		quality_name = "Uncommon (x" + str(uncommon_quality_mult) + ")"
 		_quality_rects[0].visible = true
+		quality_color = Color(0.72, 0.59, 0.95, 1.0)
 		
 	elif roll <= rare_quality_cutoff:
 		_quality = rare_quality_mult
-		quality_name = "Rare" + str(rare_quality_mult) + ")"
+		quality_name = "Rare (x" + str(rare_quality_mult) + ")"
 		_quality_rects[1].visible = true
 		
 	elif roll <= very_rare_quality_cutoff:
 		_quality = very_rare_quality_mult
-		quality_name = "Very Rare" + str(very_rare_quality_mult) + ")"
+		quality_name = "Very Rare (x" + str(very_rare_quality_mult) + ")"
 		_quality_rects[2].visible = true
 		
 	elif roll <= legendary_quality_cutoff:
 		_quality = legendary_quality_mult
-		quality_name = "Legendary" + str(legendary_quality_mult) + ")"
+		quality_name = "Legendary (x" + str(legendary_quality_mult) + ")"
 		_quality_rects[3].visible = true
 		
 	else:
 		_quality = mythic_quality_mult
-		quality_name = "Mythic" + str(mythic_quality_mult) + ")"
+		quality_name = "Mythic (x" + str(mythic_quality_mult) + ")"
 		_quality_rects[4].visible = true
+
+# Modifies the delta of the upgrade by the upgrade quality ?with some special cases?
+func _modify_deltas() -> void:
+	delta_dmg *= _quality
+	delta_firerate *= _quality

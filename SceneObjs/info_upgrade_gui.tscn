@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://birnub8bbbhng"]
+
+[ext_resource type="Script" path="res://SceneObjs/info_upgrade_gui.gd" id="1_5k0yb"]
+
+[node name="InfoUpgradeGUI" type="Control" unique_id=224699318]
+z_index = -5
+layout_mode = 3
+anchor_left = 0.61081254
+anchor_top = 0.09860495
+anchor_right = 0.944
+anchor_bottom = 0.89000005
+offset_left = 0.3439331
+offset_top = 0.10399628
+offset_right = -0.4880371
+offset_bottom = 0.27996826
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_5k0yb")
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1544166566]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TurretName" type="Label" parent="." unique_id=631337287]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 6.0
+offset_right = -7.0
+offset_bottom = 29.0
+grow_horizontal = 2
+horizontal_alignment = 1
+
+[node name="Instruction" type="Label" parent="." unique_id=557323492]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press 'Esc' To Edit Upgrades"
+
+[node name="Panel" type="Panel" parent="." unique_id=2032567382]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.018000001
+anchor_top = 0.65300006
+anchor_right = 0.98200005
+anchor_bottom = 0.94200003
+offset_left = -0.056000233
+offset_top = 0.19796753
+offset_right = 0.05596924
+offset_bottom = -0.10501099
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=612222549]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Dmg" type="Label" parent="Panel/VBoxContainer" unique_id=1563787465]
+layout_mode = 2
+
+[node name="FireRate" type="Label" parent="Panel/VBoxContainer" unique_id=732341896]
+layout_mode = 2
+
+[node name="UpgradeMatrix" type="GridContainer" parent="." unique_id=1601751868]
+texture_filter = 1
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.50130546
+anchor_top = 0.37621832
+anchor_right = 0.50130546
+anchor_bottom = 0.37621832
+grow_horizontal = 2
+grow_vertical = 2
+columns = 3
+metadata/_edit_use_anchors_ = true

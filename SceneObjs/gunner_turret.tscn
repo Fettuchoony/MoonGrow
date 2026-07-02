@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://cj5gkgmpt46ou"]
+
+[ext_resource type="Script" path="res://SceneObjs/gunner_turret.gd" id="1_ph50j"]
+[ext_resource type="ArrayMesh" uid="uid://c2m8j0tf1wbbu" path="res://Textures/Blender/TurretBase.obj" id="2_rbi6e"]
+[ext_resource type="ArrayMesh" uid="uid://c76w40d4x2ye6" path="res://Textures/Blender/TurretHead.obj" id="3_50ni8"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_hdy2w"]
+height = 22.968
+radius = 11.79
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ph50j"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.1764706)
+
+[sub_resource type="SphereMesh" id="SphereMesh_hdy2w"]
+material = SubResource("StandardMaterial3D_ph50j")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_50ni8"]
+size = Vector3(3, 3.21875, 3)
+
+[node name="gunner_turret" type="RigidBody3D" unique_id=2091475285 groups=["turrets"]]
+collision_layer = 8
+collision_mask = 129
+script = ExtResource("1_ph50j")
+
+[node name="EnemyDetect" type="Area3D" parent="." unique_id=814179510]
+collision_layer = 0
+collision_mask = 4
+
+[node name="AttackRadius" type="CollisionShape3D" parent="EnemyDetect" unique_id=21061634]
+shape = SubResource("CylinderShape3D_hdy2w")
+
+[node name="DebugTargetBall" type="MeshInstance3D" parent="." unique_id=418315631]
+mesh = SubResource("SphereMesh_hdy2w")
+
+[node name="TurretBase" type="MeshInstance3D" parent="." unique_id=1134865176]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+mesh = ExtResource("2_rbi6e")
+
+[node name="HeadPivot" type="Node3D" parent="TurretBase" unique_id=524707037]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 1.0295248, 0)
+
+[node name="TurretHead" type="MeshInstance3D" parent="TurretBase/HeadPivot" unique_id=997651910]
+transform = Transform3D(1.5300002, 0, 0, 0, 1.5300002, 0, 0, 0, 1.5300002, 0, 2.0062695, 0)
+mesh = ExtResource("3_50ni8")
+skeleton = NodePath("../..")
+
+[node name="FiringPoint" type="Node3D" parent="TurretBase/HeadPivot/TurretHead" unique_id=1777948428]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 1.2275248, -0.99999994)
+
+[node name="GroundDetect" type="RayCast3D" parent="TurretBase/HeadPivot/TurretHead/FiringPoint" unique_id=982648839]
+transform = Transform3D(2.1786492, 0, 0, 0, 2.1786492, 0, 0, 0, 2.1786492, 0, -5.45043, 0.99999994)
+target_position = Vector3(0, -27.935, 0)
+
+[node name="UpRef" type="Node3D" parent="TurretBase" unique_id=1198264619]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 6.7004986, 0)
+
+[node name="TurretCol" type="CollisionShape3D" parent="." unique_id=1997634634]
+transform = Transform3D(0.36, 0, 0, 0, 0.36, 0, 0, 0, 0.36, 0, 0.28437513, 0)
+shape = SubResource("BoxShape3D_50ni8")

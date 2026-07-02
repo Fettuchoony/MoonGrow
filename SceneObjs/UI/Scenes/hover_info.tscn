@@ -6,22 +6,24 @@
 
 [node name="HoverInfo" type="Control" unique_id=1659669647]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.18315972
+anchor_bottom = 0.48765433
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 script = ExtResource("1_bh7f8")
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=529749175]
 z_index = 10
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.25694445
-anchor_bottom = 0.6157407
-metadata/_edit_use_anchors_ = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=221221675]
 z_index = 1
@@ -52,7 +54,11 @@ layout_mode = 2
 text = "Stats:"
 autowrap_mode = 2
 
-[node name="Statsfield" type="Label" parent="Panel/ScrollContainer/LabelContainer" unique_id=1901778653]
-custom_minimum_size = Vector2(10, 10)
-layout_mode = 2
-autowrap_mode = 2
+[node name="Quality" type="Label" parent="." unique_id=1779264572]
+z_index = 10
+layout_mode = 0
+offset_left = 1.0
+offset_top = 292.0
+offset_right = 212.0
+offset_bottom = 315.0
+text = "Quality Here"

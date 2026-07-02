@@ -3,6 +3,10 @@ class_name Item extends PanelContainer
 
 static var HOVER_INFO_WAIT_TIME : float = 0.4
 
+var _quality : float = 1.0
+var quality_name : String = "Quality Here"
+var quality_color : Color = Color.WHITE
+
 # Control node that follows the cursor, can transfer items
 @onready var _cursor_slot = get_tree().root.get_child(0).find_child("ItemHold").find_child("Augment")
 
