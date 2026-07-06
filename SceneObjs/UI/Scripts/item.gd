@@ -23,6 +23,8 @@ var quality_color : Color = Color.WHITE
 # Item is disabled for some reason, often compatibility
 @onready var invalid : TextureRect = $GUI/Invalid
 
+@onready var augmented : TextureRect = $GUI/Augmented
+
 # If true, item is in stable spot, if not, it is being held by cursor
 @onready var _stored : bool = true
 
@@ -92,6 +94,7 @@ func _input(event: InputEvent) -> void:
 		# When clicked
 		if rect.has_point(get_screen_transform() * get_local_mouse_position()):
 			invalid.visible = false
+			augmented.visible = false
 			if _cursor_slot.get_child_count() > 0:
 				_cursor_slot.get_child(0).move()
 			move(_cursor_slot)

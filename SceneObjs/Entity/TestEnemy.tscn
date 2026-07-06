@@ -10,6 +10,54 @@ viewport_path = NodePath("Sprite3D/EnemyViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_516de"]
 
+[sub_resource type="Curve" id="Curve_ehwlw"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25838923, 100), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_anff5"]
+curve = SubResource("Curve_ehwlw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4jolf"]
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(0, 1, 0)
+spread = 15.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+scale_max = 1000.0
+scale_curve = SubResource("CurveTexture_anff5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ehwlw"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+grow = true
+grow_amount = 0.01
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 5
+metadata/_stencil_owned = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qqhcy"]
+next_pass = SubResource("StandardMaterial3D_ehwlw")
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+disable_fog = true
+disable_specular_occlusion = true
+albedo_color = Color(1, 0.25, 0.25, 1)
+billboard_mode = 2
+stencil_mode = 1
+stencil_flags = 2
+
+[sub_resource type="TextMesh" id="TextMesh_3tf66"]
+material = SubResource("StandardMaterial3D_qqhcy")
+text = "0
+"
+depth = 0.0
+
 [node name="TestEnemy" type="RigidBody3D" unique_id=1213933506]
 transform = Transform3D(-0.9992508, 0, -0.0387017, 0, 1, 0, 0.0387017, 0, -0.9992508, 0, 0, 0)
 collision_layer = 4
@@ -17,9 +65,8 @@ axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_516de")
-chargeup_time = 1.0
-health = 50
-max_health = 50
+health = 400
+max_health = 400
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1773027660]
 shape = SubResource("SphereShape3D_516de")
@@ -68,3 +115,10 @@ visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TargetPoint" unique_id=632597966]
 mesh = SubResource("BoxMesh_516de")
+
+[node name="DamageParticles" type="GPUParticles3D" parent="." unique_id=1170088959]
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0, 1.6458285, 0)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_4jolf")
+draw_pass_1 = SubResource("TextMesh_3tf66")
