@@ -350,6 +350,22 @@ func _spawn_with_all_items() -> void:
 	_pickup_item(_dmg_mod_tier1.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_dmg_mod_tier1.instantiate())
 
 # TODO: Find a way to make this use event instead of direct input?
 func _taskbar_scrolling() -> void:

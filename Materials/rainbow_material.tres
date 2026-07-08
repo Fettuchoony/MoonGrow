@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://b0vyqkaox0ilf"]
+
+[ext_resource type="Shader" uid="uid://dpvcdw5rcrbtu" path="res://Materials/raindow_shader.gdshader" id="1_henid"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_henid")

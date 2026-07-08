@@ -1,13 +1,15 @@
 class_name HoverInfo extends Control
 
 @onready var _panel = $Panel
-@onready var _quality : float = 1.0
-@onready var _quality_label : Label = $Quality
+@onready var _quality : float = 0.0
+@onready var _quality_mult : float = 0.0
+@onready var _quality_label : RichTextLabel = $Quality
 @onready var _quality_color : Color = Color.WHITE
 @onready var _item_name : Label = $Panel/ScrollContainer/LabelContainer/ItemName
 @onready var _item_info : Label = $Panel/ScrollContainer/LabelContainer/ItemInfo
 @onready var _label_container : VBoxContainer = $Panel/ScrollContainer/LabelContainer
 @onready var _label_array : Array[Node]
+@onready var _time : float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,15 +19,22 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	_position_window()
+	if _quality > Item.legendary_quality_cutoff:
+		var h = 0.5 * cos(_time) + 0.5
+		var new_color : Color = Color.from_hsv(h, 0.7, 1.0, 1.0)
+		_item_name.label_settings.font_color = new_color
+	_time += delta
 
 
 # Called with after adding this to scene tree. ie: add_child(this HoverInfo) then HoverInfo.update_data(corresponding Item)
 func update_data(item : Item = null) -> void:
-	_quality = item._quality
+	_quality = item.quality
+	_quality_mult = item.quality_mult
 	_item_name.text = item.item_name
 	_quality_label.text = item.quality_name
 	_quality_color = item.quality_color
 	_item_name.label_settings.font_color = _quality_color
+	
 	
 	
 	# Item class specific actions TODO: Add more cases for any new item classes, like probably going to add active items at some point
@@ -37,7 +46,7 @@ func update_data(item : Item = null) -> void:
 			_label_container.add_child(new_label)
 		
 		
-		_label_array[0].text = str(int(item.delta_dmg / _quality)) + " --> " + str(item.delta_dmg)
+		_label_array[0].text = str(int(item.delta_dmg / _quality_mult)) + " --> " + str(item.delta_dmg)
 	elif item is ProjectileSpawner:
 		pass
 	elif item is SpecialModifier:
