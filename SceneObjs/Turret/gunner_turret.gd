@@ -37,7 +37,7 @@ var hold_pos
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	being_held = false
-	hold_pos = global_position
+	hold_pos = global_position 
 	var ui_tscn = load("res://SceneObjs/UI/Scenes/info_upgrade_gui.tscn")
 	ui = ui_tscn.instantiate()
 	add_child(ui)

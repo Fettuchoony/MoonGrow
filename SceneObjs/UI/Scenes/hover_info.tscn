@@ -8,6 +8,7 @@
 RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
 
 [node name="HoverInfo" type="Control" unique_id=1659669647]
+z_index = 10
 layout_mode = 3
 anchor_right = 0.18315972
 anchor_bottom = 0.48765433

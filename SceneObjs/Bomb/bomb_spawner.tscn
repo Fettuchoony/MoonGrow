@@ -30,6 +30,7 @@ layout_mode = 2
 texture = ExtResource("2_ygcvh")
 
 [node name="Qualities" parent="." unique_id=1861689450 instance=ExtResource("5_26xqn")]
+modulate = Color(1, 1, 1, 0.19215687)
 layout_mode = 2
 
 [editable path="GUI"]

@@ -113,9 +113,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 226.82957, 3.3314915, 319.426
 [node name="TestEnemy" parent="NavigationRegion3D/Entities" unique_id=871990744 instance=ExtResource("8_7ypan")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 311.42682, 1.2834101, 477.5049)
 
-[node name="TestEnemy2" parent="NavigationRegion3D/Entities" unique_id=1319739438 instance=ExtResource("8_7ypan")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 307.10873, 1.2834101, 476.53604)
-
 [node name="GroundLoot" parent="." unique_id=296167991 instance=ExtResource("9_bmg8s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 273.39948, 1.9703898, 283.83783)
 

@@ -3,7 +3,7 @@ class_name Enemy extends RigidBody3D
 static var HEALTH_SHOW_TIME : float = 1
 static var REFRESH_FREQUENCY : float = 1
 
-@onready var _dmg_particles : GPUParticles3D = $DamageParticles
+#@onready var _dmg_text_scene = preload("res://SceneObjs/Entity/dmg_text.tscn").instantiate()
 
 @onready var time : float = 0
 @onready var health_sprite : Sprite3D = $Sprite3D
@@ -91,9 +91,9 @@ func health_gui_update(updated_health: int, updated_max: int) -> void:
 
 func change_health(delta: int) -> void:
 	print(name + " took " + str(delta) + " dmg")
-	_dmg_particles.restart()
-	_dmg_particles.draw_pass_1.text = str(abs(delta))
-	_dmg_particles.emitting = true
+	var new_dmg_text = DamageText.new(global_position + Vector3(0.0, 4.0, 0.0))
+	add_child(new_dmg_text)
+	new_dmg_text.text = str(abs(delta))
 	health += delta
 	# Cap health
 	health = min(health, max_health)
@@ -102,8 +102,8 @@ func change_health(delta: int) -> void:
 	if health <= 0:
 		queue_free()
 		pass
-	# Send info to the health GUI
-	health_gui_update(health, max_health)
+	## Send info to the health GUI
+	#health_gui_update(health, max_health)
 
 func apply_knockback(origin: Vector3, knockback_strength : float = 1.0) -> void:
 	apply_impulse(knockback_strength * (1 / origin.distance_to(global_position)) * origin.direction_to(global_position))

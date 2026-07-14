@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bws6qc14kpp4d"
-path.etc2="res://.godot/imported/BombActive13.png-0f24a9832c350d112817943570fa4d78.etc2.ctex"
+path.s3tc="res://.godot/imported/BombActive13.png-0f24a9832c350d112817943570fa4d78.s3tc.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/Extracted/BombAnim/BombActive13.png"
-dest_files=["res://.godot/imported/BombActive13.png-0f24a9832c350d112817943570fa4d78.etc2.ctex"]
+dest_files=["res://.godot/imported/BombActive13.png-0f24a9832c350d112817943570fa4d78.s3tc.ctex"]
 
 [params]
 
