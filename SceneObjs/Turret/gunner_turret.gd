@@ -95,7 +95,7 @@ func _turret_attack() -> void:
 				curr_target_path_length = enemy.path_length
 	# Actually firing
 	for proj in _current_projectiles:
-		if target != null && proj != null && !proj.invalid.visible:
+		if target != null && proj != null && !proj.invalid.visible && !_current_reachable_enemies.is_empty():
 			var fire_pos = _firing_point.global_position
 			proj.fire(fire_pos, target)
 		

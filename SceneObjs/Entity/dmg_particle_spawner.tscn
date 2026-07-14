@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://clcu8dl70iumg"]
+
+[ext_resource type="Script" uid="uid://dp4j1cwoffky0" path="res://SceneObjs/Entity/dmg_particle_spawner.gd" id="1_0734k"]
+
+[sub_resource type="Curve" id="Curve_dxmh2"]
+_limits = [0.0, 3.0, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.15174131, 2.3079848), 1.3609955, 1.3609955, 0, 0, Vector2(0.2860697, 2.7693284), 0.51949596, 0.51949596, 0, 0, Vector2(0.48507464, 2.967047), 0.0, 0.0, 0, 0, Vector2(0.6791045, 3), 6.6558533e-07, 6.6558533e-07, 0, 0, Vector2(0.84825873, 2.5386567), -2.0804806, -2.0804806, 0, 0, Vector2(0.9328359, 1.3358684), -8.831431, -8.831431, 0, 0, Vector2(0.9626866, 0.70975924), -3.566538, -3.566538, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 9
+
+[sub_resource type="Curve" id="Curve_0734k"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.30597013, 0.1981411), 0.0, 0.0, 0, 0, Vector2(0.5348258, 0.1981411), 0.0, 0.0, 0, 0, Vector2(0.7786069, 0.1981411), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[node name="DmgParticleSpawner" type="Node3D" unique_id=1533725901]
+script = ExtResource("1_0734k")
+height = SubResource("Curve_dxmh2")
+size_over_life = SubResource("Curve_0734k")
+metadata/_custom_type_script = "uid://dp4j1cwoffky0"

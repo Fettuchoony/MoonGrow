@@ -3,7 +3,7 @@ class_name Enemy extends RigidBody3D
 static var HEALTH_SHOW_TIME : float = 1
 static var REFRESH_FREQUENCY : float = 1
 
-@onready var _dmg_particles : GPUParticles3D = $DamageParticles
+@onready var _dmg_particle_spawner : Node3D = $DmgParticleSpawner
 
 @onready var time : float = 0
 @onready var health_sprite : Sprite3D = $Sprite3D
@@ -91,9 +91,7 @@ func health_gui_update(updated_health: int, updated_max: int) -> void:
 
 func change_health(delta: int) -> void:
 	print(name + " took " + str(delta) + " dmg")
-	_dmg_particles.restart()
-	_dmg_particles.draw_pass_1.text = str(abs(delta))
-	_dmg_particles.emitting = true
+	_dmg_particle_spawner.trigger(delta)
 	health += delta
 	# Cap health
 	health = min(health, max_health)
