@@ -44,7 +44,8 @@ func update_info(current_proj : ProjectileSpawner) -> void:
 
 # Runs on ready, creates the slots
 func _populate_slot_array() -> void:
-	var population_chance = 1.0
+	var population_chance = _turret.turret_value
+	print(_turret.turret_value)
 	for i in range(pow(_grid.columns, 2)):
 		var new_slot : ItemSlot = _slot_resource.instantiate()
 		_grid.add_child(new_slot)

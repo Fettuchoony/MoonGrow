@@ -8,7 +8,7 @@ var quality_mult : float = 0.0
 var quality_name : String = "Quality Here"
 var quality_color : Color = Color.WHITE
 
-
+@onready var _quality_scene : AspectRatioContainer = $Qualities
 @onready var _quality_rects = $Qualities.get_children()
 
 # Control node that follows the cursor, can transfer items
@@ -72,6 +72,7 @@ const mythic_quality_cutoff : float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	roll_quality()
 	_adjust_rect()
 	add_to_group("items")
 	fallback_location = get_parent()
@@ -145,6 +146,9 @@ func _request_item_for_slot(slot : Control) -> void:
 			get_tree().call_group("turrets", "update_turret_stats")
 
 func _adjust_rect() -> void:
+	z_index = 1
+	_quality_scene.z_index = -1
+	_gui.z_index = 0
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	#size = Vector2(128.0, 128.0)
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL

@@ -100,8 +100,8 @@ func change_health(delta: int) -> void:
 	if health <= 0:
 		queue_free()
 		pass
-	# Send info to the health GUI
-	health_gui_update(health, max_health)
+	## Send info to the health GUI
+	#health_gui_update(health, max_health)
 
 func apply_knockback(origin: Vector3, knockback_strength : float = 1.0) -> void:
 	apply_impulse(knockback_strength * (1 / origin.distance_to(global_position)) * origin.direction_to(global_position))
