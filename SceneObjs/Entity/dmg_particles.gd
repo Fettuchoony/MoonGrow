@@ -7,13 +7,17 @@ extends Label3D
 @onready var _time = 0.0
 @onready var _starting_pos : Vector3 = global_position
 @onready var _dir : Vector3 = Vector3(randf() * _spread, 0.0, randf() * _spread)
+@onready var _spread_percent : float = get_parent().spread_percent
 
 func init(dmg_amt : float = 0.0) -> void:
 	text = str(dmg_amt)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	var x_spread = randf_range(-_spread_percent, _spread_percent)
+	var z_spread = randf_range(-_spread_percent, _spread_percent)
+	_dir = Vector3(x_spread, 0.0, z_spread) 
+	print(_dir)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

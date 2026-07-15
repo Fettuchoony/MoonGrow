@@ -8,8 +8,8 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.15174131, 2.3079848), 1.360995
 point_count = 9
 
 [sub_resource type="Curve" id="Curve_0734k"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.30597013, 0.1981411), 0.0, 0.0, 0, 0, Vector2(0.5348258, 0.1981411), 0.0, 0.0, 0, 0, Vector2(0.7786069, 0.1981411), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 5
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.061983466, 0.17977536), -0.5008869, -0.5008869, 0, 0, Vector2(0.24793388, 0.15730345), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
 [node name="DmgParticleSpawner" type="Node3D" unique_id=1533725901]
 script = ExtResource("1_0734k")

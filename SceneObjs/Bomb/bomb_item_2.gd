@@ -11,6 +11,8 @@ class_name Bomb extends RigidBody3D
 @onready var damage_hitbox : Area3D = $DamageBox
 @onready var explosion_fog  = preload("res://SceneObjs/Bomb/explosion_bomb.tscn")
 
+
+# TODO: Move this to a prent class for all spawned projectiles
 # THIS IS VERY IMPORTANT: holds a copy of the spawner that created it, which holds all effect data
 @onready var projectile_effect : ProjectileSpawner
 

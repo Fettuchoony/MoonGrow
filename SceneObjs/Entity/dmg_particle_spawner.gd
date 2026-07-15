@@ -13,6 +13,9 @@ class_name DmgParticleSpawner extends Node3D
 ## How many seconds the partocle will exist before self-destruction
 @export var lifetime : float = 1.0
 
+### The randomness to the angles of emission, 0.0 = no spread, 0.5 = 45 degree spread, and so on...
+@export var spread_percent : float = 1.0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

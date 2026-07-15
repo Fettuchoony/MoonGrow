@@ -62,6 +62,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _turret_spawner = preload("res://SceneObjs/Turret/turret_spawner.tscn")
 @onready var _dmg_mod_tier1 = preload("res://SceneObjs/Modifiers/dmg_mod_tier1.tscn")
 @onready var _horizontal_scatter = preload("res://SceneObjs/Modifiers/horizontal_scatter.tscn")
+@onready var _bullet_spawner = preload("res://SceneObjs/Bullet/bullet_spawner.tscn")
 
 
 @export var item_cooldown_time : float = 0.2
@@ -366,6 +367,7 @@ func _spawn_with_all_items() -> void:
 	_pickup_item(_dmg_mod_tier1.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())
 	_pickup_item(_dmg_mod_tier1.instantiate())
+	_pickup_item(_bullet_spawner.instantiate())
 
 # TODO: Find a way to make this use event instead of direct input?
 func _taskbar_scrolling() -> void:
