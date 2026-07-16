@@ -8,6 +8,8 @@
 
 [node name="BulletSpawner" type="PanelContainer" unique_id=1645025842]
 script = ExtResource("1_nnvmh")
+base_dmg = 10
+base_firerate = 0.2
 projectile = ExtResource("2_pmhwo")
 item_name = "Bullet"
 slot_icon = ExtResource("3_ufvll")

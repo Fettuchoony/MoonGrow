@@ -28,8 +28,9 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	_fire_timer += delta
 
+## OOP: (Quality modifier * Base Damage) + Modifier Buffs
 func apply_effects_to_enemy(enemy : Enemy) -> void:
-	enemy.change_health(-base_dmg - added_dmg)
+	enemy.change_health(-(quality_mult * base_dmg) - added_dmg)
 
 func get_dmg() -> int:
 	return base_dmg + added_dmg

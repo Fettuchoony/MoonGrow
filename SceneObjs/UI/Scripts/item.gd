@@ -75,6 +75,7 @@ func _ready() -> void:
 	roll_quality()
 	_adjust_rect()
 	add_to_group("items")
+	$GUI/Icon.texture = slot_icon
 	fallback_location = get_parent()
 	if fallback_location == null:
 		print_debug("Orphan Item found, not allowed because no fallback location can be set")
