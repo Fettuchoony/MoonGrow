@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://djd43huil28ek"]
 
+[ext_resource type="Script" uid="uid://cwaotb5uesmhl" path="res://SceneObjs/Environmental/root.gd" id="1_pd85l"]
 [ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://SceneObjs/Player/character_movement.gd" id="2_ckccm"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://SceneObjs/Player/camera_3d.gd" id="3_u8551"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="4_pd85l"]
@@ -12,6 +13,8 @@
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
 [ext_resource type="Material" uid="uid://b0vyqkaox0ilf" path="res://Materials/rainbow_material.tres" id="12_dnjo6"]
+[ext_resource type="Script" uid="uid://85b7h8b5xqih" path="res://SceneObjs/Environmental/overworld.gd" id="13_u8551"]
+[ext_resource type="Texture2D" uid="uid://0kvrf71i3h2v" path="res://Textures/Extracted/overworld.png" id="14_pd85l"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uu6xs"]
 
@@ -43,7 +46,15 @@ volumetric_fog_density = 0.0
 [sub_resource type="BoxMesh" id="BoxMesh_ckccm"]
 material = ExtResource("12_dnjo6")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rx3v"]
+albedo_texture = ExtResource("14_pd85l")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_chges"]
+material = SubResource("StandardMaterial3D_1rx3v")
+size = Vector2(500, 500)
+
 [node name="MainScene" type="Node3D" unique_id=1688291202]
+script = ExtResource("1_pd85l")
 
 [node name="MainPlayer" type="CharacterBody3D" parent="." unique_id=1501440258 groups=["carry_on_load"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 326.36093, 1.2649469, 468.70688)
@@ -300,14 +311,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Inventory" type="AspectRatioContainer" parent="Menus/MenuInv" unique_id=1027544256]
 layout_mode = 2
-stretch_mode = 1
+stretch_mode = 3
 metadata/_tab_index = 0
 
 [node name="HFlowContainer" type="GridContainer" parent="Menus/MenuInv/Inventory" unique_id=905268427]
 texture_filter = 1
 layout_direction = 2
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 4
 columns = 10
 metadata/_edit_use_anchors_ = true
 
@@ -321,10 +332,21 @@ environment = SubResource("Environment_w3rk5")
 
 [node name="MainTestScene" parent="." unique_id=869491980 instance=ExtResource("12_0re28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3963816, -1.0000002, -0.8044402)
+visible = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1846685231]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 331.88336, 2.4259834, 463.96735)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MainTestScene" unique_id=1846685231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.48697, 3.4259837, 464.7718)
 mesh = SubResource("BoxMesh_ckccm")
+skeleton = NodePath("../..")
+
+[node name="Overworld" type="Node3D" parent="." unique_id=308531465]
+script = ExtResource("13_u8551")
+
+[node name="World" type="MeshInstance3D" parent="Overworld" unique_id=936662048]
+mesh = SubResource("PlaneMesh_chges")
+
+[node name="MapCam" type="Camera3D" parent="Overworld" unique_id=1434929999]
+transform = Transform3D(1, 0, 0, 0, 0.17364822, 0.9848077, 0, -0.9848077, 0.17364822, 0, 318.718, 88.764)
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 [connection signal="transfer_cam_to_player" from="MainPlayer" to="MainPlayer/CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]

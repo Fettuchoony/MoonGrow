@@ -5,8 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://boa50sslbynsx" path="res://Textures/Extracted/SamplePerkIcon.png" id="3_r445y"]
 [ext_resource type="PackedScene" uid="uid://c2ykpq8y0hn0i" path="res://SceneObjs/UI/Scenes/qualities.tscn" id="4_oe37h"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6r8k6"]
-
 [node name="DmgModTier1" type="PanelContainer" unique_id=896875203]
 z_index = 1
 anchors_preset = 15
@@ -16,10 +14,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_6r8k6")
 script = ExtResource("1_mq2ml")
 delta_dmg = 10
 item_name = "Damage Mod"
+slot_icon = ExtResource("3_r445y")
 
 [node name="GUI" parent="." unique_id=963375078 instance=ExtResource("2_oe37h")]
 layout_mode = 2

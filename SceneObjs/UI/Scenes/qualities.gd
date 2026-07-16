@@ -5,6 +5,8 @@ extends AspectRatioContainer
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pivot_offset_ratio = Vector2(0.5, 0.5)
+	#for child : TextureRect in get_children():
+		#child.custom_minimum_size = 3.0 * get_parent().size
 	
 
 

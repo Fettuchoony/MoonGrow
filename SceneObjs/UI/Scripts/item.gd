@@ -1,7 +1,7 @@
 # This class is now doing a lot of heavy lifting, controls its pickup/placement and spawns
 class_name Item extends PanelContainer
 
-static var HOVER_INFO_WAIT_TIME : float = 0.4
+static var HOVER_INFO_WAIT_TIME : float = 0.25
 
 var quality : float = 0.0
 var quality_mult : float = 0.0
@@ -75,7 +75,6 @@ func _ready() -> void:
 	roll_quality()
 	_adjust_rect()
 	add_to_group("items")
-	$GUI/Icon.texture = slot_icon
 	fallback_location = get_parent()
 	if fallback_location == null:
 		print_debug("Orphan Item found, not allowed because no fallback location can be set")
@@ -90,7 +89,7 @@ func _hovering_func(delta : float) -> void:
 	var rect = get_rect()
 	rect.position = global_position
 	# When hovering at all
-	if rect.has_point(get_screen_transform() * get_local_mouse_position()):
+	if is_visible_in_tree() && rect.has_point(get_screen_transform() * get_local_mouse_position()):
 		
 		_hover.visible = true
 		_hovering_timer += delta
@@ -110,7 +109,7 @@ func _hovering_func(delta : float) -> void:
 
 # On input pickup or place the item
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Click") && _stored:
+	if event.is_action_pressed("Click") && _stored && is_visible_in_tree():
 		fallback_location = get_parent()
 		var rect = get_rect()
 		rect.position = global_position
@@ -147,6 +146,10 @@ func _request_item_for_slot(slot : Control) -> void:
 			get_tree().call_group("turrets", "update_turret_stats")
 
 func _adjust_rect() -> void:
+	$GUI/Icon.texture = preload("res://Textures/Extracted/PlaceholderItem.png")
+	if slot_icon != null:
+		$GUI/Icon.texture = slot_icon
+	add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	z_index = 1
 	_quality_scene.z_index = -1
 	_gui.z_index = 0

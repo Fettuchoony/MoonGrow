@@ -19,6 +19,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	_position_window()
+	# rainbow effect for mythical items
 	if _quality > Item.legendary_quality_cutoff:
 		var h = 0.5 * cos(_time) + 0.5
 		var new_color : Color = Color.from_hsv(h, 0.7, 1.0, 1.0)
@@ -28,12 +29,13 @@ func _process(delta: float) -> void:
 
 # Called with after adding this to scene tree. ie: add_child(this HoverInfo) then HoverInfo.update_data(corresponding Item)
 func update_data(item : Item = null) -> void:
-	_quality = item.quality
-	_quality_mult = item.quality_mult
-	_item_name.text = item.item_name
-	_quality_label.text = item.quality_name
-	_quality_color = item.quality_color
-	_item_name.label_settings.font_color = _quality_color
+	if item != null:
+		_quality = item.quality
+		_quality_mult = item.quality_mult
+		_item_name.text = item.item_name
+		_quality_label.text = item.quality_name
+		_quality_color = item.quality_color
+		_item_name.label_settings.font_color = _quality_color
 	
 	
 	
@@ -54,7 +56,7 @@ func update_data(item : Item = null) -> void:
 
 func _position_window() -> void:
 	var mouse_pos = get_screen_transform() * get_local_mouse_position()
-	var window_offset = Vector2(10.0, 10.0)
+	var window_offset = Vector2(23.0, 20.0)
 	var pos = mouse_pos + window_offset
 	var screen_rect = get_viewport_rect()
 	var info_rect = get_rect()
