@@ -38,6 +38,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _taskbar_items : Dictionary[String, Control]
 @onready var _taskbar_containers : Array[Node]
 @onready var _current_taskbar_index : int = 0
+@onready var _playerGUI : Control = $PlayerGUI
 @onready var _taskbar_rects = $PlayerGUI/TaskBar/HBoxContainer.get_children()
 
 @onready var _inventory : Array
@@ -425,3 +426,7 @@ func _upgrade_hover_ui() -> void:
 				_mouse_mode = Input.MOUSE_MODE_CAPTURED
 				pause_menu.emit()
 		Input.mouse_mode = _mouse_mode
+
+func toggleHUD() -> void:
+	_playerGUI.visible = !_playerGUI.visible
+	print(_playerGUI.visible)

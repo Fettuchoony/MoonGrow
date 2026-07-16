@@ -3,7 +3,7 @@ extends Camera3D
 #@onready var _camera := $"." as Camera3D
 @onready var _camera_pivot := $"../.." as Node3D
 @onready var _player := $"../../.." as CharacterBody3D
-@onready var _vehicle_cam := $"../../../../MainTestScene/VehicleBody3D/Pivot/SpringArm3D/VehicleCam"
+@onready var _vehicle_cam := $"../../../../CurrentLevel/MainTestScene/VehicleBody3D/Pivot/SpringArm3D/VehicleCam"
 
 # TODO: make sensitivity adjustable
 @export_range(0.0, 1.0) var mouse_sensitivity = 0.01

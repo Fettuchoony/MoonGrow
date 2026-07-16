@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0kvrf71i3h2v"
-path.etc2="res://.godot/imported/overworld.png-ba82cd0b6b7b69cfda49bcea5d9c7bba.etc2.ctex"
+path.s3tc="res://.godot/imported/overworld.png-ba82cd0b6b7b69cfda49bcea5d9c7bba.s3tc.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/Extracted/overworld.png"
-dest_files=["res://.godot/imported/overworld.png-ba82cd0b6b7b69cfda49bcea5d9c7bba.etc2.ctex"]
+dest_files=["res://.godot/imported/overworld.png-ba82cd0b6b7b69cfda49bcea5d9c7bba.s3tc.ctex"]
 
 [params]
 
