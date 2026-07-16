@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://1cbj5ww0k8f2"]
+
+[ext_resource type="Script" uid="uid://dqmnkbc2xlke8" path="res://SceneObjs/Entity/dmg_particles.gd" id="1_8w8x8"]
+
+[node name="DmgParticles" type="Label3D" unique_id=1703034156]
+billboard = 2
+fixed_size = true
+modulate = Color(1, 0, 0, 1)
+text = "DMG"
+font_size = 48
+outline_size = 4
+script = ExtResource("1_8w8x8")

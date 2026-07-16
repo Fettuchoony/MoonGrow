@@ -28,4 +28,5 @@ func trigger(_pos: Vector3) -> void:
 		var turret_obj = target_item.instantiate()
 		level_node.add_child(turret_obj)
 		turret_obj.global_position = _pos
+		turret_obj.turret_value = quality
 		queue_free()

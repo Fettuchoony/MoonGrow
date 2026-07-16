@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ccm4u637jfj8t"]
+
+[ext_resource type="Script" uid="uid://bpjp041k2fkwq" path="res://SceneObjs/Entity/dmg_text.gd" id="1_hruoh"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hruoh"]
+
+[node name="DMGText" type="Label3D" unique_id=1367546217]
+text = "
+"
+script = ExtResource("1_hruoh")
+launch_strength = 10.0
+metadata/_custom_type_script = "uid://bpjp041k2fkwq"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1196435177]
+mesh = SubResource("BoxMesh_hruoh")

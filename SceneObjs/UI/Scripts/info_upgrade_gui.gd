@@ -44,7 +44,8 @@ func update_info(current_proj : ProjectileSpawner) -> void:
 
 # Runs on ready, creates the slots
 func _populate_slot_array() -> void:
-	var population_chance = 1.0
+	var population_chance = _turret.turret_value
+	print(_turret.turret_value)
 	for i in range(pow(_grid.columns, 2)):
 		var new_slot : ItemSlot = _slot_resource.instantiate()
 		_grid.add_child(new_slot)
@@ -67,7 +68,7 @@ func _populate_slot_matrix() -> void:
 				row_arr.append(slot_arr[i * grid_height + j])
 		perk_slot_matrix.append(row_arr)
 	
-# Invalidates/validates all slots in slots row not inclusive of given slot
+# Returns all slots in slots row inclusive of given slot
 func get_projectiles_in_row(slot_num : int, range : int) -> Array[ItemSlot]:
 	var grid_height = _grid.columns
 	var row = slot_num / grid_height
@@ -84,7 +85,7 @@ func get_projectiles_in_row(slot_num : int, range : int) -> Array[ItemSlot]:
 		#var curr_slot : ItemSlot = _grid.get_children()[curr_num]
 		#if _turret.applied_upgrades.has(curr_num) && _turret.applied_upgrades[curr_num] is ProjectileSpawner && curr_slot != null:
 
-# Invalidates/validates all slots in slots column not inclusive of given slot
+# Returns all slots in slots column inclusive of given slot
 func get_projectiles_in_column(slot_num : int, range : int) -> Array[ItemSlot]:
 	var grid_height = _grid.columns
 	var row = slot_num / grid_height

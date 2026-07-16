@@ -37,7 +37,7 @@ var hold_pos
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	being_held = false
-	hold_pos = global_position
+	hold_pos = global_position 
 	var ui_tscn = load("res://SceneObjs/UI/Scenes/info_upgrade_gui.tscn")
 	ui = ui_tscn.instantiate()
 	add_child(ui)
@@ -95,7 +95,7 @@ func _turret_attack() -> void:
 				curr_target_path_length = enemy.path_length
 	# Actually firing
 	for proj in _current_projectiles:
-		if target != null && proj != null && !proj.invalid.visible:
+		if target != null && proj != null && !proj.invalid.visible && !_current_reachable_enemies.is_empty():
 			var fire_pos = _firing_point.global_position
 			proj.fire(fire_pos, target)
 		
@@ -134,6 +134,8 @@ func update_turret_stats() -> void:
 	if _current_projectiles.size() > 1:
 		for projectile in _current_projectiles:
 			projectile.invalid.visible = true
+	elif _current_projectiles.size() == 1:
+		_current_projectiles[0].invalid.visible = false
 	
 	i = 0
 	# Meta modifier loop, performed after because it mods the mods

@@ -13,6 +13,7 @@ const DEFAULT_ICON_SIZE = 32.0
 @onready var _currently_idleing : bool = false
 @onready var _current_idle_obj = null
 @onready var _cursor_item = $"../MainPlayer/PlayerGUI/ItemHold"
+@onready var _cursor_slot = $"../MainPlayer/PlayerGUI/ItemHold/Augment"
 
 @onready var debug
 
@@ -26,6 +27,12 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	_item_hovering_and_selection_func()
+	
+func _input(event: InputEvent) -> void:
+	var inv_rect = inv_window.get_rect()
+	inv_rect.position = global_position
+	if event.is_action_pressed("Click") && _cursor_slot.get_child_count() > 0 && inv_rect.has_point(get_screen_transform() * get_local_mouse_position()):
+		get_tree().call_group("items", "_request_item_for_slot", _item_slots)
 	
 
 # Player Controller sends a signal to toggle visibility
@@ -92,6 +99,8 @@ func _refresh_inventory() -> void:
 			#else:
 				#_item_slots.add_child(item_gui)
 			# Do not scale taskbar rects
+
+
 
 func _item_hovering_and_selection_func() -> void:
 	pass

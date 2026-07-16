@@ -3,12 +3,14 @@
 [ext_resource type="Script" uid="uid://bo5lvhbl6ejdd" path="res://SceneObjs/UI/Scripts/special_modifier.gd" id="1_flfqn"]
 [ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/UI/Scenes/item_gui.tscn" id="2_hb10s"]
 [ext_resource type="Texture2D" uid="uid://cbpsvqr5ha27b" path="res://Textures/Extracted/PlaceholderItem.png" id="3_72nuj"]
+[ext_resource type="PackedScene" uid="uid://c2ykpq8y0hn0i" path="res://SceneObjs/UI/Scenes/qualities.tscn" id="4_4ggn3"]
 
 [node name="HorizontalScatter" type="PanelContainer" unique_id=1287588745]
 offset_right = 32.0
 offset_bottom = 32.0
 script = ExtResource("1_flfqn")
 horizontal_scatter = true
+item_name = "Horizontal Scatter"
 metadata/_custom_type_script = "uid://bo5lvhbl6ejdd"
 
 [node name="GUI" parent="." unique_id=963375078 instance=ExtResource("2_hb10s")]
@@ -16,5 +18,8 @@ layout_mode = 2
 
 [node name="Icon" parent="GUI" index="0" unique_id=1208015621]
 texture = ExtResource("3_72nuj")
+
+[node name="Qualities" parent="." unique_id=1861689450 instance=ExtResource("4_4ggn3")]
+layout_mode = 2
 
 [editable path="GUI"]

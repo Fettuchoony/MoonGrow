@@ -1,4 +1,6 @@
-class_name Bullet extends RigidBody3D
+class_name Bullet extends Projectile
+
+@onready var damage_hitbox = $DamageArea
 
 var _dmg_area : Area3D
 var _death_time : float
@@ -17,13 +19,15 @@ func _process(_delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	_dmg_calc()
+	# Check for entitys to damage (layer 10)
+	var dmg_collisions : Array[Node3D] = damage_hitbox.get_overlapping_bodies()
+	for col in dmg_collisions:
+		# Apply effects of the passed spawner
+		if projectile_effect != null:
+			projectile_effect.apply_effects_to_enemy(col)
+		# Knockback
+		if col is RigidBody3D:
+			col.apply_knockback(global_position, knockback_strength)
+			queue_free()
 	_time_alive += delta
 	if _time_alive > _death_time: queue_free()
-	
-	
-func _dmg_calc() -> void:
-	if _dmg_area.has_overlapping_bodies():
-		for col in _dmg_area.get_overlapping_bodies():
-			col.recieve_dmg(_dmg)
-		queue_free()

@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cbsecuxd6np3"]
+
+[ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/UI/Scenes/item_gui.tscn" id="1_f1t62"]
+[ext_resource type="Script" uid="uid://da18vs2ggon6p" path="res://SceneObjs/Bullet/bullet_spawner.gd" id="1_nnvmh"]
+[ext_resource type="PackedScene" uid="uid://c2ykpq8y0hn0i" path="res://SceneObjs/UI/Scenes/qualities.tscn" id="2_nnvmh"]
+[ext_resource type="PackedScene" uid="uid://cm5wgp2mbtjrw" path="res://SceneObjs/Bullet/test_bullet.tscn" id="2_pmhwo"]
+[ext_resource type="Texture2D" uid="uid://c77f5whuv6k1y" path="res://Textures/Extracted/Bullet.png" id="3_ufvll"]
+
+[node name="BulletSpawner" type="PanelContainer" unique_id=1645025842]
+script = ExtResource("1_nnvmh")
+base_dmg = 10
+base_firerate = 0.2
+projectile = ExtResource("2_pmhwo")
+item_name = "Bullet"
+slot_icon = ExtResource("3_ufvll")
+
+[node name="GUI" parent="." unique_id=963375078 instance=ExtResource("1_f1t62")]
+layout_mode = 2
+
+[node name="Qualities" parent="." unique_id=1861689450 instance=ExtResource("2_nnvmh")]
+layout_mode = 2
+
+[editable path="GUI"]
+[editable path="Qualities"]

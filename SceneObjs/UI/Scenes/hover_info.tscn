@@ -2,25 +2,31 @@
 
 [ext_resource type="Script" uid="uid://b0a7rpgtsi4ls" path="res://SceneObjs/UI/Scripts/hover_info.gd" id="1_bh7f8"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_bh7f8"]
+
+[sub_resource type="Theme" id="Theme_bh7f8"]
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
+
 [node name="HoverInfo" type="Control" unique_id=1659669647]
+z_index = 10
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.18315972
+anchor_bottom = 0.48765433
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 0
+size_flags_vertical = 0
 script = ExtResource("1_bh7f8")
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="PanelContainer" parent="." unique_id=529749175]
 z_index = 10
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 0.5
-offset_right = -0.35202026
-offset_bottom = -0.2000122
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -22.0
+grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=221221675]
@@ -37,6 +43,7 @@ size_flags_vertical = 3
 custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
 text = "Name goes here"
+label_settings = SubResource("LabelSettings_bh7f8")
 autowrap_mode = 2
 
 [node name="ItemInfo" type="Label" parent="Panel/ScrollContainer/LabelContainer" unique_id=139743328]
@@ -51,7 +58,15 @@ layout_mode = 2
 text = "Stats:"
 autowrap_mode = 2
 
-[node name="Statsfield" type="Label" parent="Panel/ScrollContainer/LabelContainer" unique_id=1901778653]
-custom_minimum_size = Vector2(10, 10)
-layout_mode = 2
-autowrap_mode = 2
+[node name="Quality" type="RichTextLabel" parent="." unique_id=432144979]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0090001
+offset_top = 294.0
+offset_right = -1.0
+offset_bottom = 0.15597534
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_bh7f8")
+text = "quality here"

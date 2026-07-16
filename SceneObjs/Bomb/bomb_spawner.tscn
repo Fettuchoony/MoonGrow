@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/UI/Scenes/item_gui.tscn" id="2_g6cll"]
 [ext_resource type="PackedScene" uid="uid://cu2jndt5i2kgt" path="res://SceneObjs/Bomb/bomb_item2.tscn" id="2_o0fyn"]
 [ext_resource type="Texture2D" uid="uid://c5lr88gvig1n2" path="res://Textures/Extracted/bomb.png" id="2_ygcvh"]
+[ext_resource type="Texture2D" uid="uid://0mcekx3gvsjc" path="res://Textures/Extracted/BombAnim/BombActive1.png" id="3_vvfga"]
+[ext_resource type="PackedScene" uid="uid://c2ykpq8y0hn0i" path="res://SceneObjs/UI/Scenes/qualities.tscn" id="5_26xqn"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ygcvh"]
 
@@ -17,8 +19,10 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ygcvh")
 script = ExtResource("1_r12s0")
+base_dmg = 20
 projectile = ExtResource("2_o0fyn")
 item_name = "Bombs"
+slot_icon = ExtResource("3_vvfga")
 metadata/_custom_type_script = "uid://b8nv1hd418umd"
 
 [node name="GUI" parent="." unique_id=1075007835 instance=ExtResource("2_g6cll")]
@@ -26,5 +30,9 @@ layout_mode = 2
 
 [node name="Icon" parent="GUI" index="0" unique_id=1208015621]
 texture = ExtResource("2_ygcvh")
+
+[node name="Qualities" parent="." unique_id=1861689450 instance=ExtResource("5_26xqn")]
+modulate = Color(1, 1, 1, 0.19215687)
+layout_mode = 2
 
 [editable path="GUI"]

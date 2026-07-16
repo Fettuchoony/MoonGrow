@@ -1,0 +1,71 @@
+[gd_scene format=3 uid="uid://c2ykpq8y0hn0i"]
+
+[ext_resource type="Script" uid="uid://c64if7rvulf70" path="res://SceneObjs/UI/Scenes/qualities.gd" id="1_ietfk"]
+[ext_resource type="Texture2D" uid="uid://dr5j5gbbo7ri6" path="res://Textures/Extracted/uncommon.png" id="1_piahv"]
+[ext_resource type="Texture2D" uid="uid://cn5ukkyc0o22o" path="res://Textures/Extracted/rare.png" id="2_ietfk"]
+[ext_resource type="Texture2D" uid="uid://or474fqye2ox" path="res://Textures/Extracted/very_rare.png" id="3_btkrn"]
+[ext_resource type="Texture2D" uid="uid://bl3t2i16hauke" path="res://Textures/Extracted/legendary.png" id="4_l53yq"]
+[ext_resource type="Texture2D" uid="uid://c5bh2uk0v16ux" path="res://Textures/Extracted/Mythic/Mythic1.png" id="5_b8cvr"]
+[ext_resource type="Texture2D" uid="uid://b337pcf3qjp62" path="res://Textures/Extracted/Mythic/Mythic2.png" id="6_g381a"]
+[ext_resource type="Texture2D" uid="uid://8oqf3qeykldp" path="res://Textures/Extracted/Mythic/Mythic3.png" id="7_fsj82"]
+[ext_resource type="Texture2D" uid="uid://s6nfd7ya1rna" path="res://Textures/Extracted/Mythic/Mythic4.png" id="8_6niiw"]
+[ext_resource type="Texture2D" uid="uid://v3jib2hbado0" path="res://Textures/Extracted/Mythic/Mythic5.png" id="9_jtwsk"]
+[ext_resource type="Texture2D" uid="uid://cyfelpn5urxka" path="res://Textures/Extracted/Mythic/Mythic6.png" id="10_2wb2e"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_de1e6"]
+frames = 6
+frame_0/texture = ExtResource("5_b8cvr")
+frame_0/duration = 0.1
+frame_1/texture = ExtResource("6_g381a")
+frame_1/duration = 0.1
+frame_2/texture = ExtResource("7_fsj82")
+frame_2/duration = 0.1
+frame_3/texture = ExtResource("8_6niiw")
+frame_3/duration = 0.1
+frame_4/texture = ExtResource("9_jtwsk")
+frame_4/duration = 0.1
+frame_5/texture = ExtResource("10_2wb2e")
+frame_5/duration = 0.1
+
+[node name="Qualities" type="AspectRatioContainer" unique_id=1861689450]
+modulate = Color(1, 1, 1, 0.78431374)
+z_index = -1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_ietfk")
+animation_speed = 0.2
+
+[node name="Uncommon" type="TextureRect" parent="." unique_id=35406048]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = ExtResource("1_piahv")
+
+[node name="Rare" type="TextureRect" parent="." unique_id=1385333353]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = ExtResource("2_ietfk")
+
+[node name="Very Rare" type="TextureRect" parent="." unique_id=1004778932]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = ExtResource("3_btkrn")
+
+[node name="Legendary" type="TextureRect" parent="." unique_id=1472043054]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = ExtResource("4_l53yq")
+
+[node name="Mythic" type="TextureRect" parent="." unique_id=448110315]
+visible = false
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = SubResource("AnimatedTexture_de1e6")

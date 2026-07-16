@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ckijqqeiabeua" path="res://SceneObjs/Turret/turret_spawner.gd" id="1_j3tkb"]
 [ext_resource type="PackedScene" uid="uid://c4v07qkjcxnw1" path="res://SceneObjs/UI/Scenes/item_gui.tscn" id="2_bw0iu"]
 [ext_resource type="Texture2D" uid="uid://bivup58xsnbb3" path="res://Textures/Extracted/GunnerTurret.png" id="3_bw0iu"]
+[ext_resource type="PackedScene" uid="uid://c2ykpq8y0hn0i" path="res://SceneObjs/UI/Scenes/qualities.tscn" id="4_6h7gh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bw0iu"]
 
@@ -32,5 +33,8 @@ expand_mode = 2
 
 [node name="Equipped" parent="GUI" index="2" unique_id=667871841]
 expand_mode = 2
+
+[node name="Qualities" parent="." unique_id=1861689450 instance=ExtResource("4_6h7gh")]
+layout_mode = 2
 
 [editable path="GUI"]

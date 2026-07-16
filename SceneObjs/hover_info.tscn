@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bkbtrritg68lr"]
+
+[ext_resource type="Script" path="res://SceneObjs/hover_info.gd" id="1_c852u"]
+
+[node name="HoverInfo" type="Control" unique_id=1659669647]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("1_c852u")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=529749175]
+z_index = 10
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.22600001
+anchor_bottom = 0.52500004
+offset_right = -0.35202026
+offset_bottom = -0.2000122
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel" unique_id=221221675]
+z_index = 1
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer" unique_id=1055409067]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=255222143]
+layout_mode = 2
+text = "sdlhjfblzkdfb"
+
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=2082697045]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label3" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=281137254]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label4" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=442901032]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label5" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=723317539]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label6" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1442983373]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label7" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=468915115]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label8" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=935410600]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label9" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=211482403]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label10" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=466815101]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label11" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1373989790]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label12" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1265038241]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label13" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1813704001]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label14" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1037054696]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label15" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=2000516978]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"
+
+[node name="Label16" type="Label" parent="Panel/ScrollContainer/VBoxContainer" unique_id=1220348721]
+layout_mode = 2
+text = ";jbgkdfjbg.kjdzbfg"

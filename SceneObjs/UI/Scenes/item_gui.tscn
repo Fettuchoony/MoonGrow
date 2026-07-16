@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://pvv472w5vjbl" path="res://Textures/Extracted/HoveringOutline.png" id="2_haauq"]
 [ext_resource type="Texture2D" uid="uid://bc7pp8j75j6gc" path="res://Textures/Extracted/EquippedSlot.png" id="3_m1m0d"]
 [ext_resource type="Texture2D" uid="uid://b6drxmtpbctju" path="res://Textures/Extracted/Inavlid.png" id="4_haauq"]
+[ext_resource type="Texture2D" uid="uid://c1fd10bbojhjl" path="res://Textures/Extracted/Augmented.png" id="5_3lwxu"]
 
 [node name="GUI" type="AspectRatioContainer" unique_id=963375078]
 anchors_preset = 15
@@ -37,3 +38,9 @@ texture = ExtResource("3_m1m0d")
 visible = false
 layout_mode = 2
 texture = ExtResource("4_haauq")
+
+[node name="Augmented" type="TextureRect" parent="." unique_id=1132028456]
+visible = false
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("5_3lwxu")

@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://SceneObjs/Player/item_pivot.gd" id="10_6sp1y"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
+[ext_resource type="Material" uid="uid://b0vyqkaox0ilf" path="res://Materials/rainbow_material.tres" id="12_dnjo6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uu6xs"]
 
@@ -38,6 +39,9 @@ background_mode = 2
 sky = SubResource("Sky_hri7i")
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_ckccm"]
+material = ExtResource("12_dnjo6")
 
 [node name="MainScene" type="Node3D" unique_id=1688291202]
 
@@ -269,7 +273,7 @@ transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676
 shadow_enabled = true
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
-z_index = -5
+z_index = -10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -317,6 +321,10 @@ environment = SubResource("Environment_w3rk5")
 
 [node name="MainTestScene" parent="." unique_id=869491980 instance=ExtResource("12_0re28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3963816, -1.0000002, -0.8044402)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1846685231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 331.88336, 2.4259834, 463.96735)
+mesh = SubResource("BoxMesh_ckccm")
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 [connection signal="transfer_cam_to_player" from="MainPlayer" to="MainPlayer/CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]
