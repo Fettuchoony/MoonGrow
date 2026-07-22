@@ -45,6 +45,7 @@ volumetric_fog_density = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rx3v"]
 albedo_texture = ExtResource("14_pd85l")
+roughness = 0.0
 texture_filter = 0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_chges"]

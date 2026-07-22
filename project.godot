@@ -145,3 +145,8 @@ Map={
 3d_physics/layer_10="BombDamage"
 3d_physics/layer_11="WallBomb"
 3d_physics/layer_12="Grapple"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
+textures/default_filters/anisotropic_filtering_level=0
