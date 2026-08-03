@@ -35,6 +35,7 @@ loading_masters="The objects that hold scene loaders as children"
 levels="All Node3D levels"
 items=""
 turrets="All turrets"
+player_spawns=""
 
 [input]
 
