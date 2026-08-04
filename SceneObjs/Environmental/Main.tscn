@@ -59,12 +59,12 @@ material = ExtResource("12_dnjo6")
 script = ExtResource("1_pd85l")
 
 [node name="MainPlayer" type="CharacterBody3D" parent="." unique_id=1501440258 groups=["carry_on_load"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 326.36093, 1.2649469, 468.70688)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08, 0)
 disable_mode = 2
 collision_layer = 258
 script = ExtResource("2_ckccm")
-item_cooldown_time = 0.5
 give_all_items = true
+speed = 10.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MainPlayer" unique_id=13420787]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4871535, 0)

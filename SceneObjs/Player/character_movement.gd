@@ -1,11 +1,9 @@
 class_name Player extends CharacterBody3D
 
 
-const MAX_SPEED = 3.5
 const JUMP_SPEED = 6.5
 const ACCELERATION = 4
 const DECELERATION = 4
-const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const INTERACT_COOLDOWN_TIME = 1
 const QSLOT : int = 0
@@ -65,10 +63,9 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _horizontal_scatter = preload("res://SceneObjs/Modifiers/horizontal_scatter.tscn")
 @onready var _bullet_spawner = preload("res://SceneObjs/Bullet/bullet_spawner.tscn")
 
-
-@export var item_cooldown_time : float = 0.2
 @export var debug:bool = false
 @export var give_all_items : bool = false
+@export var speed : float = 1.0
 
 func _ready() -> void:
 	# force health to refresh
@@ -145,7 +142,7 @@ func movement_processing(delta: float) -> void:
 	var hvel = velocity
 	hvel.y = 0
 
-	var target = direction * MAX_SPEED
+	var target = direction * speed
 	var acceleration
 	if direction.dot(hvel) > 0:
 		acceleration = ACCELERATION
