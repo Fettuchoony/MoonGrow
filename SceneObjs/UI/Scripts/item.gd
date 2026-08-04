@@ -72,6 +72,7 @@ const mythic_quality_cutoff : float = 1.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if slot_icon == null: push_error("Slot icon missing for: " + item_name + " defaulting to missing texture")
 	roll_quality()
 	_adjust_rect()
 	add_to_group("items")

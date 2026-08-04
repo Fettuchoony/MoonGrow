@@ -18,6 +18,9 @@ static var REFRESH_FREQUENCY : float = 1
 @onready var castle : Node3D = $"../../../Castle"
 @onready var path_length : float = 0
 
+# Set by the enemy
+@onready var loot_table : Dictionary[Item, float]
+
 @export var health : int = 6
 @export var max_health : int = 10
 @export var movement_speed: float = 3.0
@@ -91,6 +94,7 @@ func change_health(delta: int) -> void:
 	#print(health)
 	# ded
 	if health <= 0:
+		_drop_loot()
 		queue_free()
 		pass
 
@@ -105,3 +109,11 @@ func _update_navigation() -> void:
 		return
 	if navigation_agent.is_navigation_finished():
 		return
+
+func _drop_loot() -> void:
+	for item in loot_table:
+		var chance = loot_table[item]
+		if chance <= randf():
+			var loot = Pickup.new(item)
+			loot.global_position = global_position + Vector3(0.0, 0.5, 0.0)
+			
