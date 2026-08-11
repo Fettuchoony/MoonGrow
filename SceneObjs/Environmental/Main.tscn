@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://djd43huil28ek"]
 
 [ext_resource type="Script" uid="uid://cwaotb5uesmhl" path="res://SceneObjs/Environmental/root.gd" id="1_pd85l"]
+[ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="2_1rx3v"]
 [ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://SceneObjs/Player/character_movement.gd" id="2_ckccm"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://SceneObjs/Player/camera_3d.gd" id="3_u8551"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="4_pd85l"]
@@ -57,6 +58,9 @@ material = ExtResource("12_dnjo6")
 
 [node name="MainScene" type="Node3D" unique_id=1688291202]
 script = ExtResource("1_pd85l")
+
+[node name="PickupEmmiter" parent="." unique_id=1229295387 instance=ExtResource("2_1rx3v")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5983009, 2.8736207, 5.1459827)
 
 [node name="MainPlayer" type="CharacterBody3D" parent="." unique_id=1501440258 groups=["carry_on_load"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08, 0)
