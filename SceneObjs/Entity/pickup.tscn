@@ -5,11 +5,12 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_jg1i6"]
 
 [node name="Pickup" type="Sprite3D" unique_id=838998089]
+pixel_size = 0.05
+texture_filter = 0
 script = ExtResource("1_jg1i6")
 
 [node name="PickupArea" type="Area3D" parent="." unique_id=71097185]
 collision_layer = 32
-monitoring = false
 
 [node name="PickupCollider" type="CollisionShape3D" parent="PickupArea" unique_id=1937329772]
 shape = SubResource("SphereShape3D_jg1i6")

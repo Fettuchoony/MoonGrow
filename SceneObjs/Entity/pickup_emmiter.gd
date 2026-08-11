@@ -15,6 +15,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if time > frequency:
-		target.new()
+		pass
+		target.new(preload("res://SceneObjs/Modifiers/dmg_mod_tier1.tscn").instantiate())
 		
 	time += delta
