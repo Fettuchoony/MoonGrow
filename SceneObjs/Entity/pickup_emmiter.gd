@@ -5,7 +5,7 @@ extends Node3D
 
 @onready var frequency : float = 3.0
 
-@export var target : Pickup
+@export var target : Resource
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -15,7 +15,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if time > frequency:
-		pass
-		target.new(preload("res://SceneObjs/Modifiers/dmg_mod_tier1.tscn").instantiate())
-		
+		var item = preload("res://SceneObjs/Modifiers/dmg_mod_tier1.tscn").instantiate()
+		add_child(item)
+		Pickup.new(item, global_position)
+		time = 0.0
+		print("spawn")
 	time += delta

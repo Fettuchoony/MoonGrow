@@ -44,6 +44,9 @@ var quality_color : Color = Color.WHITE
 # VERY IMPORTANT, this should always be set to avoid item disappearing forever
 @onready var fallback_location : Control
 
+# on init, no fallback location in UI for dropped items
+var _dropped : bool = false
+
 # Set on instantiation by creator, exported for debugging purposes
 @export var item_name : String
 
@@ -70,13 +73,16 @@ const mythic_quality_cutoff : float = 1.0
 # TODO: Getting rid of amount for now, making them stack uniquely
 #@export var amount : int
 
+func _init(dropped : bool = false) -> void:
+	_dropped = dropped
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if slot_icon == null: push_error("Slot icon missing for: " + item_name + " defaulting to missing texture")
 	roll_quality()
 	_adjust_rect()
 	add_to_group("items")
-	fallback_location = get_parent()
+	if !_dropped: fallback_location = get_parent()
 	if fallback_location == null:
 		print_debug("Orphan Item found, not allowed because no fallback location can be set")
 	# gets rid of ugly panel

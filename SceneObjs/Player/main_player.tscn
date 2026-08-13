@@ -1,0 +1,268 @@
+[gd_scene format=3 uid="uid://b4dij2k61xbs8"]
+
+[ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://SceneObjs/Player/character_movement.gd" id="1_1ntc1"]
+[ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://SceneObjs/Player/camera_3d.gd" id="2_oqahl"]
+[ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="3_f5ge2"]
+[ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://SceneObjs/UI/Scripts/health_GUI_update.gd" id="4_8nehc"]
+[ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/UI/Scenes/heart_module.tscn" id="5_qdpit"]
+[ext_resource type="Script" uid="uid://dlhhrhelqp8eu" path="res://SceneObjs/UI/Scripts/taskbar_controller.gd" id="6_rc4g8"]
+[ext_resource type="PackedScene" uid="uid://cflvbyc7lnyyb" path="res://SceneObjs/UI/Scenes/item_slot.tscn" id="7_d3pdv"]
+[ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://SceneObjs/Player/item_pivot.gd" id="8_nsc5i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uu6xs"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uu6xs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0du0"]
+albedo_color = Color(0.6772466, 0.00018799871, 0.6265677, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_cm0pq"]
+material = SubResource("StandardMaterial3D_r0du0")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_devvj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1ntc1"]
+radius = 0.031786993
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oqahl"]
+radius = 10.0
+
+[node name="MainPlayer" type="CharacterBody3D" unique_id=382776683 groups=["carry_on_load"]]
+disable_mode = 2
+collision_layer = 258
+script = ExtResource("1_1ntc1")
+give_all_items = true
+speed = 10.0
+pickup_radius = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2040565690]
+shape = SubResource("CapsuleShape3D_uu6xs")
+debug_color = Color(3.706068e-06, 0.62085986, 0.5616422, 0.41960785)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=1052910947]
+mesh = SubResource("CapsuleMesh_uu6xs")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=350449977]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1667735845]
+spring_length = 5.0
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1965886034]
+current = true
+script = ExtResource("2_oqahl")
+tilt_limit = 1.2
+
+[node name="PlayerRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/Camera3D" unique_id=577065282]
+target_position = Vector3(0, 0, -200)
+collision_mask = 13
+collide_with_areas = true
+
+[node name="DebugBall" type="MeshInstance3D" parent="CameraPivot/SpringArm3D/Camera3D/PlayerRay" unique_id=670250658]
+mesh = SubResource("SphereMesh_cm0pq")
+
+[node name="ItemRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/Camera3D" unique_id=1965880302]
+target_position = Vector3(0, 0, -20)
+collision_mask = 8
+
+[node name="PlacementRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/Camera3D" unique_id=1565345913]
+
+[node name="CharacterAreaDetect" type="Area3D" parent="." unique_id=1768660477]
+collision_layer = 2
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterAreaDetect" unique_id=557189272]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4871535, 0)
+shape = SubResource("CapsuleShape3D_uu6xs")
+debug_color = Color(3.706068e-06, 0.62085986, 0.5616422, 0.41960785)
+
+[node name="PlayerGUI" type="Control" parent="." unique_id=964238654]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Crosshair" type="Control" parent="PlayerGUI" unique_id=1350552791]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="PlayerGUI/Crosshair" unique_id=1860248663]
+texture_filter = 1
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_f5ge2")
+
+[node name="Health" type="Control" parent="PlayerGUI" unique_id=1734432742]
+layout_mode = 1
+anchor_left = 0.014000002
+anchor_top = 0.024691358
+anchor_right = 0.9861111
+anchor_bottom = 0.049802475
+offset_left = -0.12800217
+offset_bottom = -0.27200127
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("4_8nehc")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerGUI/Health" unique_id=1891740454]
+layout_direction = 2
+layout_mode = 1
+offset_right = 56.0
+offset_bottom = 16.0
+
+[node name="H1" parent="PlayerGUI/Health/HBoxContainer" unique_id=2028691687 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H2" parent="PlayerGUI/Health/HBoxContainer" unique_id=1124607965 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H3" parent="PlayerGUI/Health/HBoxContainer" unique_id=1605264693 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H4" parent="PlayerGUI/Health/HBoxContainer" unique_id=1220937180 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H5" parent="PlayerGUI/Health/HBoxContainer" unique_id=1987435125 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H6" parent="PlayerGUI/Health/HBoxContainer" unique_id=1391795587 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H7" parent="PlayerGUI/Health/HBoxContainer" unique_id=1119219435 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H8" parent="PlayerGUI/Health/HBoxContainer" unique_id=1911812378 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H9" parent="PlayerGUI/Health/HBoxContainer" unique_id=1295069861 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="H10" parent="PlayerGUI/Health/HBoxContainer" unique_id=1522084085 instance=ExtResource("5_qdpit")]
+layout_mode = 2
+
+[node name="TaskBar" type="Control" parent="PlayerGUI" unique_id=300951509]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("6_rc4g8")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerGUI/TaskBar" unique_id=964359187]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -6.225
+anchor_top = -1.005
+anchor_right = 7.275
+anchor_bottom = 0.595
+offset_top = 0.005001068
+offset_bottom = 0.0049991608
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="UpgradeSlot" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=56989139 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot2" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=271609658 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot3" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=101302281 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot4" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=2052684713 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot5" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=2040845291 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot6" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=880716342 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot7" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=665249953 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot8" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=1684685601 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="UpgradeSlot9" parent="PlayerGUI/TaskBar/HBoxContainer" unique_id=163589182 instance=ExtResource("7_d3pdv")]
+layout_mode = 2
+
+[node name="ItemHold" parent="PlayerGUI" unique_id=1269274664 instance=ExtResource("7_d3pdv")]
+visible = false
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+_is_cursor_slot = true
+
+[node name="Background" parent="PlayerGUI/ItemHold" index="2" unique_id=1529539511]
+visible = false
+
+[node name="ItemPivot" type="Node3D" parent="." unique_id=636970850]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4150555, 0)
+script = ExtResource("8_nsc5i")
+
+[node name="ItemSpawnSpot" type="Node3D" parent="ItemPivot" unique_id=486731634]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ItemPivot/ItemSpawnSpot" unique_id=983839377]
+mesh = SubResource("SphereMesh_devvj")
+
+[node name="GroundDetect" type="RayCast3D" parent="." unique_id=843351447]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1178627, 0)
+target_position = Vector3(0, -50, 0)
+
+[node name="PickupPivot" type="Node3D" parent="." unique_id=896062170]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.40548706, 0)
+script = ExtResource("8_nsc5i")
+
+[node name="ItemHoverSpot" type="Node3D" parent="PickupPivot" unique_id=652246701]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3201761, -3.5784016)
+
+[node name="PickupDetect" type="Area3D" parent="." unique_id=1319945197]
+collision_layer = 0
+collision_mask = 32
+
+[node name="PickupCol" type="CollisionShape3D" parent="PickupDetect" unique_id=285332431]
+shape = SubResource("SphereShape3D_1ntc1")
+
+[node name="PickupMagnetize" type="Area3D" parent="." unique_id=776596801]
+collision_layer = 0
+collision_mask = 32
+
+[node name="PickupCol" type="CollisionShape3D" parent="PickupMagnetize" unique_id=585242491]
+shape = SubResource("SphereShape3D_oqahl")
+
+[connection signal="transfer_cam_to_player" from="." to="CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]
+[connection signal="transfer_cam_to_vehicle" from="." to="CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_vehicle"]
+[connection signal="update_health_GUI" from="." to="PlayerGUI/Health" method="health_gui_update"]
+[connection signal="area_entered" from="CharacterAreaDetect" to="." method="_on_character_area_detect_area_entered"]
+[connection signal="area_exited" from="CharacterAreaDetect" to="." method="_on_character_area_detect_area_exited"]
+
+[editable path="PlayerGUI/ItemHold"]
