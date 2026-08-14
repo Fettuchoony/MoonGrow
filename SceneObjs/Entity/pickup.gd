@@ -22,16 +22,31 @@ var _expiring : bool = false
 var _magnetized : bool = false
 var _mag_target : Player
 var _percent_to_player : float = 0.0
+var _spawn_pos : Vector3 = Vector3.ZERO
 
 @export var mag_strength : Curve
 
 # TODO: Change this to a custom default item, not just the dmg modifier
 func _init(item : Item = dmg_mod, spawn_pos : Vector3 = Vector3.ZERO) -> void:
 	_item = item 
-	global_position = spawn_pos
+	_spawn_pos = spawn_pos
+	var area = Area3D.new()
+	# Layer 6 = 6th bit = 32 which is pickups lol
+	area.collision_layer = 32
+	var col = CollisionShape3D.new()
+	col.shape = SphereShape3D.new()
+	col.shape.radius = 0.2
+	area.add_child(col)
+	add_child(area)
+	area.name = "PickupArea"
+	texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+	scale = 3.0 * Vector3.ONE
+	mag_strength = preload("res://SceneObjs/Entity/magnet_strength_curve.tres")
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	global_position = _spawn_pos
 	_name = _item.item_name
 	texture = _item.slot_icon
 	_pickup_area = $PickupArea

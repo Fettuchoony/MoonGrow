@@ -16,8 +16,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if time > frequency:
 		var item = preload("res://SceneObjs/Modifiers/dmg_mod_tier1.tscn").instantiate()
-		add_child(item)
-		Pickup.new(item, global_position)
+		item._dropped = true
+		var pickup = Pickup.new(item, global_position)
+		pickup.add_child(item)
+		add_child(pickup)
 		time = 0.0
 		print("spawn")
 	time += delta

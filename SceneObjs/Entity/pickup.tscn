@@ -2,20 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://cbpsvqr5ha27b" path="res://Textures/Extracted/PlaceholderItem.png" id="1_268ma"]
 [ext_resource type="Script" uid="uid://4nnb7u70d5fw" path="res://SceneObjs/Entity/pickup.gd" id="1_jg1i6"]
-
-[sub_resource type="Curve" id="Curve_jg1i6"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.22500001, 1), -1.7397605, -1.7397605, 0, 0, Vector2(0.325, 0.70786524), 0.0, 0.0, 0, 0, Vector2(0.54999995, 0.68539333), -1.1848825, -1.1848825, 0, 0, Vector2(0.90999997, 0.34831464), -3.2102745, -3.2102745, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 6
+[ext_resource type="Curve" uid="uid://ddf6d8jvorv04" path="res://SceneObjs/Entity/magnet_strength_curve.tres" id="3_yeagi"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_jg1i6"]
 radius = 0.20485608
 
 [node name="Pickup" type="Sprite3D" unique_id=244742398]
-pixel_size = 0.05
 texture_filter = 0
 texture = ExtResource("1_268ma")
 script = ExtResource("1_jg1i6")
-mag_strength = SubResource("Curve_jg1i6")
+mag_strength = ExtResource("3_yeagi")
 metadata/_custom_type_script = "uid://4nnb7u70d5fw"
 
 [node name="PickupArea" type="Area3D" parent="." unique_id=71097185]

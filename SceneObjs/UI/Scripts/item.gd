@@ -3,6 +3,17 @@ class_name Item extends PanelContainer
 
 static var HOVER_INFO_WAIT_TIME : float = 0.25
 
+## INIT
+
+# on init, no fallback location in UI for dropped items
+var _dropped : bool
+# So item knows if in turret, set in move function
+var _in_turret : bool
+# If true, item is in stable spot, if not, it is being held by cursor
+var _stored : bool = true
+
+## READY
+
 var quality : float = 0.0
 var quality_mult : float = 0.0
 var quality_name : String = "Quality Here"
@@ -29,12 +40,6 @@ var quality_color : Color = Color.WHITE
 
 @onready var augmented : TextureRect = $GUI/Augmented
 
-# If true, item is in stable spot, if not, it is being held by cursor
-@onready var _stored : bool = true
-
-# So item knows if in turret, set in move function
-@onready var in_turret : bool = false
-
 # If not in turret, array empty
 @onready var near_slots
 
@@ -44,8 +49,7 @@ var quality_color : Color = Color.WHITE
 # VERY IMPORTANT, this should always be set to avoid item disappearing forever
 @onready var fallback_location : Control
 
-# on init, no fallback location in UI for dropped items
-var _dropped : bool = false
+## EXPORT
 
 # Set on instantiation by creator, exported for debugging purposes
 @export var item_name : String
@@ -73,17 +77,21 @@ const mythic_quality_cutoff : float = 1.0
 # TODO: Getting rid of amount for now, making them stack uniquely
 #@export var amount : int
 
-func _init(dropped : bool = false) -> void:
+func _init(dropped : bool = false, in_turret : bool = false, stored : bool = false) -> void:
 	_dropped = dropped
+	_in_turret = in_turret
+	_stored = stored
+	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if slot_icon == null: push_error("Slot icon missing for: " + item_name + " defaulting to missing texture")
+	if _dropped: visible = false
 	roll_quality()
 	_adjust_rect()
 	add_to_group("items")
 	if !_dropped: fallback_location = get_parent()
-	if fallback_location == null:
+	if !_dropped && fallback_location == null:
 		print_debug("Orphan Item found, not allowed because no fallback location can be set")
 	# gets rid of ugly panel
 	#theme.panel = StyleBoxEmpty
@@ -139,11 +147,11 @@ func move(new_parent = fallback_location) -> void:
 	_adjust_rect()
 	# Find out if this item is being put in turret so it can interact with neighbors
 	if new_parent is ItemSlot && new_parent.is_turret_slot:
-		in_turret = true
+		_in_turret = true
 		# Grab the other slots in the turret
 		near_slots = new_parent.get_parent().get_children()
 	else:
-		in_turret = false
+		_in_turret = false
 
 # Item slots can request an item (taskbar or turret)
 func _request_item_for_slot(slot : Control) -> void:
