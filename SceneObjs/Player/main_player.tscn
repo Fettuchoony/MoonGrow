@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cq48dxeabn5gs" path="res://SceneObjs/Player/character_movement.gd" id="1_1ntc1"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://SceneObjs/Player/camera_3d.gd" id="2_oqahl"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="3_f5ge2"]
+[ext_resource type="Script" uid="uid://srfdh6m6c7nk" path="res://SceneObjs/Player/underworld_cam.gd" id="3_oqahl"]
 [ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://SceneObjs/UI/Scripts/health_GUI_update.gd" id="4_8nehc"]
 [ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/UI/Scenes/heart_module.tscn" id="5_qdpit"]
 [ext_resource type="Script" uid="uid://dlhhrhelqp8eu" path="res://SceneObjs/UI/Scripts/taskbar_controller.gd" id="6_rc4g8"]
@@ -51,6 +52,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 spring_length = 5.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1965886034]
+cull_mask = 1047553
 current = true
 script = ExtResource("2_oqahl")
 tilt_limit = 1.2
@@ -68,6 +70,9 @@ target_position = Vector3(0, 0, -20)
 collision_mask = 8
 
 [node name="PlacementRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/Camera3D" unique_id=1565345913]
+
+[node name="UnderworldRemoteTransfer" type="RemoteTransform3D" parent="CameraPivot/SpringArm3D" unique_id=562558832]
+remote_path = NodePath("../../../SubViewport/UnderworldCam")
 
 [node name="CharacterAreaDetect" type="Area3D" parent="." unique_id=1768660477]
 collision_layer = 2
@@ -258,6 +263,28 @@ collision_mask = 32
 
 [node name="PickupCol" type="CollisionShape3D" parent="PickupMagnetize" unique_id=585242491]
 shape = SubResource("SphereShape3D_oqahl")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=1820352936]
+
+[node name="UnderworldCam" type="Camera3D" parent="SubViewport" unique_id=1702511103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+cull_mask = 1047554
+current = true
+script = ExtResource("3_oqahl")
+
+[node name="PlayerRay" type="RayCast3D" parent="SubViewport/UnderworldCam" unique_id=259869477]
+target_position = Vector3(0, 0, -200)
+collision_mask = 13
+collide_with_areas = true
+
+[node name="DebugBall" type="MeshInstance3D" parent="SubViewport/UnderworldCam/PlayerRay" unique_id=584020532]
+mesh = SubResource("SphereMesh_cm0pq")
+
+[node name="ItemRay" type="RayCast3D" parent="SubViewport/UnderworldCam" unique_id=828245319]
+target_position = Vector3(0, 0, -20)
+collision_mask = 8
+
+[node name="PlacementRay" type="RayCast3D" parent="SubViewport/UnderworldCam" unique_id=1722711286]
 
 [connection signal="transfer_cam_to_player" from="." to="CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]
 [connection signal="transfer_cam_to_vehicle" from="." to="CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_vehicle"]

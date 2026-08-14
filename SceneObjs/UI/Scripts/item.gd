@@ -77,7 +77,7 @@ const mythic_quality_cutoff : float = 1.0
 # TODO: Getting rid of amount for now, making them stack uniquely
 #@export var amount : int
 
-func _init(dropped : bool = false, in_turret : bool = false, stored : bool = false) -> void:
+func _init(dropped : bool = false, in_turret : bool = false, stored : bool = true) -> void:
 	_dropped = dropped
 	_in_turret = in_turret
 	_stored = stored
@@ -138,6 +138,8 @@ func _input(event: InputEvent) -> void:
 
 # Used for moving the item somewhere
 func move(new_parent = fallback_location) -> void:
+	_dropped = false
+	print("moving " + name + " to " + new_parent.name)
 	if new_parent is ItemSlot:
 		reparent(new_parent.find_child("Augment"))
 	else:

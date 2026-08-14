@@ -2,14 +2,23 @@
 
 [ext_resource type="Script" uid="uid://cwaotb5uesmhl" path="res://SceneObjs/Environmental/root.gd" id="1_pd85l"]
 [ext_resource type="PackedScene" uid="uid://b4dij2k61xbs8" path="res://SceneObjs/Player/main_player.tscn" id="2_2mr28"]
+[ext_resource type="PackedScene" uid="uid://bind4oopgiloh" path="res://SceneObjs/Environmental/underworld.tscn" id="9_ckccm"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
+[ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="11_nmxc6"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
+[ext_resource type="Script" uid="uid://c0op7ak3mupmn" path="res://SceneObjs/Environmental/portal.gd" id="12_ckccm"]
 [ext_resource type="Material" uid="uid://b0vyqkaox0ilf" path="res://Materials/rainbow_material.tres" id="12_dnjo6"]
 [ext_resource type="Script" uid="uid://da7ulox4a1bid" path="res://SceneObjs/Environmental/level_master.gd" id="13_pd85l"]
 [ext_resource type="Script" uid="uid://85b7h8b5xqih" path="res://SceneObjs/Environmental/overworld.gd" id="13_u8551"]
 [ext_resource type="Texture2D" uid="uid://0kvrf71i3h2v" path="res://Textures/Extracted/overworld.png" id="14_pd85l"]
 [ext_resource type="PackedScene" uid="uid://dky5nnvlfq6v2" path="res://SceneObjs/Entity/pickup.tscn" id="16_1rx3v"]
+
+[sub_resource type="Environment" id="Environment_ckccm"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u8551"]
+
+[sub_resource type="Compositor" id="Compositor_pd85l"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sqvbp"]
 sky_top_color = Color(0.17506927, 0.50570166, 0.99999994, 1)
@@ -36,11 +45,32 @@ size = Vector2(500, 500)
 [sub_resource type="BoxMesh" id="BoxMesh_ckccm"]
 material = ExtResource("12_dnjo6")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ckccm"]
+viewport_path = NodePath("MainPlayer/CameraPivot/SpringArm3D/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dnjo6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("11_nmxc6")
+shader_parameter/underworld_texture = SubResource("ViewportTexture_ckccm")
+
+[sub_resource type="QuadMesh" id="QuadMesh_daody"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_dnjo6")
+uv2_padding = 0.0
+size = Vector2(5, 5)
+
 [node name="MainScene" type="Node3D" unique_id=1688291202]
 script = ExtResource("1_pd85l")
 
 [node name="MainPlayer" parent="." unique_id=382776683 instance=ExtResource("2_2mr28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 0)
+
+[node name="UnderworldCam" parent="MainPlayer/SubViewport" parent_id_path=PackedInt32Array(382776683, 1820352936) index="0" unique_id=1702511103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0443754, 0)
+environment = SubResource("Environment_ckccm")
+attributes = SubResource("CameraAttributesPractical_u8551")
+compositor = SubResource("Compositor_pd85l")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1612695682]
 transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676767, 0.7444302, 0.3971914, 0.684691, -0.61109513, 300.08688, 6.8276563, 308.22333)
@@ -113,6 +143,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.48697, 3.4259837, 464.771
 mesh = SubResource("BoxMesh_ckccm")
 skeleton = NodePath("../../..")
 
+[node name="Underworld" parent="CurrentLevel" unique_id=241016671 instance=ExtResource("9_ckccm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5940685, 0)
+
 [node name="Pickup" parent="." unique_id=838998089 instance=ExtResource("16_1rx3v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742)
 
@@ -121,4 +154,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 8.80727, 6.245742)
 target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"modulate":Color(1, 1, 1, 1),"pixel_size":0.05,"axis":2,"billboard":0,"transparent":true,"shaded":false,"double_sided":true,"no_depth_test":false,"fixed_size":false,"alpha_cut":0,"alpha_scissor_threshold":0.5,"alpha_hash_scale":1.0,"alpha_antialiasing_mode":0,"alpha_antialiasing_edge":0.0,"texture_filter":0,"render_priority":0,"texture":Resource("res://Textures/Extracted/PlaceholderItem.png"),"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"script":Resource("res://SceneObjs/Entity/pickup.gd"),"mag_strength":null,"metadata/_custom_type_script":"uid://4nnb7u70d5fw")
 
 
+[node name="Portal" type="MeshInstance3D" parent="." unique_id=219493015]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021791458, 4.1859136, -14.616669)
+mesh = SubResource("QuadMesh_daody")
+script = ExtResource("12_ckccm")
+
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
+
+[editable path="MainPlayer"]
+[editable path="MainPlayer/PlayerGUI/ItemHold"]

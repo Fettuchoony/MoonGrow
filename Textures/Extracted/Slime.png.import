@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhr1jlrogxy5l"
-path.etc2="res://.godot/imported/Slime.png-1fc037a485aea965a65870e28ebd5138.etc2.ctex"
+path.s3tc="res://.godot/imported/Slime.png-1fc037a485aea965a65870e28ebd5138.s3tc.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/Extracted/Slime.png"
-dest_files=["res://.godot/imported/Slime.png-1fc037a485aea965a65870e28ebd5138.etc2.ctex"]
+dest_files=["res://.godot/imported/Slime.png-1fc037a485aea965a65870e28ebd5138.s3tc.ctex"]
 
 [params]
 
