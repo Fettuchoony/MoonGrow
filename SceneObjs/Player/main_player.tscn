@@ -22,7 +22,9 @@ material = SubResource("StandardMaterial3D_r0du0")
 radius = 0.1
 height = 0.2
 
-[sub_resource type="SphereMesh" id="SphereMesh_devvj"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_oqahl"]
+margin = 0.01
+size = Vector3(0.1, 0.1, 0.1)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1ntc1"]
 radius = 0.031786993
@@ -46,10 +48,10 @@ debug_color = Color(3.706068e-06, 0.62085986, 0.5616422, 0.41960785)
 mesh = SubResource("CapsuleMesh_uu6xs")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=350449977]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39201754, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot" unique_id=1667735845]
-spring_length = 5.0
+spring_length = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D" unique_id=1965886034]
 cull_mask = 1047553
@@ -71,8 +73,15 @@ collision_mask = 8
 
 [node name="PlacementRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/Camera3D" unique_id=1565345913]
 
+[node name="CameraArea" type="Area3D" parent="CameraPivot/SpringArm3D/Camera3D" unique_id=1593249897]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/SpringArm3D/Camera3D/CameraArea" unique_id=275180452]
+shape = SubResource("BoxShape3D_oqahl")
+
 [node name="UnderworldRemoteTransfer" type="RemoteTransform3D" parent="CameraPivot/SpringArm3D" unique_id=562558832]
-remote_path = NodePath("../../../SubViewport/UnderworldCam")
+remote_path = NodePath("../../../PortalViewport/UnderworldCam")
 
 [node name="CharacterAreaDetect" type="Area3D" parent="." unique_id=1768660477]
 collision_layer = 2
@@ -236,9 +245,6 @@ script = ExtResource("8_nsc5i")
 [node name="ItemSpawnSpot" type="Node3D" parent="ItemPivot" unique_id=486731634]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="ItemPivot/ItemSpawnSpot" unique_id=983839377]
-mesh = SubResource("SphereMesh_devvj")
-
 [node name="GroundDetect" type="RayCast3D" parent="." unique_id=843351447]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1178627, 0)
 target_position = Vector3(0, -50, 0)
@@ -264,27 +270,28 @@ collision_mask = 32
 [node name="PickupCol" type="CollisionShape3D" parent="PickupMagnetize" unique_id=585242491]
 shape = SubResource("SphereShape3D_oqahl")
 
-[node name="SubViewport" type="SubViewport" parent="." unique_id=1820352936]
+[node name="PortalViewport" type="SubViewport" parent="." unique_id=1820352936]
 
-[node name="UnderworldCam" type="Camera3D" parent="SubViewport" unique_id=1702511103]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+[node name="UnderworldCam" type="Camera3D" parent="PortalViewport" unique_id=1702511103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39201754, 0)
 cull_mask = 1047554
 current = true
 script = ExtResource("3_oqahl")
+tilt_limit = 1.2
 
-[node name="PlayerRay" type="RayCast3D" parent="SubViewport/UnderworldCam" unique_id=259869477]
+[node name="PlayerRay" type="RayCast3D" parent="PortalViewport/UnderworldCam" unique_id=259869477]
 target_position = Vector3(0, 0, -200)
 collision_mask = 13
 collide_with_areas = true
 
-[node name="DebugBall" type="MeshInstance3D" parent="SubViewport/UnderworldCam/PlayerRay" unique_id=584020532]
+[node name="DebugBall" type="MeshInstance3D" parent="PortalViewport/UnderworldCam/PlayerRay" unique_id=584020532]
 mesh = SubResource("SphereMesh_cm0pq")
 
-[node name="ItemRay" type="RayCast3D" parent="SubViewport/UnderworldCam" unique_id=828245319]
+[node name="ItemRay" type="RayCast3D" parent="PortalViewport/UnderworldCam" unique_id=828245319]
 target_position = Vector3(0, 0, -20)
 collision_mask = 8
 
-[node name="PlacementRay" type="RayCast3D" parent="SubViewport/UnderworldCam" unique_id=1722711286]
+[node name="PlacementRay" type="RayCast3D" parent="PortalViewport/UnderworldCam" unique_id=1722711286]
 
 [connection signal="transfer_cam_to_player" from="." to="CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_player"]
 [connection signal="transfer_cam_to_vehicle" from="." to="CameraPivot/SpringArm3D/Camera3D" method="_on_main_player_transfer_cam_to_vehicle"]

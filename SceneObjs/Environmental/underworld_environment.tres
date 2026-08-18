@@ -1,0 +1,5 @@
+[gd_resource type="Environment" format=3 uid="uid://bs466bqoa4sn6"]
+
+[resource]
+ambient_light_color = Color(0.36862746, 0, 0, 1)
+adjustment_enabled = true

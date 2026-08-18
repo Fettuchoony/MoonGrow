@@ -2,79 +2,86 @@
 
 [ext_resource type="Script" uid="uid://cwaotb5uesmhl" path="res://SceneObjs/Environmental/root.gd" id="1_pd85l"]
 [ext_resource type="PackedScene" uid="uid://b4dij2k61xbs8" path="res://SceneObjs/Player/main_player.tscn" id="2_2mr28"]
+[ext_resource type="Environment" uid="uid://d38wahfpvxjed" path="res://SceneObjs/Environmental/overworld_environment.tres" id="3_ckccm"]
+[ext_resource type="Environment" uid="uid://bs466bqoa4sn6" path="res://SceneObjs/Environmental/underworld_environment.tres" id="4_u8551"]
 [ext_resource type="PackedScene" uid="uid://bind4oopgiloh" path="res://SceneObjs/Environmental/underworld.tscn" id="9_ckccm"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="11_nmxc6"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
-[ext_resource type="Script" uid="uid://c0op7ak3mupmn" path="res://SceneObjs/Environmental/portal.gd" id="12_ckccm"]
+[ext_resource type="PackedScene" uid="uid://deyjwluil7ksl" path="res://SceneObjs/Environmental/portal.tscn" id="12_ckccm"]
 [ext_resource type="Material" uid="uid://b0vyqkaox0ilf" path="res://Materials/rainbow_material.tres" id="12_dnjo6"]
 [ext_resource type="Script" uid="uid://da7ulox4a1bid" path="res://SceneObjs/Environmental/level_master.gd" id="13_pd85l"]
-[ext_resource type="Script" uid="uid://85b7h8b5xqih" path="res://SceneObjs/Environmental/overworld.gd" id="13_u8551"]
-[ext_resource type="Texture2D" uid="uid://0kvrf71i3h2v" path="res://Textures/Extracted/overworld.png" id="14_pd85l"]
+[ext_resource type="Script" uid="uid://c0op7ak3mupmn" path="res://SceneObjs/Environmental/portal.gd" id="14_u8551"]
 [ext_resource type="PackedScene" uid="uid://dky5nnvlfq6v2" path="res://SceneObjs/Entity/pickup.tscn" id="16_1rx3v"]
-
-[sub_resource type="Environment" id="Environment_ckccm"]
-
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_u8551"]
-
-[sub_resource type="Compositor" id="Compositor_pd85l"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sqvbp"]
-sky_top_color = Color(0.17506927, 0.50570166, 0.99999994, 1)
-sky_horizon_color = Color(0.70654005, 0.6583666, 0.43005383, 1)
-
-[sub_resource type="Sky" id="Sky_hri7i"]
-sky_material = SubResource("ProceduralSkyMaterial_sqvbp")
-
-[sub_resource type="Environment" id="Environment_w3rk5"]
-background_mode = 2
-sky = SubResource("Sky_hri7i")
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rx3v"]
-albedo_texture = ExtResource("14_pd85l")
-roughness = 0.0
-texture_filter = 0
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_chges"]
-material = SubResource("StandardMaterial3D_1rx3v")
-size = Vector2(500, 500)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ckccm"]
 material = ExtResource("12_dnjo6")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_ckccm"]
-viewport_path = NodePath("MainPlayer/CameraPivot/SpringArm3D/SubViewport")
+[sub_resource type="ViewportTexture" id="ViewportTexture_u8551"]
+viewport_path = NodePath("../MainPlayer/PortalViewport")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dnjo6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckccm"]
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("11_nmxc6")
-shader_parameter/underworld_texture = SubResource("ViewportTexture_ckccm")
+shader_parameter/underworld_texture = SubResource("ViewportTexture_u8551")
 
-[sub_resource type="QuadMesh" id="QuadMesh_daody"]
+[sub_resource type="QuadMesh" id="QuadMesh_u8551"]
 resource_local_to_scene = true
-material = SubResource("ShaderMaterial_dnjo6")
-uv2_padding = 0.0
+material = SubResource("ShaderMaterial_ckccm")
 size = Vector2(5, 5)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_pd85l"]
+viewport_path = NodePath("../MainPlayer/PortalViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pd85l"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("11_nmxc6")
+shader_parameter/underworld_texture = SubResource("ViewportTexture_pd85l")
+
+[sub_resource type="QuadMesh" id="QuadMesh_1rx3v"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_pd85l")
+size = Vector2(5, 5)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1rx3v"]
+viewport_path = NodePath("MainPlayer/PortalViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u8551"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("11_nmxc6")
+shader_parameter/underworld_texture = SubResource("ViewportTexture_1rx3v")
+
+[sub_resource type="BoxMesh" id="BoxMesh_pd85l"]
+material = SubResource("ShaderMaterial_u8551")
+size = Vector3(5, 5, 0.04)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8551"]
+margin = 0.01
+size = Vector3(5, 5, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pd85l"]
+size = Vector3(5, 5, 3)
 
 [node name="MainScene" type="Node3D" unique_id=1688291202]
 script = ExtResource("1_pd85l")
 
-[node name="MainPlayer" parent="." unique_id=382776683 instance=ExtResource("2_2mr28")]
+[node name="MainPlayer" parent="." unique_id=382776683 groups=["player"] instance=ExtResource("2_2mr28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 0)
 
-[node name="UnderworldCam" parent="MainPlayer/SubViewport" parent_id_path=PackedInt32Array(382776683, 1820352936) index="0" unique_id=1702511103]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.0443754, 0)
-environment = SubResource("Environment_ckccm")
-attributes = SubResource("CameraAttributesPractical_u8551")
-compositor = SubResource("Compositor_pd85l")
+[node name="Camera3D" parent="MainPlayer/CameraPivot/SpringArm3D" parent_id_path=PackedInt32Array(382776683, 1667735845) index="0" unique_id=1965886034]
+environment = ExtResource("3_ckccm")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1612695682]
-transform = Transform3D(-0.9177185, 0.2922433, -0.26904747, -0.005625937, 0.6676767, 0.7444302, 0.3971914, 0.684691, -0.61109513, 300.08688, 6.8276563, 308.22333)
-shadow_enabled = true
+[node name="PortalViewport" parent="MainPlayer" index="9" unique_id=1820352936]
+sdf_oversize = 0
+sdf_scale = 0
+
+[node name="UnderworldCam" parent="MainPlayer/PortalViewport" index="0" unique_id=1702511103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.436393, 0)
+environment = ExtResource("4_u8551")
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
 z_index = -10
@@ -120,19 +127,6 @@ visible = false
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=280029085]
-environment = SubResource("Environment_w3rk5")
-
-[node name="Overworld" type="Node3D" parent="." unique_id=308531465 groups=["carry_on_load"]]
-visible = false
-script = ExtResource("13_u8551")
-
-[node name="World" type="MeshInstance3D" parent="Overworld" unique_id=936662048]
-mesh = SubResource("PlaneMesh_chges")
-
-[node name="MapCam" type="Camera3D" parent="Overworld" unique_id=1434929999]
-transform = Transform3D(1, 0, 0, 0, 0.17364822, 0.9848077, 0, -0.9848077, 0.17364822, 0, 320, 90)
-
 [node name="CurrentLevel" type="Node3D" parent="." unique_id=909279468]
 script = ExtResource("13_pd85l")
 
@@ -154,10 +148,32 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 8.80727, 6.245742)
 target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"modulate":Color(1, 1, 1, 1),"pixel_size":0.05,"axis":2,"billboard":0,"transparent":true,"shaded":false,"double_sided":true,"no_depth_test":false,"fixed_size":false,"alpha_cut":0,"alpha_scissor_threshold":0.5,"alpha_hash_scale":1.0,"alpha_antialiasing_mode":0,"alpha_antialiasing_edge":0.0,"texture_filter":0,"render_priority":0,"texture":Resource("res://Textures/Extracted/PlaceholderItem.png"),"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"script":Resource("res://SceneObjs/Entity/pickup.gd"),"mag_strength":null,"metadata/_custom_type_script":"uid://4nnb7u70d5fw")
 
 
-[node name="Portal" type="MeshInstance3D" parent="." unique_id=219493015]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0021791458, 4.1859136, -14.616669)
-mesh = SubResource("QuadMesh_daody")
-script = ExtResource("12_ckccm")
+[node name="Portal" parent="." unique_id=1480320457 instance=ExtResource("12_ckccm")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0.2132883, 4.185913, -14.593814)
+mesh = SubResource("QuadMesh_u8551")
+
+[node name="Portal2" parent="." unique_id=1474061080 instance=ExtResource("12_ckccm")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 7.8745356, 4.185913, -13.967824)
+mesh = SubResource("QuadMesh_1rx3v")
+
+[node name="CubePortal" type="MeshInstance3D" parent="." unique_id=2070517996 groups=["portals"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.399185, 4.10319, -14.751821)
+mesh = SubResource("BoxMesh_pd85l")
+script = ExtResource("14_u8551")
+
+[node name="PortalArea" type="Area3D" parent="CubePortal" unique_id=1241233832]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CubePortal/PortalArea" unique_id=1272639127]
+shape = SubResource("BoxShape3D_u8551")
+
+[node name="RefractoryArea" type="Area3D" parent="CubePortal" unique_id=1139021954 groups=["portals"]]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CubePortal/RefractoryArea" unique_id=190124759]
+shape = SubResource("BoxShape3D_pd85l")
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 
