@@ -31,10 +31,6 @@ shader_parameter/underworld_texture = SubResource("ViewportTexture_1rx3v")
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckccm"]
 size = Vector3(5, 5, 0.1)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u8551"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pd85l"]
-
 [node name="MainScene" type="Node3D" unique_id=1688291202]
 script = ExtResource("1_pd85l")
 
@@ -53,6 +49,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.436393, 0)
 environment = ExtResource("4_u8551")
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
+light_mask = 3
+visibility_layer = 3
 z_index = -10
 layout_mode = 3
 anchors_preset = 15
@@ -131,21 +129,13 @@ monitorable = false
 [node name="PortalCol" type="CollisionShape3D" parent="CubePortal/PortalArea" unique_id=1178850918]
 shape = SubResource("BoxShape3D_ckccm")
 
-[node name="ExitTrigger1" type="Area3D" parent="CubePortal" unique_id=1957731034]
+[node name="PortalCoreArea" type="Area3D" parent="CubePortal" unique_id=2016177859]
 collision_layer = 0
 collision_mask = 64
 monitorable = false
 
-[node name="PortalCol" type="CollisionShape3D" parent="CubePortal/ExitTrigger1" unique_id=1112728108]
-shape = SubResource("BoxShape3D_u8551")
-
-[node name="ExitTrigger2" type="Area3D" parent="CubePortal" unique_id=1288093374]
-collision_layer = 0
-collision_mask = 64
-monitorable = false
-
-[node name="PortalCol" type="CollisionShape3D" parent="CubePortal/ExitTrigger2" unique_id=1122519323]
-shape = SubResource("BoxShape3D_pd85l")
+[node name="PortalCol" type="CollisionShape3D" parent="CubePortal/PortalCoreArea" unique_id=1695779662]
+shape = SubResource("BoxShape3D_ckccm")
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 
