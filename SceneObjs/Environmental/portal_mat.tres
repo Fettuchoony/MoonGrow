@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://wq82utyn5xls"]
+
+[ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="1_gfei0"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_gfei0")

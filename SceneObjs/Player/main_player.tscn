@@ -24,7 +24,7 @@ height = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oqahl"]
 margin = 0.01
-size = Vector3(0.1, 0.1, 0.1)
+size = Vector3(0.02, 0.02, 0.02)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1ntc1"]
 radius = 0.031786993
