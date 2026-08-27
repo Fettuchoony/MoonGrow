@@ -129,14 +129,6 @@ monitorable = false
 [node name="PortalCol" type="CollisionShape3D" parent="CubePortal/PortalArea" unique_id=1178850918]
 shape = SubResource("BoxShape3D_ckccm")
 
-[node name="PortalCoreArea" type="Area3D" parent="CubePortal" unique_id=2016177859]
-collision_layer = 0
-collision_mask = 64
-monitorable = false
-
-[node name="PortalCol" type="CollisionShape3D" parent="CubePortal/PortalCoreArea" unique_id=1695779662]
-shape = SubResource("BoxShape3D_ckccm")
-
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 
 [editable path="MainPlayer"]
