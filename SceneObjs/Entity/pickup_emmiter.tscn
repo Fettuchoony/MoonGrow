@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://0x8uufyrcwad"]
+
+[ext_resource type="Script" uid="uid://dk1vtux6oxb13" path="res://SceneObjs/Entity/pickup_emmiter.gd" id="1_alns3"]
+
+[node name="PickupEmmiter" type="Node3D" unique_id=1229295387]
+script = ExtResource("1_alns3")

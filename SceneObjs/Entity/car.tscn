@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://bahk1voj71i1m"]
+
+[ext_resource type="Script" uid="uid://di4xyko1a38kw" path="res://SceneObjs/Player/VehicleControl.gd" id="1_jihn7"]
+[ext_resource type="Script" uid="uid://cw2gt8gptulw5" path="res://SceneObjs/Player/vehicle_script.gd" id="2_w2v4w"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_20pc6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_20pc6"]
+size = Vector3(6, 0.1, 3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5vvyt"]
+size = Vector3(6, 0.1, 3)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_20pc6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j4qnp"]
+size = Vector3(3, 3.88, 5.715)
+
+[node name="VehicleBody3D" type="VehicleBody3D" unique_id=803057675 groups=["carry_on_load"]]
+physics_material_override = SubResource("PhysicsMaterial_20pc6")
+script = ExtResource("1_jihn7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1511001895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.55447626, 0)
+shape = SubResource("BoxShape3D_20pc6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D" unique_id=991925600]
+mesh = SubResource("BoxMesh_5vvyt")
+
+[node name="VehicleWheelFL" type="VehicleWheel3D" parent="." unique_id=1908143231]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3, -1.2, -1.5)
+use_as_traction = true
+use_as_steering = true
+wheel_rest_length = 0.2
+suspension_stiffness = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheelFL" unique_id=1841391172]
+transform = Transform3D(-4.371139e-08, -0.2, 0, 1, -8.742278e-09, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_20pc6")
+
+[node name="VehicleWheelFR" type="VehicleWheel3D" parent="." unique_id=380501341]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 3, -1.2, 1.5)
+use_as_traction = true
+use_as_steering = true
+wheel_rest_length = 0.2
+suspension_stiffness = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheelFR" unique_id=105861421]
+transform = Transform3D(-4.371139e-08, -0.2, 0, 1, -8.742278e-09, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_20pc6")
+
+[node name="VehicleWheelBR" type="VehicleWheel3D" parent="." unique_id=1408395214]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, -1.2, 1.5)
+use_as_traction = true
+wheel_rest_length = 0.2
+suspension_stiffness = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheelBR" unique_id=1229228144]
+transform = Transform3D(-4.371139e-08, -0.2, 0, 1, -8.742278e-09, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_20pc6")
+
+[node name="VehicleWheelBL" type="VehicleWheel3D" parent="." unique_id=1481809592]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, -1.2, -1.5)
+use_as_traction = true
+wheel_rest_length = 0.2
+suspension_stiffness = 30.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleWheelBL" unique_id=1302016010]
+transform = Transform3D(-4.371139e-08, -0.2, 0, 1, -8.742278e-09, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_20pc6")
+
+[node name="EnterVehicleTrigger" type="Area3D" parent="." unique_id=1066500099]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7609825, 0, 0)
+collision_layer = 256
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="EnterVehicleTrigger" unique_id=374459193]
+shape = SubResource("BoxShape3D_j4qnp")
+
+[node name="EngineSound" type="AudioStreamPlayer3D" parent="." unique_id=737710071]
+
+[node name="ImpactSound" type="AudioStreamPlayer3D" parent="." unique_id=1748262706]
+
+[node name="Pivot" type="Node3D" parent="." unique_id=880558182]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.1047134, 0.79517984, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot" unique_id=427494891]
+spring_length = 8.0
+
+[node name="VehicleCam" type="Camera3D" parent="Pivot/SpringArm3D" unique_id=478250554]
+script = ExtResource("2_w2v4w")
+
+[node name="DrivingPos" type="Node3D" parent="." unique_id=1210882128]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2359018, 0, 0)

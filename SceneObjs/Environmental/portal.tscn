@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://deyjwluil7ksl"]
+
+[ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="1_0ae4m"]
+[ext_resource type="Script" uid="uid://c0op7ak3mupmn" path="res://SceneObjs/Environmental/portal.gd" id="2_1c70m"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dnjo6"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("1_0ae4m")
+
+[sub_resource type="QuadMesh" id="QuadMesh_daody"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_dnjo6")
+size = Vector2(5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ckccm"]
+margin = 0.01
+size = Vector3(5, 5, 0.02)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nmxc6"]
+size = Vector3(5, 5, 3)
+
+[node name="Portal" type="MeshInstance3D" unique_id=1480320457 groups=["portals"]]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_daody")
+script = ExtResource("2_1c70m")
+
+[node name="PortalArea" type="Area3D" parent="." unique_id=1906611894]
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PortalArea" unique_id=660618748]
+shape = SubResource("BoxShape3D_ckccm")
+
+[node name="RefractoryArea" type="Area3D" parent="." unique_id=269754306]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RefractoryArea" unique_id=798099853]
+shape = SubResource("BoxShape3D_nmxc6")

@@ -1,11 +1,9 @@
 class_name Player extends CharacterBody3D
 
 
-const MAX_SPEED = 3.5
 const JUMP_SPEED = 6.5
 const ACCELERATION = 4
 const DECELERATION = 4
-const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const INTERACT_COOLDOWN_TIME = 1
 const QSLOT : int = 0
@@ -38,6 +36,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _taskbar_items : Dictionary[String, Control]
 @onready var _taskbar_containers : Array[Node]
 @onready var _current_taskbar_index : int = 0
+@onready var _playerGUI : Control = $PlayerGUI
 @onready var _taskbar_rects = $PlayerGUI/TaskBar/HBoxContainer.get_children()
 
 @onready var _inventory : Array
@@ -54,6 +53,8 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 # Keep track of the gui being displayed
 @onready var _current_turret_gui : Control
 @onready var _camera : Camera3D = $CameraPivot/SpringArm3D/Camera3D
+@onready var _pickup_detect : Area3D = $PickupDetect
+@onready var _pickup_magnet : Area3D = $PickupMagnetize
 
 # Preload all items (Might be a better way to do this)
 @onready var _turret_gui = preload("res://SceneObjs/UI/Scenes/info_upgrade_gui.tscn")
@@ -64,10 +65,10 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _horizontal_scatter = preload("res://SceneObjs/Modifiers/horizontal_scatter.tscn")
 @onready var _bullet_spawner = preload("res://SceneObjs/Bullet/bullet_spawner.tscn")
 
-
-@export var item_cooldown_time : float = 0.2
 @export var debug:bool = false
 @export var give_all_items : bool = false
+@export var speed : float = 1.0
+@export var pickup_radius : float = 10.0
 
 func _ready() -> void:
 	# force health to refresh
@@ -75,6 +76,7 @@ func _ready() -> void:
 	change_health(0)
 	_spawn_with_all_items()
 	_init_taskbar()
+	_pickup_magnet.get_child(0).shape.radius = pickup_radius
 	return
 	
 func _process(delta: float) -> void:
@@ -95,6 +97,7 @@ func _physics_process(delta: float) -> void:
 	pickup_and_lockon(delta)
 	use_item()
 	debug_aim()
+	_item_pickup()
 
 # Displays UI for entering vehicle and handles user input and controller handover to vehicle script
 func enter_vehicle() -> void:
@@ -144,7 +147,7 @@ func movement_processing(delta: float) -> void:
 	var hvel = velocity
 	hvel.y = 0
 
-	var target = direction * MAX_SPEED
+	var target = direction * speed
 	var acceleration
 	if direction.dot(hvel) > 0:
 		acceleration = ACCELERATION
@@ -425,3 +428,22 @@ func _upgrade_hover_ui() -> void:
 				_mouse_mode = Input.MOUSE_MODE_CAPTURED
 				pause_menu.emit()
 		Input.mouse_mode = _mouse_mode
+
+func toggleHUD() -> void:
+	_playerGUI.visible = !_playerGUI.visible
+	print(_playerGUI.visible)
+
+## Player collision for picking up items
+func _item_pickup() -> void:
+	# magnetize
+	var magnets = _pickup_magnet.get_overlapping_areas()
+	for mag in magnets:
+		var pickup : Pickup = mag.get_parent()
+		pickup.magnetize(self)
+	
+	# pickup
+	var pickups = _pickup_detect.get_overlapping_areas()
+	for pickup in pickups:
+		var item : Item = pickup.get_parent().pickup_and_kill()
+		_pickup_item(item)
+		

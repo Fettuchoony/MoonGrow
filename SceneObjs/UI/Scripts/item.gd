@@ -1,7 +1,18 @@
 # This class is now doing a lot of heavy lifting, controls its pickup/placement and spawns
 class_name Item extends PanelContainer
 
-static var HOVER_INFO_WAIT_TIME : float = 0.4
+static var HOVER_INFO_WAIT_TIME : float = 0.25
+
+## INIT
+
+# on init, no fallback location in UI for dropped items
+var _dropped : bool
+# So item knows if in turret, set in move function
+var _in_turret : bool
+# If true, item is in stable spot, if not, it is being held by cursor
+var _stored : bool = true
+
+## READY
 
 var quality : float = 0.0
 var quality_mult : float = 0.0
@@ -29,12 +40,6 @@ var quality_color : Color = Color.WHITE
 
 @onready var augmented : TextureRect = $GUI/Augmented
 
-# If true, item is in stable spot, if not, it is being held by cursor
-@onready var _stored : bool = true
-
-# So item knows if in turret, set in move function
-@onready var in_turret : bool = false
-
 # If not in turret, array empty
 @onready var near_slots
 
@@ -43,6 +48,8 @@ var quality_color : Color = Color.WHITE
 
 # VERY IMPORTANT, this should always be set to avoid item disappearing forever
 @onready var fallback_location : Control
+
+## EXPORT
 
 # Set on instantiation by creator, exported for debugging purposes
 @export var item_name : String
@@ -70,14 +77,21 @@ const mythic_quality_cutoff : float = 1.0
 # TODO: Getting rid of amount for now, making them stack uniquely
 #@export var amount : int
 
+func _init(dropped : bool = false, in_turret : bool = false, stored : bool = true) -> void:
+	_dropped = dropped
+	_in_turret = in_turret
+	_stored = stored
+	
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if slot_icon == null: push_error("Slot icon missing for: " + item_name + " defaulting to missing texture")
+	if _dropped: visible = false
 	roll_quality()
 	_adjust_rect()
 	add_to_group("items")
-	$GUI/Icon.texture = slot_icon
-	fallback_location = get_parent()
-	if fallback_location == null:
+	if !_dropped: fallback_location = get_parent()
+	if !_dropped && fallback_location == null:
 		print_debug("Orphan Item found, not allowed because no fallback location can be set")
 	# gets rid of ugly panel
 	#theme.panel = StyleBoxEmpty
@@ -90,7 +104,7 @@ func _hovering_func(delta : float) -> void:
 	var rect = get_rect()
 	rect.position = global_position
 	# When hovering at all
-	if rect.has_point(get_screen_transform() * get_local_mouse_position()):
+	if is_visible_in_tree() && rect.has_point(get_screen_transform() * get_local_mouse_position()):
 		
 		_hover.visible = true
 		_hovering_timer += delta
@@ -110,7 +124,7 @@ func _hovering_func(delta : float) -> void:
 
 # On input pickup or place the item
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Click") && _stored:
+	if event.is_action_pressed("Click") && _stored && is_visible_in_tree():
 		fallback_location = get_parent()
 		var rect = get_rect()
 		rect.position = global_position
@@ -124,6 +138,8 @@ func _input(event: InputEvent) -> void:
 
 # Used for moving the item somewhere
 func move(new_parent = fallback_location) -> void:
+	_dropped = false
+	print("moving " + name + " to " + new_parent.name)
 	if new_parent is ItemSlot:
 		reparent(new_parent.find_child("Augment"))
 	else:
@@ -133,11 +149,11 @@ func move(new_parent = fallback_location) -> void:
 	_adjust_rect()
 	# Find out if this item is being put in turret so it can interact with neighbors
 	if new_parent is ItemSlot && new_parent.is_turret_slot:
-		in_turret = true
+		_in_turret = true
 		# Grab the other slots in the turret
 		near_slots = new_parent.get_parent().get_children()
 	else:
-		in_turret = false
+		_in_turret = false
 
 # Item slots can request an item (taskbar or turret)
 func _request_item_for_slot(slot : Control) -> void:
@@ -147,6 +163,10 @@ func _request_item_for_slot(slot : Control) -> void:
 			get_tree().call_group("turrets", "update_turret_stats")
 
 func _adjust_rect() -> void:
+	$GUI/Icon.texture = preload("res://Textures/Extracted/PlaceholderItem.png")
+	if slot_icon != null:
+		$GUI/Icon.texture = slot_icon
+	add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 	z_index = 1
 	_quality_scene.z_index = -1
 	_gui.z_index = 0

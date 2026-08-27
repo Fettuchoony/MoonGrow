@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dvmvi0lsoifv4"]
+
+[ext_resource type="Script" uid="uid://85b7h8b5xqih" path="res://SceneObjs/Environmental/overworld.gd" id="1_h8d7y"]
+[ext_resource type="Texture2D" uid="uid://0kvrf71i3h2v" path="res://Textures/Extracted/overworld.png" id="2_dnjaw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1rx3v"]
+albedo_texture = ExtResource("2_dnjaw")
+roughness = 0.0
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_chges"]
+material = SubResource("StandardMaterial3D_1rx3v")
+size = Vector2(500, 500)
+
+[node name="OverworldMap" type="Node3D" unique_id=251422057 groups=["carry_on_load"]]
+visible = false
+script = ExtResource("1_h8d7y")
+
+[node name="World" type="MeshInstance3D" parent="." unique_id=1501656550]
+mesh = SubResource("PlaneMesh_chges")
+
+[node name="MapCam" type="Camera3D" parent="." unique_id=182413128]
+transform = Transform3D(1, 0, 0, 0, 0.17364822, 0.9848077, 0, -0.9848077, 0.17364822, 0, 320, 90)

@@ -6,9 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://cm5wgp2mbtjrw" path="res://SceneObjs/Bullet/test_bullet.tscn" id="2_pmhwo"]
 [ext_resource type="Texture2D" uid="uid://c77f5whuv6k1y" path="res://Textures/Extracted/Bullet.png" id="3_ufvll"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nnvmh"]
+
 [node name="BulletSpawner" type="PanelContainer" unique_id=1645025842]
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nnvmh")
 script = ExtResource("1_nnvmh")
-base_dmg = 10
 base_firerate = 0.2
 projectile = ExtResource("2_pmhwo")
 item_name = "Bullet"

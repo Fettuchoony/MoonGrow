@@ -12,11 +12,14 @@ static var REFRESH_FREQUENCY : float = 1
 @onready var health_bar : HBoxContainer = $"Sprite3D/EnemyViewport/Health Bar/HBoxContainer"
 @onready var time_since_target_update : float = 0
 @onready var time_since_last_hop : float = 0
-@onready var player : CharacterBody3D = $"../../../../MainPlayer"
-@onready var player_cam : Camera3D = $"../../../../MainPlayer/CameraPivot/SpringArm3D/Camera3D"
+@onready var player : CharacterBody3D = get_tree().root.get_child(0).find_child("MainPlayer")
+@onready var player_cam : Camera3D = get_tree().root.get_child(0).find_child("Camera3D")
 @onready var navigation_agent: NavigationAgent3D = get_node("NavigationAgent3D")
 @onready var castle : Node3D = $"../../../Castle"
 @onready var path_length : float = 0
+
+# Set by the enemy
+@onready var loot_table : Dictionary[Item, float]
 
 @export var health : int = 6
 @export var max_health : int = 10
@@ -27,7 +30,7 @@ static var REFRESH_FREQUENCY : float = 1
 func _ready() -> void:
 	# Get a good reference to enemy velocty?
 	navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
-	_init_healthbar()
+	#_init_healthbar()
 
 
 
@@ -37,7 +40,7 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:	
 	_adjust_target()
-	_update_healthbar()
+	#_update_healthbar()
 	_update_navigation()
 	time += delta
 	health_sprite_timer += delta
@@ -54,14 +57,7 @@ func _adjust_target() -> void :
 		time_since_target_update = 0
 		path_length = navigation_agent.get_path_length()
 
-func _init_healthbar() -> void:
-	var i : int = 0
-	while i < max_health:
-		var heart = heart_module_scene.instantiate()
-		heart.get_child(0).visible = false
-		heart.get_child(0).get_child(0).visible = false
-		health_bar.add_child(heart)
-		i += 2
+
 
 func enable_info() -> void:
 	health_sprite.visible = true
@@ -98,18 +94,14 @@ func change_health(delta: int) -> void:
 	#print(health)
 	# ded
 	if health <= 0:
+		_drop_loot()
 		queue_free()
 		pass
-	## Send info to the health GUI
-	#health_gui_update(health, max_health)
+
 
 func apply_knockback(origin: Vector3, knockback_strength : float = 1.0) -> void:
 	apply_impulse(knockback_strength * (1 / origin.distance_to(global_position)) * origin.direction_to(global_position))
 
-func _update_healthbar() -> void:
-	if health_sprite_timer > HEALTH_SHOW_TIME:
-		health_gui_update(6, 10)
-		health_sprite.visible = false
 
 func _update_navigation() -> void:
 	# Do not query when the map has never synchronized and is empty.
@@ -117,3 +109,11 @@ func _update_navigation() -> void:
 		return
 	if navigation_agent.is_navigation_finished():
 		return
+
+func _drop_loot() -> void:
+	for item in loot_table:
+		var chance = loot_table[item]
+		if chance <= randf():
+			var loot = Pickup.new(item)
+			loot.global_position = global_position + Vector3(0.0, 0.5, 0.0)
+			

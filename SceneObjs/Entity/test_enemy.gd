@@ -44,7 +44,7 @@ func _physics_process(delta: float) -> void:
 	
 	var next_path_pos = navigation_agent.get_next_path_position()
 	var focus_point = Vector3(next_path_pos.x, global_position.y, next_path_pos.z)
-	if global_position != focus_point: look_at(focus_point)
+	look_at(focus_point + Vector3(0.1, 0, 0))
 	
 	if time_since_last_hop > HOP_FREQUENCY:
 		# Cancel any charging if player leaves radius
