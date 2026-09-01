@@ -14,7 +14,7 @@ extends MeshInstance3D
 @onready var _portal_core : Area3D = find_child("PortalCoreArea")
 @export var width : float = 5.0
 @export var height : float = 5.0
-@onready var _thickness : float = 0.2
+@onready var _thickness : float = 2.0
 @onready var _player : CharacterBody3D = $"../MainPlayer"
 @onready var _player_entry_point : Vector3 = Vector3.ONE
 @onready var _curr_player_to_portal_norm : Vector3 = Vector3.FORWARD
@@ -40,7 +40,6 @@ func _physics_process(delta: float) -> void:
 	if _portal_area.has_overlapping_areas():
 		_player_in_portal = true
 		if player_passed_center:
-			print("Flipping portal cam")
 			get_tree().call_group("portals", "flip_portal")
 			#_player_overworld_cam.reparent(_player_underworld_cam.get_parent())
 			if _main_cam_in_overworld:
@@ -67,23 +66,29 @@ func _physics_process(delta: float) -> void:
 			#_on_cooldown = true
 
 func flip_portal() -> void:
+	# Overworld -> Underworld
 	if _portal_displaying_overworld:
+		print_debug("Flipping portal to displaying underworld")
 		_portal_displaying_overworld = false
 		set_layer_mask_value(2, false)
 		set_layer_mask_value(1, true)
+		# Underworld -> Overworld
 	elif !_portal_displaying_overworld:
+		print_debug("Flipping portal to displaying overworld")
 		_portal_displaying_overworld = true
 		set_layer_mask_value(2, true)
 		set_layer_mask_value(1, false)
 
 func flip_cameras() -> void:
 	# In overworld looking at underworld portal
-	if _main_cam_in_overworld:
-		_remote_portal_cam.set_remote_node(_main_cam_in_overworld.get_path())
+	if !_main_cam_in_overworld:
+		print_debug("Flipping portal cam to " + str(_player.find_child("Camera3D").get_path()))
+		_remote_portal_cam.set_remote_node(_player.find_child("Camera3D").get_path())
 		_main_cam_in_overworld = false
 	# In underworld looking at overworld portal
-	elif !_main_cam_in_overworld:
-		_remote_portal_cam.set_remote_node(_player_underworld_cam.get_child(0).get_path())
+	elif _main_cam_in_overworld:
+		print_debug("Flipping portal cam to " + str(_player.find_child("UnderworldCam").get_path()))
+		_remote_portal_cam.set_remote_node(_player.find_child("UnderworldCam").get_path())
 		_main_cam_in_overworld = true
 
 func _spawn_frame() -> void:
