@@ -2,11 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cwaotb5uesmhl" path="res://SceneObjs/Environmental/root.gd" id="1_pd85l"]
 [ext_resource type="PackedScene" uid="uid://b4dij2k61xbs8" path="res://SceneObjs/Player/main_player.tscn" id="2_2mr28"]
-[ext_resource type="Environment" uid="uid://d38wahfpvxjed" path="res://SceneObjs/Environmental/overworld_environment.tres" id="3_ckccm"]
-[ext_resource type="Environment" uid="uid://bs466bqoa4sn6" path="res://SceneObjs/Environmental/underworld_environment.tres" id="4_u8551"]
+[ext_resource type="Environment" uid="uid://dfet4xumhgaiu" path="res://SceneObjs/Environmental/overworld_unique_environment.tres" id="3_pd85l"]
+[ext_resource type="Environment" uid="uid://dit1yhdba1snm" path="res://SceneObjs/Environmental/underworld_unique_environment.tres" id="4_1rx3v"]
+[ext_resource type="PackedScene" uid="uid://bn63ycqwdpaqq" path="res://SceneObjs/Environmental/overworld_environment.tscn" id="9_chges"]
 [ext_resource type="PackedScene" uid="uid://bind4oopgiloh" path="res://SceneObjs/Environmental/underworld.tscn" id="9_ckccm"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
+[ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
 [ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="11_nmxc6"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
 [ext_resource type="Material" uid="uid://b0vyqkaox0ilf" path="res://Materials/rainbow_material.tres" id="12_dnjo6"]
@@ -37,16 +39,12 @@ script = ExtResource("1_pd85l")
 [node name="MainPlayer" parent="." unique_id=382776683 groups=["player"] instance=ExtResource("2_2mr28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 0)
 
-[node name="Camera3D" parent="MainPlayer/CameraPivot/SpringArm3D" parent_id_path=PackedInt32Array(382776683, 1667735845) index="0" unique_id=1965886034]
-environment = ExtResource("3_ckccm")
-
 [node name="PortalViewport" parent="MainPlayer" index="9" unique_id=1820352936]
 sdf_oversize = 0
 sdf_scale = 0
 
 [node name="UnderworldCam" parent="MainPlayer/PortalViewport" index="0" unique_id=1702511103]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.436393, 0)
-environment = ExtResource("4_u8551")
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
 light_mask = 3
@@ -104,8 +102,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 329.48697, 3.4259837, 464.771
 mesh = SubResource("BoxMesh_ckccm")
 skeleton = NodePath("../../..")
 
+[node name="OverworldEnvironment" parent="CurrentLevel/MainTestScene" unique_id=793134576 instance=ExtResource("9_chges")]
+environment = ExtResource("3_pd85l")
+
+[node name="OverworldLight" type="DirectionalLight3D" parent="CurrentLevel/MainTestScene" unique_id=549279110]
+transform = Transform3D(-0.2357501, -0.9430212, -0.2348043, -0.77310866, 0.035592902, 0.6332744, -0.5888338, 0.33082366, -0.7374488, -0.01223731, 7.02184, 0)
+
 [node name="Underworld" parent="CurrentLevel" unique_id=241016671 instance=ExtResource("9_ckccm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5940685, 0)
+
+[node name="UnderworldLight" type="DirectionalLight3D" parent="CurrentLevel/Underworld" unique_id=1110694660]
+
+[node name="UnderworldEnvironment" parent="CurrentLevel/Underworld" unique_id=1922065242 instance=ExtResource("11_lqwkv")]
+environment = ExtResource("4_1rx3v")
 
 [node name="Pickup" parent="." unique_id=838998089 instance=ExtResource("16_1rx3v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742)

@@ -19,8 +19,8 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 
 @onready var _max_health : int = 10
 @onready var _health : int = 10
-@onready var _target = $CameraPivot/SpringArm3D/Camera3D/PlayerRay
-@onready var _debug_ball = $CameraPivot/SpringArm3D/Camera3D/PlayerRay/DebugBall
+@onready var _target = find_child("PlayerRay")
+@onready var _debug_ball = find_child("DebugBall")
 @onready var _item_spawn_location = $ItemPivot/ItemSpawnSpot
 @onready var _pickup_hold_location : Node3D = $PickupPivot/ItemHoverSpot
 @onready var _held_item : RigidBody3D = null
@@ -42,17 +42,16 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _inventory : Array
 @onready var _paused : bool
 @onready var _item_timer: float = 0
-@onready var _aim_ray : RayCast3D = $CameraPivot/SpringArm3D/Camera3D/PlayerRay
-@onready var _item_ray : RayCast3D = $CameraPivot/SpringArm3D/Camera3D/ItemRay
+@onready var _aim_ray : RayCast3D = find_child("PlayerRay")
+@onready var _item_ray : RayCast3D = find_child("ItemRay")
 @onready var _ground_ray : RayCast3D = $GroundDetect
 @onready var _menu : Control = $"../Menus"
 @onready var _ground_pos : Vector3 = Vector3(0, 0, 0)
-@onready var _last_subscene : int = 0
 # Keeps track if the turret gui is displaying or not
 @onready var _displaying_turret_gui : bool = false
 # Keep track of the gui being displayed
 @onready var _current_turret_gui : Control
-@onready var _camera : Camera3D = $CameraPivot/SpringArm3D/Camera3D
+@onready var _camera : Camera3D = find_child("Camera3D")
 @onready var _pickup_detect : Area3D = $PickupDetect
 @onready var _pickup_magnet : Area3D = $PickupMagnetize
 

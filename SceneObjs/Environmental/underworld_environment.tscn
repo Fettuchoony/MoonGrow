@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://ccguxx12dl1bh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_u8551"]
+sky_top_color = Color(0.38131323, 0, 0.10667197, 1)
+sky_horizon_color = Color(1, 0.5956259, 0.7267213, 1)
+
+[sub_resource type="Sky" id="Sky_pd85l"]
+sky_material = SubResource("ProceduralSkyMaterial_u8551")
+
+[sub_resource type="Environment" id="Environment_1rx3v"]
+background_mode = 2
+sky = SubResource("Sky_pd85l")
+
+[node name="UnderworldEnvironment" type="WorldEnvironment" unique_id=1922065242]
+environment = SubResource("Environment_1rx3v")

@@ -1,8 +1,9 @@
 extends MeshInstance3D
 
-@onready var _main_viewport_cam_parent = $"../MainPlayer/CameraPivot/SpringArm3D"
+@onready var _player : CharacterBody3D = $"../MainPlayer"
+@onready var _main_viewport_cam_parent = _player.find_child("CurrPlayerCam")
 @onready var _portal_viewport_cam_parent = $"../MainPlayer/PortalViewport"
-@onready var _player_overworld_cam : Camera3D = $"../MainPlayer/CameraPivot/SpringArm3D/Camera3D"
+@onready var _player_overworld_cam : Camera3D = _player.find_child("Camera3D")
 @onready var _player_underworld_cam : Camera3D = $"../MainPlayer/PortalViewport/UnderworldCam"
 #@onready var _lighting : DirectionalLight3D = $"../DirectionalLight3D"
 @onready var _remote_portal_cam : RemoteTransform3D = $"../MainPlayer/CameraPivot/SpringArm3D/UnderworldRemoteTransfer"
@@ -15,7 +16,6 @@ extends MeshInstance3D
 @export var width : float = 5.0
 @export var height : float = 5.0
 @onready var _thickness : float = 2.0
-@onready var _player : CharacterBody3D = $"../MainPlayer"
 @onready var _player_entry_point : Vector3 = Vector3.ONE
 @onready var _curr_player_to_portal_norm : Vector3 = Vector3.FORWARD
 
@@ -44,12 +44,18 @@ func _physics_process(delta: float) -> void:
 			#_player_overworld_cam.reparent(_player_underworld_cam.get_parent())
 			if _main_cam_in_overworld:
 				_main_cam_in_overworld = false
+				_player_overworld_cam.is_player_cam = false
+				_player_underworld_cam.is_player_cam = true
 				_player_overworld_cam.reparent(_portal_viewport_cam_parent)
 				_player_underworld_cam.reparent(_main_viewport_cam_parent)
+				_player_overworld_cam.global_transform = _player_underworld_cam.global_transform
 			else: 
 				_main_cam_in_overworld = true
+				_player_overworld_cam.is_player_cam = true
+				_player_underworld_cam.is_player_cam = false
 				_player_overworld_cam.reparent(_main_viewport_cam_parent)
 				_player_underworld_cam.reparent(_portal_viewport_cam_parent)
+				_player_overworld_cam.global_transform = _player_underworld_cam.global_transform
 	
 	# outside portal
 	if !_portal_area.has_overlapping_areas() && _player_in_portal:

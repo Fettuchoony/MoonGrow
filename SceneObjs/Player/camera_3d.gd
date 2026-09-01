@@ -1,8 +1,10 @@
 extends Camera3D
 
 #@onready var _camera := $"." as Camera3D
-@onready var _camera_pivot := $"../.." as Node3D
-@onready var _player := $"../../.." as CharacterBody3D
+@onready var _camera_pivot := $"../../.." as Node3D
+@onready var _player := $"../../../.." as CharacterBody3D
+@onready var _underworld_cam : Camera3D = _player.find_child("UnderworldCam")
+@onready var is_player_cam : bool = true
 
 # TODO: make sensitivity adjustable
 @export_range(0.0, 1.0) var mouse_sensitivity = 0.01
@@ -11,7 +13,9 @@ extends Camera3D
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if enable_movement && event is InputEventMouseMotion:
+	if !is_player_cam:
+		transform = _underworld_cam.transform
+	elif enable_movement && event is InputEventMouseMotion:
 		# Camera tilt, max tilt set above as global
 		_camera_pivot.rotation.x -= event.relative.y * mouse_sensitivity
 		# Clamps tilt within params
