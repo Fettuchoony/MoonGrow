@@ -189,7 +189,7 @@ func handle_pausing() -> void:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 			pause_menu.emit()
 			
-func debug_aim() -> Node3D:
+func debug_aim() -> void:
 	if !debug:
 		_debug_ball.visible = false
 	else:

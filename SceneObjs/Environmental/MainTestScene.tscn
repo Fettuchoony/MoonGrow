@@ -46,17 +46,16 @@ size = Vector3(2.18, 0.065, 2.09)
 [node name="MainTestScene" type="Node3D" unique_id=869491980 groups=["levels"]]
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=808804662]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 navigation_mesh = SubResource("NavigationMesh_5mvff")
 script = ExtResource("1_teode")
 
-[node name="HTerrain" type="Node3D" parent="NavigationRegion3D" unique_id=1653979407]
+[node name="HTerrain" type="Node3D" parent="NavigationRegion3D" unique_id=1377157646]
 script = ExtResource("2_54cmu")
 centered = true
 _terrain_data = ExtResource("3_yn7s4")
 chunk_size = 32
 collision_enabled = true
-collision_layer = 2049
+collision_layer = 1
 collision_mask = 1
 shader_type = "Classic4Lite"
 custom_shader = null

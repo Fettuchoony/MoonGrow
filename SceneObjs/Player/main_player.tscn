@@ -16,6 +16,10 @@
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uu6xs"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_oqahl"]
+margin = 0.01
+size = Vector3(0.02, 0.02, 0.02)
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0du0"]
 albedo_color = Color(0.6772466, 0.00018799871, 0.6265677, 1)
 
@@ -23,10 +27,6 @@ albedo_color = Color(0.6772466, 0.00018799871, 0.6265677, 1)
 material = SubResource("StandardMaterial3D_r0du0")
 radius = 0.1
 height = 0.2
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_oqahl"]
-margin = 0.01
-size = Vector3(0.02, 0.02, 0.02)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_1ntc1"]
 radius = 0.031786993
@@ -38,6 +38,7 @@ radius = 10.0
 disable_mode = 2
 collision_layer = 258
 script = ExtResource("1_1ntc1")
+debug = true
 give_all_items = true
 speed = 10.0
 pickup_radius = 5.0
@@ -61,22 +62,9 @@ spring_length = 0.0
 cull_mask = 1047553
 environment = ExtResource("2_8nehc")
 current = true
+fov = 81.5
 script = ExtResource("2_oqahl")
 tilt_limit = 1.2
-
-[node name="PlayerRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" unique_id=577065282]
-target_position = Vector3(0, 0, -200)
-collision_mask = 13
-collide_with_areas = true
-
-[node name="DebugBall" type="MeshInstance3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D/PlayerRay" unique_id=670250658]
-mesh = SubResource("SphereMesh_cm0pq")
-
-[node name="ItemRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" unique_id=1965880302]
-target_position = Vector3(0, 0, -20)
-collision_mask = 8
-
-[node name="PlacementRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" unique_id=1565345913]
 
 [node name="CameraArea" type="Area3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=1593249897]
 collision_layer = 64
@@ -84,6 +72,21 @@ collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam/CameraArea" unique_id=275180452]
 shape = SubResource("BoxShape3D_oqahl")
+
+[node name="PlayerRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=577065282]
+target_position = Vector3(0, 0, -200)
+collision_mask = 13
+collide_with_areas = true
+
+[node name="DebugBall" type="MeshInstance3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam/PlayerRay" unique_id=670250658]
+visible = false
+mesh = SubResource("SphereMesh_cm0pq")
+
+[node name="ItemRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=1965880302]
+target_position = Vector3(0, 0, -20)
+collision_mask = 8
+
+[node name="PlacementRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=1565345913]
 
 [node name="UnderworldRemoteTransfer" type="RemoteTransform3D" parent="CameraPivot/SpringArm3D" unique_id=562558832]
 remote_path = NodePath("../../../PortalViewport/UnderworldCam")
@@ -282,22 +285,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39201754, 0)
 cull_mask = 1047554
 environment = ExtResource("10_qdpit")
 current = true
+fov = 81.5
 script = ExtResource("3_oqahl")
 tilt_limit = 1.2
-
-[node name="PlayerRay" type="RayCast3D" parent="PortalViewport/UnderworldCam" unique_id=259869477]
-target_position = Vector3(0, 0, -200)
-collision_mask = 13
-collide_with_areas = true
-
-[node name="DebugBall" type="MeshInstance3D" parent="PortalViewport/UnderworldCam/PlayerRay" unique_id=584020532]
-mesh = SubResource("SphereMesh_cm0pq")
-
-[node name="ItemRay" type="RayCast3D" parent="PortalViewport/UnderworldCam" unique_id=828245319]
-target_position = Vector3(0, 0, -20)
-collision_mask = 8
-
-[node name="PlacementRay" type="RayCast3D" parent="PortalViewport/UnderworldCam" unique_id=1722711286]
 
 [connection signal="transfer_cam_to_player" from="." to="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" method="_on_main_player_transfer_cam_to_player"]
 [connection signal="transfer_cam_to_vehicle" from="." to="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" method="_on_main_player_transfer_cam_to_vehicle"]

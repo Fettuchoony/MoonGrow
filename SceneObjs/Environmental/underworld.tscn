@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://ceb22ea8d8f0p" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_3uvki"]
 [ext_resource type="Texture2D" uid="uid://qc1w7spndy6q" path="res://Textures/Extracted/slot0_albedo_bump.png" id="4_4axv2"]
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_8fx6v"]
+
 [sub_resource type="Resource" id="Resource_yjw2p"]
 script = ExtResource("3_3uvki")
 mode = 0
@@ -12,14 +14,17 @@ textures = [[ExtResource("4_4axv2")], [null]]
 
 [node name="Underworld" type="Node3D" unique_id=241016671]
 
-[node name="HTerrain" type="Node3D" parent="." unique_id=1241828546]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=119212961]
+navigation_mesh = SubResource("NavigationMesh_8fx6v")
+
+[node name="HTerrain" type="Node3D" parent="NavigationRegion3D" unique_id=1241828546]
 script = ExtResource("1_oualc")
 centered = true
 _terrain_data = ExtResource("2_ttpt8")
 chunk_size = 32
 collision_enabled = true
-collision_layer = 1
-collision_mask = 1
+collision_layer = 32768
+collision_mask = 32768
 shader_type = "Classic4Lite"
 custom_shader = null
 custom_globalmap_shader = null

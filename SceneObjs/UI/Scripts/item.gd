@@ -85,7 +85,7 @@ func _init(dropped : bool = false, in_turret : bool = false, stored : bool = tru
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if slot_icon == null: push_error("Slot icon missing for: " + item_name + " defaulting to missing texture")
+	#if slot_icon == null: push_error("Slot icon missing for: " + item_name + " defaulting to missing texture")
 	if _dropped: visible = false
 	roll_quality()
 	_adjust_rect()

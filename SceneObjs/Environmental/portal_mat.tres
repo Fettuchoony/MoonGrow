@@ -3,5 +3,7 @@
 [ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="1_gfei0"]
 
 [resource]
+resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("1_gfei0")
+shader_parameter/deactive_z = 0.235

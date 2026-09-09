@@ -200,4 +200,3 @@ static func grid_get_or_default(grid, x, y, defval=null):
 		if x >= 0 and x < len(row):
 			return row[x]
 	return defval
-
