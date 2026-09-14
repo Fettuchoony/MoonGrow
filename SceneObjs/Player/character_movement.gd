@@ -64,6 +64,7 @@ signal update_health_GUI(deltaH: int, deltaMax: int)
 @onready var _horizontal_scatter = preload("res://SceneObjs/Modifiers/horizontal_scatter.tscn")
 @onready var _bullet_spawner = preload("res://SceneObjs/Bullet/bullet_spawner.tscn")
 
+@export var in_overworld : bool = true
 @export var debug:bool = false
 @export var give_all_items : bool = false
 @export var speed : float = 1.0

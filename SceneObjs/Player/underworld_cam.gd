@@ -13,9 +13,7 @@ extends Camera3D
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if !is_player_cam:
-		transform = _overworld_cam.transform
-	elif enable_movement && event is InputEventMouseMotion:
+	if enable_movement && event is InputEventMouseMotion:
 		# Camera tilt, max tilt set above as global
 		_camera_pivot.rotation.x -= event.relative.y * mouse_sensitivity
 		# Clamps tilt within params
@@ -29,7 +27,11 @@ func _ready() -> void:
 	var main_viewport : Viewport = get_tree().root
 	var portal_viewport : SubViewport = get_parent()
 	portal_viewport.size = main_viewport.size
-	
+
+func _process(delta: float) -> void:
+	if !is_player_cam:
+		transform = _overworld_cam.global_transform
+		
 	
 
 

@@ -4,13 +4,11 @@
 [ext_resource type="Environment" uid="uid://dfet4xumhgaiu" path="res://SceneObjs/Environmental/overworld_unique_environment.tres" id="2_8nehc"]
 [ext_resource type="Script" uid="uid://dvrsrr1i7byml" path="res://SceneObjs/Player/camera_3d.gd" id="2_oqahl"]
 [ext_resource type="Texture2D" uid="uid://b2b533e7fydfk" path="res://Textures/Extracted/Crosshair.png" id="3_f5ge2"]
-[ext_resource type="Script" uid="uid://srfdh6m6c7nk" path="res://SceneObjs/Player/underworld_cam.gd" id="3_oqahl"]
 [ext_resource type="Script" uid="uid://dimv3hf7bsc53" path="res://SceneObjs/UI/Scripts/health_GUI_update.gd" id="4_8nehc"]
 [ext_resource type="PackedScene" uid="uid://ewc5qej3n60j" path="res://SceneObjs/UI/Scenes/heart_module.tscn" id="5_qdpit"]
 [ext_resource type="Script" uid="uid://dlhhrhelqp8eu" path="res://SceneObjs/UI/Scripts/taskbar_controller.gd" id="6_rc4g8"]
 [ext_resource type="PackedScene" uid="uid://cflvbyc7lnyyb" path="res://SceneObjs/UI/Scenes/item_slot.tscn" id="7_d3pdv"]
 [ext_resource type="Script" uid="uid://dix651ieftiuw" path="res://SceneObjs/Player/item_pivot.gd" id="8_nsc5i"]
-[ext_resource type="Environment" uid="uid://dit1yhdba1snm" path="res://SceneObjs/Environmental/underworld_unique_environment.tres" id="10_qdpit"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uu6xs"]
 
@@ -64,6 +62,7 @@ environment = ExtResource("2_8nehc")
 current = true
 fov = 81.5
 script = ExtResource("2_oqahl")
+is_player_cam = true
 tilt_limit = 1.2
 
 [node name="CameraArea" type="Area3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=1593249897]
@@ -87,9 +86,6 @@ target_position = Vector3(0, 0, -20)
 collision_mask = 8
 
 [node name="PlacementRay" type="RayCast3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=1565345913]
-
-[node name="UnderworldRemoteTransfer" type="RemoteTransform3D" parent="CameraPivot/SpringArm3D" unique_id=562558832]
-remote_path = NodePath("../../../PortalViewport/UnderworldCam")
 
 [node name="CharacterAreaDetect" type="Area3D" parent="." unique_id=1768660477]
 collision_layer = 2
@@ -277,17 +273,6 @@ collision_mask = 32
 
 [node name="PickupCol" type="CollisionShape3D" parent="PickupMagnetize" unique_id=585242491]
 shape = SubResource("SphereShape3D_oqahl")
-
-[node name="PortalViewport" type="SubViewport" parent="." unique_id=1820352936]
-
-[node name="UnderworldCam" type="Camera3D" parent="PortalViewport" unique_id=1702511103]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39201754, 0)
-cull_mask = 1047554
-environment = ExtResource("10_qdpit")
-current = true
-fov = 81.5
-script = ExtResource("3_oqahl")
-tilt_limit = 1.2
 
 [connection signal="transfer_cam_to_player" from="." to="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" method="_on_main_player_transfer_cam_to_player"]
 [connection signal="transfer_cam_to_vehicle" from="." to="CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D" method="_on_main_player_transfer_cam_to_vehicle"]

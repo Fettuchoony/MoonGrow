@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
-[ext_resource type="Shader" uid="uid://cs8oi8q25fp48" path="res://SceneObjs/Environmental/portal.gdshader" id="11_nmxc6"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
 [ext_resource type="Material" uid="uid://b0vyqkaox0ilf" path="res://Materials/rainbow_material.tres" id="12_dnjo6"]
 [ext_resource type="Script" uid="uid://da7ulox4a1bid" path="res://SceneObjs/Environmental/level_master.gd" id="13_pd85l"]
@@ -23,30 +22,12 @@ material = ExtResource("12_dnjo6")
 
 [sub_resource type="BoxMesh" id="BoxMesh_chges"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_lqwkv"]
-viewport_path = NodePath("MainPlayer/PortalViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rc1co"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("11_nmxc6")
-shader_parameter/underworld_texture = SubResource("ViewportTexture_lqwkv")
-shader_parameter/deactive_z = 0.235
-shader_parameter/z_slice = 0.0
-
 [node name="MainScene" type="Node3D" unique_id=1688291202]
 script = ExtResource("1_pd85l")
 
 [node name="MainPlayer" parent="." unique_id=382776683 groups=["player"] instance=ExtResource("2_2mr28")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 0)
 debug = false
-
-[node name="PortalViewport" parent="MainPlayer" index="9" unique_id=1820352936]
-sdf_oversize = 0
-sdf_scale = 0
-
-[node name="UnderworldCam" parent="MainPlayer/PortalViewport" index="0" unique_id=1702511103]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.436393, 0)
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
 light_mask = 3
@@ -131,7 +112,16 @@ target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_
 [node name="CubePortal" type="MeshInstance3D" parent="." unique_id=2070517996 groups=["portals"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.552, 2.6, -14.752)
 mesh = SubResource("BoxMesh_chges")
-surface_material_override/0 = SubResource("ShaderMaterial_rc1co")
+script = ExtResource("14_u8551")
+
+[node name="CubePortal2" type="MeshInstance3D" parent="." unique_id=970932803 groups=["portals"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.585986, 2.6, -21.480055)
+mesh = SubResource("BoxMesh_chges")
+script = ExtResource("14_u8551")
+
+[node name="CubePortal3" type="MeshInstance3D" parent="." unique_id=845590582 groups=["portals"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.610034, 2.6, -29.441174)
+mesh = SubResource("BoxMesh_chges")
 script = ExtResource("14_u8551")
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
