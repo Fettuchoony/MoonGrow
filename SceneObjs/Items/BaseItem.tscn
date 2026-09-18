@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c6qrq4upjacc3"]
+
+[ext_resource type="Script" uid="uid://wedswy480ndt" path="res://SceneObjs/Items/itemFAIL.gd" id="1_gpdbj"]
+
+[node name="BaseItem" type="Node3D" unique_id=995986501]
+script = ExtResource("1_gpdbj")

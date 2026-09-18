@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dc047347gnkh2"]
+
+[ext_resource type="Script" uid="uid://c6t6fyyncdy1i" path="res://SceneObjs/Environmental/energy_source.gd" id="1_fp17e"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cte8g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nkn4e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fp17e"]
+albedo_color = Color(2.47802, 2.656016, 2.8340123, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_oa2qq"]
+material = SubResource("StandardMaterial3D_fp17e")
+top_radius = 0.1
+bottom_radius = 0.1
+
+[node name="EnergySource" type="RigidBody3D" unique_id=812360070]
+script = ExtResource("1_fp17e")
+
+[node name="BaseMesh" type="MeshInstance3D" parent="." unique_id=1298796032]
+mesh = SubResource("BoxMesh_cte8g")
+
+[node name="Collider" type="CollisionShape3D" parent="." unique_id=1173562517]
+shape = SubResource("BoxShape3D_nkn4e")
+
+[node name="RayOrigin" type="Node3D" parent="." unique_id=86914115]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.56730556)
+
+[node name="Ray" type="MeshInstance3D" parent="RayOrigin" unique_id=1165346629]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_oa2qq")
+skeleton = NodePath("../..")
+
+[node name="PhysRay" type="RayCast3D" parent="RayOrigin" unique_id=900230823]
+target_position = Vector3(0, 0, -200)
+collide_with_areas = true

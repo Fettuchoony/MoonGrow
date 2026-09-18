@@ -247,7 +247,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4150555, 0)
 script = ExtResource("8_nsc5i")
 
 [node name="ItemSpawnSpot" type="Node3D" parent="ItemPivot" unique_id=486731634]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9021199)
 
 [node name="GroundDetect" type="RayCast3D" parent="." unique_id=843351447]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1178627, 0)

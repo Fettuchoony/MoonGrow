@@ -9,3 +9,4 @@ sky_material = SubResource("ProceduralSkyMaterial_ckccm")
 [resource]
 background_mode = 2
 sky = SubResource("Sky_u8551")
+glow_enabled = true

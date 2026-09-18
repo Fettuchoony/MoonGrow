@@ -4,11 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://b4dij2k61xbs8" path="res://SceneObjs/Player/main_player.tscn" id="2_2mr28"]
 [ext_resource type="Environment" uid="uid://dfet4xumhgaiu" path="res://SceneObjs/Environmental/overworld_unique_environment.tres" id="3_pd85l"]
 [ext_resource type="Environment" uid="uid://dit1yhdba1snm" path="res://SceneObjs/Environmental/underworld_unique_environment.tres" id="4_1rx3v"]
-[ext_resource type="Script" uid="uid://yjx3u7mlo873" path="res://SceneObjs/Environmental/overworld_controller.gd" id="6_1rx3v"]
+[ext_resource type="Script" path="res://SceneObjs/Environmental/overworld_controller.gd" id="6_1rx3v"]
 [ext_resource type="PackedScene" uid="uid://bn63ycqwdpaqq" path="res://SceneObjs/Environmental/overworld_environment.tscn" id="9_chges"]
 [ext_resource type="PackedScene" uid="uid://bind4oopgiloh" path="res://SceneObjs/Environmental/underworld.tscn" id="9_ckccm"]
+[ext_resource type="PackedScene" uid="uid://dc047347gnkh2" path="res://SceneObjs/Environmental/energy_source.tscn" id="10_chges"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
-[ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
+[ext_resource type="Script" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
@@ -92,6 +93,10 @@ environment = ExtResource("3_pd85l")
 [node name="OverworldLight" type="DirectionalLight3D" parent="CurrentLevel/MainTestScene" unique_id=549279110]
 transform = Transform3D(-0.2357501, -0.9430212, -0.2348043, -0.77310866, 0.035592902, 0.6332744, -0.5888338, 0.33082366, -0.7374488, -0.01223731, 7.02184, 0)
 
+[node name="EnergySource" parent="CurrentLevel/MainTestScene" unique_id=812360070 instance=ExtResource("10_chges")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.973567, 1.5474262, -8.945782)
+collision_layer = 9
+
 [node name="Underworld" parent="CurrentLevel" unique_id=241016671 instance=ExtResource("9_ckccm")]
 script = ExtResource("11_chges")
 
@@ -111,16 +116,6 @@ target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_
 
 [node name="CubePortal" type="MeshInstance3D" parent="." unique_id=2070517996 groups=["portals"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.552, 2.6, -14.752)
-mesh = SubResource("BoxMesh_chges")
-script = ExtResource("14_u8551")
-
-[node name="CubePortal2" type="MeshInstance3D" parent="." unique_id=970932803 groups=["portals"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.585986, 2.6, -21.480055)
-mesh = SubResource("BoxMesh_chges")
-script = ExtResource("14_u8551")
-
-[node name="CubePortal3" type="MeshInstance3D" parent="." unique_id=845590582 groups=["portals"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.610034, 2.6, -29.441174)
 mesh = SubResource("BoxMesh_chges")
 script = ExtResource("14_u8551")
 

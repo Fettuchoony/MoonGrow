@@ -9,6 +9,12 @@ const INTERACT_COOLDOWN_TIME = 1
 const QSLOT : int = 0
 const ESLOT : int = 1
 const RSLOT : int = 2
+const ITEM_ROTATE_SENSITIVITY : float = 0.1
+const ITEM_HOLDING_STRENGTH : float = 3.0
+# The radius from the hold location where the ite is locked in to prevent jitter
+const ITEM_HOLDING_DEADZONE : float = 0.05
+# EXPONENT
+const ITEM_PULL_STRENGTH_WITH_DISTANCE : float = 2.0
 
 signal transfer_cam_to_vehicle(target:VehicleBody3D)
 signal transfer_cam_to_player()
@@ -301,26 +307,36 @@ func game_over() -> void:
 func pickup_and_lockon(delta : float) -> void:
 	var col : RigidBody3D = _item_ray.get_collider()
 	# pickup
-	if Input.is_action_just_pressed("EItem") and _held_item == null and col != null and col.collision_layer == 8:
+	if Input.is_action_just_pressed("EItem") && col != null && _held_item == null:
 		# Reassign held item
-		#print_debug("picked up: " + to_string(_held_item))
 		_held_item = col
-		_held_item.being_held = true
-		_held_item.hold_pos = _pickup_hold_location
-		# Right object upward when picked up
-		#var y_ang_vel : float = _held_item.angular_velocity.y
-		#_held_item.angular_velocity.x = -_held_item.global_rotation.x
-		#_held_item.angular_velocity.z = -_held_item.global_rotation.z
-		#TODO: Fix righting
-		#_held_item.rotation = Vector3(0, _held_item.rotation.y, 0)
-	# put down
-	elif Input.is_action_just_pressed("EItem") and _held_item != null:
-		#print("put down: " + to_string(_held_item))
-		_held_item.being_held = false
+		_held_item.gravity_scale = 0.0
+	elif Input.is_action_just_pressed("EItem") && _held_item != null:
+		_held_item.gravity_scale = 1.0
 		_held_item = null
+	
+	# While being held
 	if _held_item != null:
-		_held_item.rotation = lerp(_held_item.rotation, _held_item.rotation.y * Vector3.UP, 0.05)
-		_held_item.angular_velocity.z = -_held_item.rotation.z
+		# Get local vector from holding location to item position
+		var dir : Vector3 = -_held_item.global_position + _item_spawn_location.global_position
+		var dist : float = dir.length()
+		var dir_norm = dir.normalized()
+		var pull = pow(dist, ITEM_PULL_STRENGTH_WITH_DISTANCE) * ITEM_HOLDING_STRENGTH + ITEM_HOLDING_STRENGTH
+		# If item outside deadzone radius, pull toward
+		if dist > ITEM_HOLDING_DEADZONE:
+			_held_item.global_position += dir_norm * pull * delta
+			
+		# If item inside deadzone radius, lock at hold position to prevent jitter 
+		else:
+			_held_item.global_position = _item_spawn_location.global_position
+		# Kill velocity to prevent wacky shit (weird move_and_collide interaction with rigidbodies)
+		# Rotate item in players posession
+		if Input.is_action_just_pressed("ScrollDown"):
+			_held_item.rotate(Vector3.UP, ITEM_ROTATE_SENSITIVITY)
+		elif Input.is_action_just_pressed("ScrollUp"):
+			_held_item.rotate(Vector3.UP, -ITEM_ROTATE_SENSITIVITY)
+	
+
 	
 # Adds item to inventory and updates the menu accordingly
 func _pickup_item(item) -> void:
@@ -374,25 +390,27 @@ func _spawn_with_all_items() -> void:
 
 # TODO: Find a way to make this use event instead of direct input?
 func _taskbar_scrolling() -> void:
-	if Input.is_action_just_released("ScrollDown"):
-		# Clear equip sprite from prev index
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
-		# Move index
-		_current_taskbar_index -= 1
-		if _current_taskbar_index < 0:
-			_current_taskbar_index = 8
-		# Reveal equip sprite for curr index of taskbar
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
-		#_currently_idleing = false
-		
-	if Input.is_action_just_released("ScrollUp"):
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
-		_current_taskbar_index += 1
-		if _current_taskbar_index > 8:
-			_current_taskbar_index = 0
-		_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
-		#_currently_idleing = false
-	#_current_hovered_item_name = _player._taskbar_items[_current_taskbar_index]
+	# Item hold rotation takes priority
+	if _held_item == null:
+		if Input.is_action_just_released("ScrollDown"):
+			# Clear equip sprite from prev index
+			_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
+			# Move index
+			_current_taskbar_index -= 1
+			if _current_taskbar_index < 0:
+				_current_taskbar_index = 8
+			# Reveal equip sprite for curr index of taskbar
+			_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
+			#_currently_idleing = false
+			
+		if Input.is_action_just_released("ScrollUp"):
+			_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = false
+			_current_taskbar_index += 1
+			if _current_taskbar_index > 8:
+				_current_taskbar_index = 0
+			_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true
+			#_currently_idleing = false
+		#_current_hovered_item_name = _player._taskbar_items[_current_taskbar_index]
 
 func _init_taskbar() -> void:
 	_taskbar_rects[_current_taskbar_index].find_child("Equipped").visible = true

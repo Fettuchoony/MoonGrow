@@ -137,7 +137,7 @@ func _spawn_frame() -> void:
 	mesh.size = Vector3(width, height, _thickness)	
 	
 	# Set viewport size
-	_portal_viewport.size = DisplayServer.screen_get_size()
+	_portal_viewport.size = get_viewport().get_visible_rect().size
 	
 	if framed:
 		# Create mesh instances for frame
@@ -235,7 +235,7 @@ func _setup_camera() -> void:
 	
 	# Add viewport
 	var viewport = SubViewport.new()
-	viewport.size = DisplayServer.screen_get_size()
+	viewport.size = get_viewport().get_visible_rect().size
 	add_child(viewport)
 	
 	# Add cam to viewport
@@ -251,3 +251,4 @@ func _setup_camera() -> void:
 	# Assign globals
 	_portal_viewport = viewport
 	_portal_cam = cam
+	_portal_cam.fov = _player_cam.fov
