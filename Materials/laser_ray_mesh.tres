@@ -1,0 +1,9 @@
+[gd_resource type="CylinderMesh" format=3 uid="uid://bp2t4j4w7k25g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fp17e"]
+albedo_color = Color(2.47802, 2.656016, 2.8340123, 1)
+
+[resource]
+material = SubResource("StandardMaterial3D_fp17e")
+top_radius = 0.1
+bottom_radius = 0.1

@@ -252,3 +252,5 @@ func _setup_camera() -> void:
 	_portal_viewport = viewport
 	_portal_cam = cam
 	_portal_cam.fov = _player_cam.fov
+
+#func passthrough_laser()

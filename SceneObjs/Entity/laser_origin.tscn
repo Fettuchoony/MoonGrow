@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://v6rcbdtt3s1p"]
+
+[ext_resource type="Script" uid="uid://7x5er48o0g0" path="res://SceneObjs/Entity/laser.gd" id="1_krkqf"]
+[ext_resource type="CylinderMesh" uid="uid://bp2t4j4w7k25g" path="res://Materials/laser_ray_mesh.tres" id="2_ojtji"]
+
+[node name="RayOrigin" type="Node3D" unique_id=520412185]
+script = ExtResource("1_krkqf")
+
+[node name="Ray" type="MeshInstance3D" parent="." unique_id=2018620938]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = ExtResource("2_ojtji")
+skeleton = NodePath("../..")
+
+[node name="PhysRay" type="RayCast3D" parent="." unique_id=922789413]
+target_position = Vector3(0, 0, -200)
+collide_with_areas = true
