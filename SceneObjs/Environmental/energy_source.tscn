@@ -6,6 +6,10 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nkn4e"]
 
+[sub_resource type="SphereMesh" id="SphereMesh_fp17e"]
+radius = 0.2
+height = 0.4
+
 [node name="EnergySource" type="RigidBody3D" unique_id=812360070]
 script = ExtResource("1_fp17e")
 
@@ -17,3 +21,7 @@ shape = SubResource("BoxShape3D_nkn4e")
 
 [node name="EmissionPoint" type="Node3D" parent="." unique_id=390395216]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6620636)
+
+[node name="UpReference" type="MeshInstance3D" parent="." unique_id=1126115039]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.68670225, 0)
+mesh = SubResource("SphereMesh_fp17e")

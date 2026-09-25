@@ -74,7 +74,7 @@ metadata/_custom_type_script = "uid://dm7atgmn4nyu2"
 [node name="Visible" type="Node3D" parent="NavigationRegion3D/WorldBuilds" unique_id=214563816]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/WorldBuilds/Visible" unique_id=863100747]
-transform = Transform3D(0.9099613, -0.41469324, 0, 0.41469324, 0.9099613, 0, 0, 0, 1, 42.82058, 1.3928137, 21.08617)
+transform = Transform3D(0.9099613, -0.41469324, 0, 0.41469324, 0.9099613, 0, 0, 0, 1, 13.699722, 1.3928156, 1.6204681)
 collision_layer = 2049
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/WorldBuilds/Visible/StaticBody3D" unique_id=1364176454]
