@@ -131,6 +131,7 @@ shape = SubResource("BoxShape3D_dvtkr")
 mesh = SubResource("PlaneMesh_vm1e4")
 
 [node name="LoadZone" parent="." unique_id=2053487811 instance=ExtResource("14_jxwv7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7575722, 0)
 target_level = ExtResource("15_sjjey")
 
 [editable path="LoadZone"]

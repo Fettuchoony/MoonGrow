@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckk61qf5220ji"
-path.etc2="res://.godot/imported/RockFace1.png-cd0f00a7dcd277f86acb57b7f77f9e85.etc2.ctex"
+path.s3tc="res://.godot/imported/RockFace1.png-cd0f00a7dcd277f86acb57b7f77f9e85.s3tc.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/Extracted/RockFace1.png"
-dest_files=["res://.godot/imported/RockFace1.png-cd0f00a7dcd277f86acb57b7f77f9e85.etc2.ctex"]
+dest_files=["res://.godot/imported/RockFace1.png-cd0f00a7dcd277f86acb57b7f77f9e85.s3tc.ctex"]
 
 [params]
 

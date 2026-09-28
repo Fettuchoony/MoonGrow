@@ -4,12 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://b4dij2k61xbs8" path="res://SceneObjs/Player/main_player.tscn" id="2_2mr28"]
 [ext_resource type="Environment" uid="uid://dfet4xumhgaiu" path="res://SceneObjs/Environmental/overworld_unique_environment.tres" id="3_pd85l"]
 [ext_resource type="Environment" uid="uid://dit1yhdba1snm" path="res://SceneObjs/Environmental/underworld_unique_environment.tres" id="4_1rx3v"]
-[ext_resource type="Script" path="res://SceneObjs/Environmental/overworld_controller.gd" id="6_1rx3v"]
+[ext_resource type="Script" uid="uid://yjx3u7mlo873" path="res://SceneObjs/Environmental/overworld_controller.gd" id="6_1rx3v"]
 [ext_resource type="PackedScene" uid="uid://bn63ycqwdpaqq" path="res://SceneObjs/Environmental/overworld_environment.tscn" id="9_chges"]
 [ext_resource type="PackedScene" uid="uid://bind4oopgiloh" path="res://SceneObjs/Environmental/underworld.tscn" id="9_ckccm"]
 [ext_resource type="PackedScene" uid="uid://dc047347gnkh2" path="res://SceneObjs/Environmental/energy_source.tscn" id="10_chges"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
-[ext_resource type="Script" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
+[ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
 [ext_resource type="PackedScene" uid="uid://dsg3aaq8k3xk8" path="res://SceneObjs/Environmental/MainTestScene.tscn" id="12_0re28"]
@@ -27,7 +27,7 @@ material = ExtResource("12_dnjo6")
 script = ExtResource("1_pd85l")
 
 [node name="MainPlayer" parent="." unique_id=382776683 groups=["player"] instance=ExtResource("2_2mr28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 11.001358)
 debug = false
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
@@ -98,6 +98,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.973567, 1.5474262, -8.94578
 collision_layer = 9
 
 [node name="Underworld" parent="CurrentLevel" unique_id=241016671 instance=ExtResource("9_ckccm")]
+visible = false
 script = ExtResource("11_chges")
 
 [node name="UnderworldLight" type="DirectionalLight3D" parent="CurrentLevel/Underworld" unique_id=1110694660]
