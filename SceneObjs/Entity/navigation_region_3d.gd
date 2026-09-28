@@ -1,5 +1,9 @@
 extends Node3D
 
+const HTerrain = preload("res://addons/zylann.hterrain/hterrain.gd")
+const HTerrainData = preload("res://addons/zylann.hterrain/hterrain_data.gd")
+const HeavyMeshGen = preload("res://addons/zylann.hterrain/tools/generate_mesh_dialog.gd")
+
 var navigation_mesh: NavigationMesh
 var source_geometry : NavigationMeshSourceGeometryData3D
 var callback_parsing : Callable
@@ -8,6 +12,7 @@ var region_rid: RID
 var terrain
 var t_data
 var t_collider
+
 
 func _ready() -> void:
 	navigation_mesh = NavigationMesh.new()

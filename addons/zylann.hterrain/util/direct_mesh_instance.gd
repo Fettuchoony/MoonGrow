@@ -62,4 +62,3 @@ func set_visible(visible: bool):
 func set_aabb(aabb: AABB):
 	assert(_mesh_instance != RID())
 	RenderingServer.instance_set_custom_aabb(_mesh_instance, aabb)
-

@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cila07ur758vu"]
+
+[ext_resource type="Script" uid="uid://xefcvoe7cm5q" path="res://SceneObjs/Items/item_conveyor.gd" id="1_tanpl"]
+[ext_resource type="PackedScene" uid="uid://2jatnop4rvly" path="res://Textures/Blender/transport_tube.glb" id="2_tsamt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tanpl"]
+
+[node name="ItemConveyor" type="Node3D" unique_id=1641859191]
+script = ExtResource("1_tanpl")
+
+[node name="Tube" type="StaticBody3D" parent="." unique_id=151624409]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tube" unique_id=1016113649]
+shape = SubResource("BoxShape3D_tanpl")
+
+[node name="transport_tube_mesh" parent="Tube" unique_id=1173270789 instance=ExtResource("2_tsamt")]
