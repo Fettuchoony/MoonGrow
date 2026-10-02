@@ -3,9 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://batxglye73xsi"
-path.s3tc="res://.godot/imported/transport_tube_TransportTubeTex.png-3896e626dd5f22d70a0b110e3bde5752.s3tc.ctex"
+path.etc2="res://.godot/imported/transport_tube_TransportTubeTex.png-3896e626dd5f22d70a0b110e3bde5752.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://Textures/Blender/transport_tube_TransportTubeTex.png"
-dest_files=["res://.godot/imported/transport_tube_TransportTubeTex.png-3896e626dd5f22d70a0b110e3bde5752.s3tc.ctex"]
+dest_files=["res://.godot/imported/transport_tube_TransportTubeTex.png-3896e626dd5f22d70a0b110e3bde5752.etc2.ctex"]
 
 [params]
 

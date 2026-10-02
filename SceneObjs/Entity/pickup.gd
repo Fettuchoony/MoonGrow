@@ -66,7 +66,6 @@ func _fall_and_pickup(delta: float) -> void:
 	elif _magnetized && _landed:
 		var curve_offset = global_position.distance_to(_mag_target.global_position) / _mag_target.pickup_radius
 		global_position = global_position.move_toward(_mag_target.global_position, MAG_POWER * mag_strength.sample(curve_offset) * delta)
-		print(curve_offset)
 	else:
 		_vel = Vector3.ZERO
 		_landed = true

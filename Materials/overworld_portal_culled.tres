@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dvc5wk3e0ad8w"]
+
+[ext_resource type="Shader" uid="uid://de3lqj1f8hs4l" path="res://Materials/overworld_portal_culled.gdshader" id="1_8kikj"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_8kikj")

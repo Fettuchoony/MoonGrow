@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bdu8mfboje2yg"]
+
+[ext_resource type="Shader" uid="uid://b5ohjl0i10xun" path="res://Materials/underworld_portal_culled.gdshader" id="1_80m21"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_80m21")
