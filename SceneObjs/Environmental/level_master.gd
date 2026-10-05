@@ -3,6 +3,7 @@ extends Node3D
 static var MAX_PORTAL_COUNT = 16
 static var OVERWORLD_DIMENSIONAL_CULL_SHADER = preload("res://Materials/overworld_portal_culled.tres")
 static var UNDERWORLD_DIMENSIONAL_CULL_SHADER = preload("res://Materials/underworld_portal_culled.tres")
+static var FLAT_PORTAL_SHADER = preload("res://Materials/flat_portal.tres")
 
 @onready var _curr_level : Node3D
 
@@ -37,31 +38,34 @@ func load_level(level : PackedScene, global_shift : Vector3):
 
 func _init_dimension_shader() -> void:
 	# Set overworld shader to all overworld children
-	for child in _overworld.find_children("*"):
+	#for child in _overworld.find_children("*"):
+	for child in find_children("*"):
 		if child is MeshInstance3D:
-			child.set_surface_override_material(0, OVERWORLD_DIMENSIONAL_CULL_SHADER)
+			#child.set_surface_override_material(0, OVERWORLD_DIMENSIONAL_CULL_SHADER)
+			child.set_surface_override_material(0, FLAT_PORTAL_SHADER)
 	# Set underworld shader to all underworld children
-	for child in _underworld.find_children("*"):
-		if child is MeshInstance3D:
-			child.set_surface_override_material(0, UNDERWORLD_DIMENSIONAL_CULL_SHADER)
-	OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal", _player.global_position)
-	UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("player_position", _player.global_position)
+	#for child in _underworld.find_children("*"):
+		#if child is MeshInstance3D:
+			#child.set_surface_override_material(0, UNDERWORLD_DIMENSIONAL_CULL_SHADER)
+	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal", _player.global_position)
+	#UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("player_position", _player.global_position)
 
 
 func _update_dimension_shader() -> void:
-	if _portals.size() > MAX_PORTAL_COUNT:
-		push_error("MAXIMUM PORTAL COUNT EXCEEDED FOR SHADER, ALLOCATE MORE IN PORTAL_CULLED_SHADER")
-	# Update overworld shader with portal positions and dimension status
-	var portal_positions : Array[Vector3]
-	# Maximum portals is set
-	portal_positions.resize(MAX_PORTAL_COUNT)
-	portal_positions.fill(Vector3.ZERO)
-	for i : int in range(_portals.size()):
-		portal_positions.set(i, _portals[i].global_position)
-	OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_count", _portals.size())
-	OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_positions", portal_positions)
-	OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("is_dimension", _player.in_overworld)
-	
-	UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_count", _portals.size())
-	UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_positions", portal_positions)
-	UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("is_dimension", !_player.in_overworld)
+	#if _portals.size() > MAX_PORTAL_COUNT:
+		#push_error("MAXIMUM PORTAL COUNT EXCEEDED FOR SHADER, ALLOCATE MORE IN PORTAL_CULLED_SHADER")
+	## Update overworld shader with portal positions and dimension status
+	#var portal_positions : Array[Vector3]
+	## Maximum portals is set
+	#portal_positions.resize(MAX_PORTAL_COUNT)
+	#portal_positions.fill(Vector3.ZERO)
+	#for i : int in range(_portals.size()):
+		#portal_positions.set(i, _portals[i].global_position)
+	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_count", _portals.size())
+	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_positions", portal_positions)
+	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("is_dimension", _player.in_overworld)
+	#
+	#UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_count", _portals.size())
+	#UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_positions", portal_positions)
+	#UNDERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("is_dimension", !_player.in_overworld)
+	pass
