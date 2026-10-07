@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dc047347gnkh2" path="res://SceneObjs/Environmental/energy_source.tscn" id="10_chges"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://cbm26jdhaslks" path="res://SceneObjs/Environmental/nav_region.gd" id="10_m5msw"]
-[ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
+[ext_resource type="Script" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="PackedScene" uid="uid://c83dnwe7afdko" path="res://SceneObjs/Environmental/RockWall1.tscn" id="11_jjgha"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://bok63sp5licm0" path="res://Textures/Extracted/Grass.png" id="17_s76h1"]
 [ext_resource type="Resource" uid="uid://cjh7xp1lhcmix" path="res://TerrainData/Underworld/data.hterrain" id="24_xvppk"]
 [ext_resource type="Texture2D" uid="uid://qc1w7spndy6q" path="res://Textures/Extracted/slot0_albedo_bump.png" id="25_4s6kp"]
+[ext_resource type="Script" uid="uid://cyxva1qdgk2p" path="res://SceneObjs/Environmental/flat_portal.gd" id="31_73b8e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_r0du0"]
 
@@ -190,7 +191,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.7575722, -63.443565)
 target_level = ExtResource("9_gmekt")
 
 [node name="NavigationRegion3D2" type="NavigationRegion3D" parent="CurrentLevel/MainTestScene" unique_id=1960040991 node_paths=PackedStringArray("_terrain")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250, 0, -250)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -250.00293, 0, -250.00325)
 navigation_mesh = SubResource("NavigationMesh_a1bu5")
 script = ExtResource("10_m5msw")
 _terrain = NodePath("../HTerrain")
@@ -301,7 +302,7 @@ environment = ExtResource("4_1rx3v")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742)
 
 [node name="PickupEmmiter" parent="." unique_id=1229295387 instance=ExtResource("10_daody")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 8.80727, 6.245742)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 8.80727, 53.169853)
 target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","transform":Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742),"rotation_edit_mode":0,"rotation_order":2,"top_level":false,"visible":true,"visibility_parent":NodePath(""),"layers":1,"sorting_offset":0.0,"sorting_use_aabb_center":true,"material_override":null,"material_overlay":null,"transparency":0.0,"cast_shadow":1,"extra_cull_margin":0.0,"custom_aabb":AABB(0, 0, 0, 0, 0, 0),"lod_bias":1.0,"ignore_occlusion_culling":false,"gi_mode":1,"gi_lightmap_texel_scale":1.0,"visibility_range_begin":0.0,"visibility_range_begin_margin":0.0,"visibility_range_end":0.0,"visibility_range_end_margin":0.0,"visibility_range_fade_mode":0,"centered":true,"offset":Vector2(0, 0),"flip_h":false,"flip_v":false,"modulate":Color(1, 1, 1, 1),"pixel_size":0.05,"axis":2,"billboard":0,"transparent":true,"shaded":false,"double_sided":true,"no_depth_test":false,"fixed_size":false,"alpha_cut":0,"alpha_scissor_threshold":0.5,"alpha_hash_scale":1.0,"alpha_antialiasing_mode":0,"alpha_antialiasing_edge":0.0,"texture_filter":0,"render_priority":0,"texture":Resource("res://Textures/Extracted/PlaceholderItem.png"),"hframes":1,"vframes":1,"frame":0,"region_enabled":false,"region_rect":Rect2(0, 0, 0, 0),"script":Resource("res://SceneObjs/Entity/pickup.gd"),"mag_strength":null,"metadata/_custom_type_script":"uid://4nnb7u70d5fw")
 
 
@@ -311,15 +312,20 @@ mesh = SubResource("BoxMesh_chges")
 script = ExtResource("14_u8551")
 
 [node name="FlatPortalProto" type="Node3D" parent="." unique_id=45491246 groups=["portals"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+transform = Transform3D(0.51007766, 0, -0.86012834, 0, 1, 0, 0.86012834, 0, 0.51007766, 0, 2.5, 0)
+script = ExtResource("31_73b8e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FlatPortalProto" unique_id=1073982563]
 mesh = SubResource("BoxMesh_7tkxm")
 
-[node name="XPlane" type="MeshInstance3D" parent="." unique_id=1156458228]
-transform = Transform3D(109.335, 0, 0, 0, 109.335, 0, 0, 0, 109.335, 0, 0, 0)
+[node name="XPlane" type="MeshInstance3D" parent="FlatPortalProto" unique_id=1156458228]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 mesh = SubResource("QuadMesh_7tkxm")
+skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_73b8e")
+
+[node name="Norm" type="Node3D" parent="FlatPortalProto" unique_id=665641231]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [connection signal="pause_menu" from="MainPlayer" to="Menus" method="_on_main_player_pause_menu"]
 [connection signal="bake_finished" from="CurrentLevel/MainTestScene/NavigationRegion3D2" to="CurrentLevel/MainTestScene/NavigationRegion3D2" method="_on_bake_finished"]

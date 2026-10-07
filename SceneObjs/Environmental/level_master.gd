@@ -52,15 +52,26 @@ func _init_dimension_shader() -> void:
 
 
 func _update_dimension_shader() -> void:
-	#if _portals.size() > MAX_PORTAL_COUNT:
-		#push_error("MAXIMUM PORTAL COUNT EXCEEDED FOR SHADER, ALLOCATE MORE IN PORTAL_CULLED_SHADER")
-	## Update overworld shader with portal positions and dimension status
-	#var portal_positions : Array[Vector3]
-	## Maximum portals is set
-	#portal_positions.resize(MAX_PORTAL_COUNT)
-	#portal_positions.fill(Vector3.ZERO)
-	#for i : int in range(_portals.size()):
-		#portal_positions.set(i, _portals[i].global_position)
+	if _portals.size() > MAX_PORTAL_COUNT:
+		push_error("MAXIMUM PORTAL COUNT EXCEEDED FOR SHADER, ALLOCATE MORE IN PORTAL_CULLED_SHADER")
+	# Update overworld shader with portal positions and dimension status
+	var portal_positions : Array[Vector3]
+	var portal_norms : Array[Vector3]
+	# Maximum portals is set
+	portal_positions.resize(MAX_PORTAL_COUNT)
+	portal_norms.resize(MAX_PORTAL_COUNT)
+	portal_positions.fill(Vector3.ZERO)
+	portal_positions.fill(Vector3.ZERO)
+	for i : int in range(_portals.size()):
+		var curr_portal = _portals[i]
+		portal_positions.set(i, curr_portal.global_position)
+		var sign : float = curr_portal.to_local(_player.global_position).z / abs(curr_portal.to_local(_player.global_position).z)
+		portal_norms.set(i, sign * (_portals[i].norm.global_position - _portals[i].global_position).normalized())
+		print(portal_norms[i])
+	FLAT_PORTAL_SHADER.set_shader_parameter("portal_count", _portals.size())
+	FLAT_PORTAL_SHADER.set_shader_parameter("portal_positions", portal_positions)
+	FLAT_PORTAL_SHADER.set_shader_parameter("is_dimension", true)
+	FLAT_PORTAL_SHADER.set_shader_parameter("portal_norms", portal_norms)
 	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_count", _portals.size())
 	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_positions", portal_positions)
 	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("is_dimension", _player.in_overworld)

@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://hovgsowu2du8"
-path.s3tc="res://.godot/imported/ExplosionFrag1.png-ea48b8e9858038328bb61d15be1e6cbe.s3tc.ctex"
+path.etc2="res://.godot/imported/ExplosionFrag1.png-ea48b8e9858038328bb61d15be1e6cbe.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/Extracted/ExplosionFrag1.png"
-dest_files=["res://.godot/imported/ExplosionFrag1.png-ea48b8e9858038328bb61d15be1e6cbe.s3tc.ctex"]
+dest_files=["res://.godot/imported/ExplosionFrag1.png-ea48b8e9858038328bb61d15be1e6cbe.etc2.ctex"]
 
 [params]
 
