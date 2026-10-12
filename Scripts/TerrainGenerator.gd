@@ -24,6 +24,8 @@ var rendering_device: RenderingDevice
 var shader : RID
 var pipeline : RID
 
+var collision_shape: CollisionShape3D
+
 var buffer_set : RID
 var triangle_buffer : RID
 var params_buffer : RID
@@ -51,7 +53,12 @@ var thread
 func _ready():
 	array_mesh = ArrayMesh.new()
 	mesh = array_mesh
-	
+
+	var static_body = StaticBody3D.new()
+	add_child(static_body)
+	collision_shape = CollisionShape3D.new()
+	static_body.add_child(collision_shape)
+
 	init_compute()
 	run_compute()
 	fetch_and_process_compute_data()
@@ -176,15 +183,41 @@ func process_mesh_data():
 func create_mesh():
 	thread.wait_to_finish()
 	waiting_for_meshthread = false
-	print("Num tris: ", num_triangles, " FPS: ", Engine.get_frames_per_second())
+
+	print("Num tris: ", num_triangles,
+		" FPS: ", Engine.get_frames_per_second())
+
+	array_mesh.clear_surfaces()
+
+	if verts.is_empty():
+		collision_shape.shape = null
+		return
+
+	var mesh_data = []
+	mesh_data.resize(Mesh.ARRAY_MAX)
+
+	mesh_data[Mesh.ARRAY_VERTEX] = verts
+	mesh_data[Mesh.ARRAY_NORMAL] = normals
+
+	array_mesh.add_surface_from_arrays(
+		Mesh.PRIMITIVE_TRIANGLES,
+		mesh_data
+	)
+
+	build_trimesh_collision(verts)
 	
-	if len(verts) > 0:
-		var mesh_data = []
-		mesh_data.resize(Mesh.ARRAY_MAX)
-		mesh_data[Mesh.ARRAY_VERTEX] = verts
-		mesh_data[Mesh.ARRAY_NORMAL] = normals
-		array_mesh.clear_surfaces()
-		array_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, mesh_data)
+		
+
+# Create collision identical to visual mesh, prob really expensive
+func build_trimesh_collision(vertices: PackedVector3Array) -> void:
+	if vertices.is_empty():
+		collision_shape.shape = null
+		return
+
+	var shape = ConcavePolygonShape3D.new()
+	shape.set_faces(vertices)
+
+	collision_shape.shape = shape
 
 func get_params_array():
 	var params = []

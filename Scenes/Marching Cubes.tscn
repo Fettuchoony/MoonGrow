@@ -10,6 +10,9 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_e2eci"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_0wrqv"]
+size = Vector3(2.1047363, 1.1694336, 2.8822632)
+
 [sub_resource type="Environment" id="Environment_q07dc"]
 background_mode = 1
 ssao_enabled = true
@@ -124,6 +127,12 @@ transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, 
 light_energy = 200.0
 spot_range = 500.0
 spot_angle = 25.0
+
+[node name="RigidBody3D" type="RigidBody3D" parent="Player" unique_id=958749464]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/RigidBody3D" unique_id=273895879]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10070801, -0.0847168, 0.15151978)
+shape = SubResource("BoxShape3D_0wrqv")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1226972906]
 environment = SubResource("Environment_q07dc")

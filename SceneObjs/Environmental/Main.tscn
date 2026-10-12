@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://dky5nnvlfq6v2" path="res://SceneObjs/Entity/pickup.tscn" id="16_1rx3v"]
 [ext_resource type="Script" uid="uid://ceb22ea8d8f0p" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="16_ov4yy"]
 [ext_resource type="Texture2D" uid="uid://bok63sp5licm0" path="res://Textures/Extracted/Grass.png" id="17_s76h1"]
+[ext_resource type="Material" uid="uid://c16m6psb2fle8" path="res://Materials/TerrainMat.tres" id="23_gmekt"]
+[ext_resource type="Script" uid="uid://ce17m62yh67wg" path="res://Scripts/TerrainGenerator.gd" id="24_m5msw"]
 [ext_resource type="Resource" uid="uid://cjh7xp1lhcmix" path="res://TerrainData/Underworld/data.hterrain" id="24_xvppk"]
 [ext_resource type="Texture2D" uid="uid://qc1w7spndy6q" path="res://Textures/Extracted/slot0_albedo_bump.png" id="25_4s6kp"]
 [ext_resource type="Script" uid="uid://cyxva1qdgk2p" path="res://SceneObjs/Environmental/flat_portal.gd" id="31_73b8e"]
@@ -248,6 +250,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.973567, 1.5474262, -8.94578
 collision_layer = 9
 
 [node name="Goblin" parent="CurrentLevel/MainTestScene" unique_id=1888169871 instance=ExtResource("11_rc1co")]
+
+[node name="Terrain" type="MeshInstance3D" parent="CurrentLevel/MainTestScene" unique_id=477414590 node_paths=PackedStringArray("player")]
+material_override = ExtResource("23_gmekt")
+script = ExtResource("24_m5msw")
+noise_offset = Vector3(152.543, -150, 100)
+iso_level = 1.11
+chunk_scale = 100.0
+player = NodePath("../../../MainPlayer")
 
 [node name="Underworld" type="Node3D" parent="CurrentLevel" unique_id=241016671]
 visible = false
