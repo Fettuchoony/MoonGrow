@@ -57,7 +57,7 @@ spring_length = 0.0
 [node name="CurrPlayerCam" type="Node3D" parent="CameraPivot/SpringArm3D" unique_id=138784536]
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D/CurrPlayerCam" unique_id=1965886034]
-cull_mask = 1047553
+cull_mask = 1047555
 environment = ExtResource("2_8nehc")
 current = true
 fov = 81.5

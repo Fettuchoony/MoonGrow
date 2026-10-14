@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dc047347gnkh2" path="res://SceneObjs/Environmental/energy_source.tscn" id="10_chges"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://cbm26jdhaslks" path="res://SceneObjs/Environmental/nav_region.gd" id="10_m5msw"]
-[ext_resource type="Script" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
+[ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="PackedScene" uid="uid://c83dnwe7afdko" path="res://SceneObjs/Environmental/RockWall1.tscn" id="11_jjgha"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
@@ -261,8 +261,11 @@ environment = ExtResource("3_pd85l")
 transform = Transform3D(-0.2357501, -0.9430212, -0.2348043, -0.77310866, 0.035592902, 0.6332744, -0.5888338, 0.33082366, -0.7374488, -0.01223731, 7.02184, 0)
 
 [node name="EnergySource" parent="CurrentLevel/MainTestScene" unique_id=812360070 instance=ExtResource("10_chges")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.973567, 1.5474262, -8.945782)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85561085, 1.5474262, -2.0541158)
 collision_layer = 9
+
+[node name="BaseMesh" parent="CurrentLevel/MainTestScene/EnergySource" index="0" unique_id=1298796032]
+layers = 2
 
 [node name="Goblin" parent="CurrentLevel/MainTestScene" unique_id=1888169871 instance=ExtResource("11_rc1co")]
 
@@ -312,7 +315,7 @@ mesh = SubResource("BoxMesh_chges")
 script = ExtResource("14_u8551")
 
 [node name="FlatPortalProto" type="Node3D" parent="." unique_id=45491246 groups=["portals"]]
-transform = Transform3D(0.51007766, 0, -0.86012834, 0, 1, 0, 0.86012834, 0, 0.51007766, 0, 2.5, 0)
+transform = Transform3D(0.48187593, 0, 0.8762395, 0, 1, 0, -0.8762395, 0, 0.48187593, 1.4681573, 2.5, 4.2364583)
 script = ExtResource("31_73b8e")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="FlatPortalProto" unique_id=1073982563]
@@ -333,3 +336,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 [editable path="MainPlayer"]
 [editable path="MainPlayer/PlayerGUI/ItemHold"]
 [editable path="CurrentLevel/MainTestScene/LoadZone"]
+[editable path="CurrentLevel/MainTestScene/EnergySource"]

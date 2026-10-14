@@ -58,13 +58,14 @@ func _on_main_player_transfer_cam_to_player(player: CharacterBody3D) -> void:
 
 # Meant for camera group call
 func update_curr_cam(cam : Camera3D, curr_cam_in_overworld : bool) -> void:
-	print("updating cameras")
+	pass
+	#print("updating cameras")
 	_curr_cam = cam
 	if cam == self:
-		set_cull_mask_value(1, curr_cam_in_overworld)
-		set_cull_mask_value(2, !curr_cam_in_overworld)
+		#set_cull_mask_value(1, curr_cam_in_overworld)
+		#set_cull_mask_value(2, !curr_cam_in_overworld)
 		is_player_cam = true
 	else:
-		set_cull_mask_value(1, !curr_cam_in_overworld)
-		set_cull_mask_value(2, curr_cam_in_overworld)
+		#set_cull_mask_value(1, !curr_cam_in_overworld)
+		#set_cull_mask_value(2, curr_cam_in_overworld)
 		is_player_cam = false

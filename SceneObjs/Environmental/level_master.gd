@@ -43,6 +43,7 @@ func _init_dimension_shader() -> void:
 		if child is MeshInstance3D:
 			#child.set_surface_override_material(0, OVERWORLD_DIMENSIONAL_CULL_SHADER)
 			child.set_surface_override_material(0, FLAT_PORTAL_SHADER)
+			child.set_instance_shader_parameter("visual_layer", child.layers)
 	# Set underworld shader to all underworld children
 	#for child in _underworld.find_children("*"):
 		#if child is MeshInstance3D:
@@ -67,10 +68,9 @@ func _update_dimension_shader() -> void:
 		portal_positions.set(i, curr_portal.global_position)
 		var sign : float = curr_portal.to_local(_player.global_position).z / abs(curr_portal.to_local(_player.global_position).z)
 		portal_norms.set(i, sign * (_portals[i].norm.global_position - _portals[i].global_position).normalized())
-		print(portal_norms[i])
 	FLAT_PORTAL_SHADER.set_shader_parameter("portal_count", _portals.size())
 	FLAT_PORTAL_SHADER.set_shader_parameter("portal_positions", portal_positions)
-	FLAT_PORTAL_SHADER.set_shader_parameter("is_dimension", true)
+	FLAT_PORTAL_SHADER.set_shader_parameter("player_dimension", 1)
 	FLAT_PORTAL_SHADER.set_shader_parameter("portal_norms", portal_norms)
 	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_count", _portals.size())
 	#OVERWORLD_DIMENSIONAL_CULL_SHADER.set_shader_parameter("portal_positions", portal_positions)
