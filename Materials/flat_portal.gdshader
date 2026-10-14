@@ -1,134 +1,183 @@
+
 shader_type spatial;
-render_mode world_vertex_coords;
+render_mode cull_disabled;
 
-// This is the hard cap from the shader, should mirror uniform portal_count
 const int PORTAL_COUNT_SHADER_MAX = 16;
-
 const int IN_OVERWORLD = 1;
 const int IN_UNDERWORLD = 2;
 
-// We need the depth texture to reconstruct world coordinates
-uniform sampler2D depth_texture : hint_depth_texture, filter_linear_mipmap;
+uniform vec3 portal_rights[16];
+uniform vec3 portal_ups[16];
 
-// Is global coords for all ins
-uniform int portal_count;
-uniform vec3[PORTAL_COUNT_SHADER_MAX] portal_positions;
-uniform vec3[PORTAL_COUNT_SHADER_MAX] portal_norms;
+uniform int portal_count = 0;
+uniform vec3 portal_positions[16];
+uniform vec3 portal_norms[16];
+
+// Half-width and half-height of every rectangular portal.
+uniform vec2 portal_half_size = vec2(2.5, 2.5);
+
+// Small tolerances in world units.
+uniform float portal_plane_epsilon = 0.02;
+uniform float portal_parallel_epsilon = 0.0001;
+
 uniform int player_dimension = 1;
 
-// The 'instance' qualifier exposes this per object instance
-instance uniform int visual_layer = 1; 
+// Set per material instance / GeometryInstance3D.
+instance uniform int visual_layer = 1;
+
+// Optional debugging visualization.
+uniform bool debug_portal_intersection = false;
+
+
+// Test the rectangular bounds only.
+// This does not enforce a front/back-facing direction.
+
+bool point_inside_portal(
+    vec3 point,
+    vec3 center,
+    vec3 normal,
+    vec3 right,
+    vec3 up,
+    vec2 half_size
+) {
+    vec3 n = normalize(normal);
+	vec3 r = normalize(right);
+	vec3 u = normalize(up);
+
+	vec3 relative = point - center;
+
+	if (abs(dot(relative, n)) > portal_plane_epsilon) {
+	    return false;
+	}
+
+	float local_x = dot(relative, r);
+	float local_y = dot(relative, u);
+
+	return abs(local_x) <= half_size.x
+	    && abs(local_y) <= half_size.y;
+}
+
+
+
+// Intersect a ray with a portal plane and check its finite bounds.
+// Returns true only when the intersection is in front of the camera.
+bool ray_hits_portal(
+    vec3 ray_origin,
+    vec3 ray_direction,
+    vec3 center,
+    vec3 normal,
+    vec3 right,
+    vec3 up,
+    vec2 half_size,
+    out vec3 intersection
+) {
+    float denominator = dot(ray_direction, normal);
+
+    if (abs(denominator) < portal_parallel_epsilon) {
+        return false;
+    }
+
+    float t = dot(center - ray_origin, normal) / denominator;
+
+    if (t < 0.0) {
+        return false;
+    }
+
+    intersection = ray_origin + ray_direction * t;
+
+    return point_inside_portal(
+        intersection,
+        center,
+        normal,
+        right,
+        up,
+        half_size
+    );
+}
 
 
 void vertex() {
-	
+    // With world_vertex_coords, VERTEX is in world coordinates.
 }
-
-// Helper function to build an orthonormal basis (tangent and bitangent) from a normal
-void getPlaneBasis(vec3 normal, out vec3 tangent, out vec3 bitangent) {
-    vec3 n_abs = abs(normal);
-    vec3 v1;
-    if (n_abs.x < n_abs.y && n_abs.x < n_abs.z) {
-        v1 = vec3(1.0, 0.0, 0.0);
-    } else if (n_abs.y < n_abs.z) {
-        v1 = vec3(0.0, 1.0, 0.0);
-    } else {
-        v1 = vec3(0.0, 0.0, 1.0);
-    }
-    tangent = normalize(cross(normal, v1));
-    bitangent = cross(normal, tangent);
-}
-
-// Returns true if 'point' is on the finite plane
-bool isPointOnFinitePlane(
-    vec3 point, 
-    vec3 planeCenter, 
-    vec3 planeNormal, 
-    vec2 halfSize, 
-    float thicknessThreshold
-) {
-    vec3 n = normalize(planeNormal);
-    vec3 toPoint = point - planeCenter;
-    
-    // 1. Check if the point lies on the infinite plane (distance along normal is ~0)
-    float distToPlane = dot(toPoint, n);
-    if (abs(distToPlane) > thicknessThreshold) {
-        return false;
-    }
-    
-    // 2. Build local plane axes
-    vec3 tangent, bitangent;
-    getPlaneBasis(n, tangent, bitangent);
-    
-    // 3. Project the vector onto the plane's local 2D coordinates
-    float localX = dot(toPoint, tangent);
-    float localY = dot(toPoint, bitangent);
-    
-    // 4. Check if local coordinates fall within the finite bounds (-halfSize to +halfSize)
-	// FIX THIS SJKLADHFG;IKLUSBDFG;OIUBH'ILB
-    if (abs(localX) <= halfSize.x && abs(localY) <= halfSize.y && dot(normalize(toPoint), n) < -0.01) {
-        return true;
-    }
-    
-    return false;
-}
-
 
 
 void fragment() {
-	bool discard_flag = false;
-	if (player_dimension != visual_layer) {
-		discard_flag = true;
-	}
-	
-	// Define your target plane using a Center Position and Normal vector
-	vec3 plane_center = portal_positions[0]; // Absolute center point in World Space
-	vec3 plane_normal = portal_norms[0];
-    
-    // 4. Convert View Space to World Space (Object Hit Point)
-    vec4 world_pos = INV_VIEW_MATRIX * vec4(VERTEX, 1.0);
-    vec3 hit_point_world = world_pos.xyz;
-    
-    // 6. Calculate Ray Direction (Camera -> Object Hit Point)
-    vec3 ray_dir = normalize(hit_point_world - CAMERA_POSITION_WORLD);
-    
-    // 7. Calculate Ray-Plane Intersection using the Plane Center
-    // Formula: t = dot(plane_center - ray_origin, normal) / dot(ray_dir, normal)
-    float denominator = dot(ray_dir, plane_normal);
-    
-    // Prevent division by zero if ray runs perfectly parallel to the plane
-    if (abs(denominator) > 0.0001) {
-        float t = dot(plane_center - CAMERA_POSITION_WORLD, plane_normal) / denominator;
-        
-        // Check if the intersection happens in front of the camera (t >= 0)
-        if (t >= 0.0) {
-			// Intersect point in world space
-            vec3 intersection_world = CAMERA_POSITION_WORLD + ray_dir * t;
-            
-            vec3 relative_pos = intersection_world - plane_center;
-			bool on_plane = isPointOnFinitePlane(intersection_world, plane_center, plane_normal, vec2(2.5,2.5), 0.1);
-			if (on_plane && player_dimension != visual_layer) {
-				ALBEDO = vec3(0.0,1.0,0.0);
-				discard_flag = false;
-			// occlude in dimension
-			} else if (on_plane && player_dimension == visual_layer){
-				discard_flag = true;
-			}
-            
-        } else {
-            //ALBEDO = vec3(1.0,0.0,0.0); // Intersection point is behind the camera view
-			
-        }
-    } else {
-         // Ray is parallel to the plane, it will never hit
-		
+    int active_portals = clamp(
+        portal_count,
+        0,
+        PORTAL_COUNT_SHADER_MAX
+    );
+
+    bool same_dimension = (player_dimension == visual_layer);
+
+    // Fragment VERTEX is in view space.
+    // Convert it to world space exactly once.
+    vec3 world_hit = (
+        INV_VIEW_MATRIX * vec4(VERTEX, 1.0)
+    ).xyz;
+
+    vec3 ray_origin = CAMERA_POSITION_WORLD;
+    vec3 ray_vector = world_hit - ray_origin;
+    float fragment_distance = length(ray_vector);
+
+    if (fragment_distance < 0.0001) {
+        discard;
     }
-	if (discard_flag) {
-		discard;
+
+    vec3 ray_direction = ray_vector / fragment_distance;
+
+    bool through_portal = false;
+    float nearest_portal_distance = 1e20;
+
+    for (int i = 0; i < PORTAL_COUNT_SHADER_MAX; i++) {
+        if (i >= active_portals) {
+            break;
+        }
+
+        vec3 normal = normalize(portal_norms[i]);
+
+        if (length(portal_norms[i]) < 0.00001) {
+            continue;
+        }
+
+        vec3 intersection;
+
+        if (ray_hits_portal(
+            ray_origin,
+            ray_direction,
+            portal_positions[i],
+            normal,
+            portal_rights[i],
+            portal_ups[i],
+            portal_half_size,
+            intersection
+        )) {
+            float distance_to_portal =
+                length(intersection - ray_origin);
+
+            if (
+                distance_to_portal < fragment_distance
+                && distance_to_portal < nearest_portal_distance
+            ) {
+                nearest_portal_distance = distance_to_portal;
+                through_portal = true;
+            }
+        }
+    }
+
+	
+
+    if (debug_portal_intersection) {
+	    ALBEDO = through_portal
+	        ? vec3(0.0, 1.0, 0.0)
+	        : vec3(1.0, 0.0, 1.0);
+	    EMISSION = ALBEDO * 0.2;
+	}
+
+	bool visible = (same_dimension && !through_portal)
+	    || (!same_dimension && through_portal);
+
+	if (!visible) {
+	    discard;
 	}
 }
-
-//void light() {
-//	// Called for every pixel for every light affecting the material.
-//	// Uncomment to replace the default light processing function with this one.
-//}

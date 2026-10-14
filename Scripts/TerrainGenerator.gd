@@ -1,5 +1,9 @@
 extends MeshInstance3D
 
+const FLAT_PORTAL_SHADER = preload(
+    "res://Materials/flat_portal.tres"
+)
+
 # Settings, references and constants
 @export var noise_scale : float = 2.0
 @export var noise_offset : Vector3
@@ -59,12 +63,16 @@ var waiting_for_meshthread : bool
 var thread
 
 func _ready():
+	material_override = FLAT_PORTAL_SHADER
+	set_instance_shader_parameter("visual_layer", 2)
+	
 	array_mesh = ArrayMesh.new()
 	mesh = array_mesh
+	
 
 	var static_body = StaticBody3D.new()
-	static_body.set_collision_layer_value(1, false)
 	static_body.set_collision_layer_value(2, true)
+	static_body.set_collision_layer_value(1, false)
 	add_child(static_body)
 	collision_shape = CollisionShape3D.new()
 	static_body.add_child(collision_shape)
@@ -212,12 +220,17 @@ func create_mesh():
 
 	mesh_data[Mesh.ARRAY_VERTEX] = verts
 	mesh_data[Mesh.ARRAY_NORMAL] = normals
+	
 
 	array_mesh.add_surface_from_arrays(
 		Mesh.PRIMITIVE_TRIANGLES,
 		mesh_data
 	)
-	
+
+	## Apply the material to the newly generated surface.
+	#array_mesh.surface_set_material(0, FLAT_PORTAL_SHADER)
+	#array_mesh.set_instance_shader_parameter("visual_layer", 2)
+
 	collision_needs_update = true
 		
 
@@ -257,7 +270,7 @@ func build_trimesh_collision(vertices: PackedVector3Array) -> void:
 		var vertex_index := i * 3
 
 		# Protect against the array changing during iteration.
-		if vertex_index + 2 >= vertices.size():
+		if vertex_index + 2 >= vertices.size() - 3:
 			break
 
 		var a := vertices[vertex_index]

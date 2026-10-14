@@ -25,10 +25,7 @@ func _ready() -> void:
 	# Suck player mouse in
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	add_to_group("cameras")
-	if is_player_cam:
-		update_curr_cam(self, _player.in_overworld)
-	else:
-		update_curr_cam(_player.find_child("Camera3D"), _player.in_overworld)
+	_curr_cam = self
 
 
 func _process(delta: float) -> void:

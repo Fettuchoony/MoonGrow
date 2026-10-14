@@ -472,4 +472,3 @@ func _item_pickup() -> void:
 	for pickup in pickups:
 		var item : Item = pickup.get_parent().pickup_and_kill()
 		_pickup_item(item)
-		
