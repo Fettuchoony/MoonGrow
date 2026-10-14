@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dc047347gnkh2" path="res://SceneObjs/Environmental/energy_source.tscn" id="10_chges"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://cbm26jdhaslks" path="res://SceneObjs/Environmental/nav_region.gd" id="10_m5msw"]
-[ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
+[ext_resource type="Script" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="PackedScene" uid="uid://c83dnwe7afdko" path="res://SceneObjs/Environmental/RockWall1.tscn" id="11_jjgha"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
@@ -88,7 +88,7 @@ albedo_color = Color(0.13725491, 1, 1, 0.19215687)
 script = ExtResource("1_pd85l")
 
 [node name="MainPlayer" parent="." unique_id=382776683 groups=["player"] instance=ExtResource("2_2mr28")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0443754, 11.001358)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.711128, 3.0443754, 3.9201527)
 debug = false
 
 [node name="Menus" type="Control" parent="." unique_id=1694970739 groups=["carry_on_load"]]
@@ -254,14 +254,6 @@ layers = 2
 
 [node name="Goblin" parent="CurrentLevel/MainTestScene" unique_id=1888169871 instance=ExtResource("11_rc1co")]
 
-[node name="Terrain" type="MeshInstance3D" parent="CurrentLevel/MainTestScene" unique_id=477414590 node_paths=PackedStringArray("player")]
-material_override = ExtResource("23_gmekt")
-script = ExtResource("24_m5msw")
-noise_offset = Vector3(152.543, -150, 100)
-iso_level = 1.11
-chunk_scale = 100.0
-player = NodePath("../../../MainPlayer")
-
 [node name="Underworld" type="Node3D" parent="CurrentLevel" unique_id=241016671]
 visible = false
 script = ExtResource("11_chges")
@@ -295,6 +287,16 @@ layers = 2
 [node name="UnderworldEnvironment" parent="CurrentLevel/Underworld" unique_id=1922065242 instance=ExtResource("11_lqwkv")]
 environment = ExtResource("4_1rx3v")
 
+[node name="Terrain" type="MeshInstance3D" parent="CurrentLevel/Underworld" unique_id=477414590 node_paths=PackedStringArray("player")]
+layers = 2
+material_override = ExtResource("23_gmekt")
+skeleton = NodePath("../../MainTestScene")
+script = ExtResource("24_m5msw")
+noise_offset = Vector3(152.543, -150, 100)
+iso_level = 0.2
+chunk_scale = 100.0
+player = NodePath("../../../MainPlayer")
+
 [node name="Pickup" parent="." unique_id=838998089 instance=ExtResource("16_1rx3v")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.0656404, 43.005783, 6.245742)
 
@@ -304,6 +306,7 @@ target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_
 
 
 [node name="CubePortal" type="MeshInstance3D" parent="." unique_id=2070517996]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.552, 2.6, -14.752)
 mesh = SubResource("BoxMesh_chges")
 script = ExtResource("14_u8551")

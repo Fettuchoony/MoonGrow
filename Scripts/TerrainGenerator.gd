@@ -6,6 +6,12 @@ extends MeshInstance3D
 @export var iso_level : float = 1
 @export var chunk_scale : float = 1000
 @export var player : Node3D
+@export var collision_update_distance: float = 10.0
+@export var collision_update_interval: float = 0.25
+
+var last_collision_player_position: Vector3
+var last_collision_update_time: float = -INF
+var collision_initialized: bool = false
 
 const resolution : int = 8
 const num_waitframes_gpusync : int = 12
@@ -18,6 +24,7 @@ const triangle_bind_index : int = 0
 const params_bind_index : int = 1
 const counter_bind_index : int = 2
 const lut_bind_index : int = 3
+const collision_render_distance : float = 25.0
 
 # Compute stuff
 var rendering_device: RenderingDevice
@@ -25,6 +32,7 @@ var shader : RID
 var pipeline : RID
 
 var collision_shape: CollisionShape3D
+var collision_needs_update := false
 
 var buffer_set : RID
 var triangle_buffer : RID
@@ -55,6 +63,8 @@ func _ready():
 	mesh = array_mesh
 
 	var static_body = StaticBody3D.new()
+	static_body.set_collision_layer_value(1, false)
+	static_body.set_collision_layer_value(2, true)
 	add_child(static_body)
 	collision_shape = CollisionShape3D.new()
 	static_body.add_child(collision_shape)
@@ -64,14 +74,18 @@ func _ready():
 	fetch_and_process_compute_data()
 	create_mesh()
 	
-func _process(delta):
-	if (waiting_for_compute && frame - last_compute_dispatch_frame >= num_waitframes_gpusync):
+func _process(delta: float) -> void:
+	if waiting_for_compute and frame - last_compute_dispatch_frame >= num_waitframes_gpusync:
 		fetch_and_process_compute_data()
-	elif (waiting_for_meshthread && frame - last_meshthread_start_frame >= num_waitframes_meshthread):
+	elif waiting_for_meshthread and frame - last_meshthread_start_frame >= num_waitframes_meshthread:
 		create_mesh()
-	elif (!waiting_for_compute && !waiting_for_meshthread):
+	elif not waiting_for_compute and not waiting_for_meshthread:
 		run_compute()
-	
+
+	if collision_needs_update:
+		build_trimesh_collision(verts)
+		# Clear the flag only if a collision update actually happened.
+
 	frame += 1
 	time += delta
 	
@@ -153,7 +167,7 @@ func fetch_and_process_compute_data():
 	waiting_for_compute = false
 	# Get output
 	triangle_data_bytes = rendering_device.buffer_get_data(triangle_buffer)
-	counter_data_bytes =  rendering_device.buffer_get_data(counter_buffer)
+	counter_data_bytes = rendering_device.buffer_get_data(counter_buffer)
 	thread = Thread.new()
 	thread.start(process_mesh_data)
 	waiting_for_meshthread = true
@@ -178,7 +192,7 @@ func process_mesh_data():
 		normals[tri_index * 3 + 0] = norm
 		normals[tri_index * 3 + 1] = norm
 		normals[tri_index * 3 + 2] = norm
-		
+
 	
 func create_mesh():
 	thread.wait_to_finish()
@@ -203,21 +217,70 @@ func create_mesh():
 		Mesh.PRIMITIVE_TRIANGLES,
 		mesh_data
 	)
-
-	build_trimesh_collision(verts)
 	
+	collision_needs_update = true
 		
 
 # Create collision identical to visual mesh, prob really expensive
 func build_trimesh_collision(vertices: PackedVector3Array) -> void:
 	if vertices.is_empty():
 		collision_shape.shape = null
+		collision_initialized = false
 		return
 
-	var shape = ConcavePolygonShape3D.new()
-	shape.set_faces(vertices)
+	var player_global := player.global_position
+	var now := Time.get_ticks_msec() / 1000.0
 
-	collision_shape.shape = shape
+	# Skip rebuilding if the player hasn't moved far enough
+	# and the cooldown hasn't elapsed.
+	if collision_initialized:
+		var moved_squared := player_global.distance_squared_to(
+			last_collision_player_position
+		)
+
+		var threshold_squared := (
+			collision_update_distance * collision_update_distance
+		)
+
+		if moved_squared < threshold_squared:
+			if now - last_collision_update_time < collision_update_interval:
+				return
+
+	var final := PackedVector3Array()
+	var collision_distance_squared := (
+		collision_render_distance * collision_render_distance
+	)
+
+	var available_triangles := int(vertices.size() / 3)
+
+	for i in range(available_triangles):
+		var vertex_index := i * 3
+
+		# Protect against the array changing during iteration.
+		if vertex_index + 2 >= vertices.size():
+			break
+
+		var a := vertices[vertex_index]
+		var b := vertices[vertex_index + 1]
+		var c := vertices[vertex_index + 2]
+
+		var vertex_global := to_global(a)
+
+		if vertex_global.distance_squared_to(player_global) < collision_distance_squared:
+			final.append(a)
+			final.append(b)
+			final.append(c)
+
+	if final.is_empty():
+		collision_shape.shape = null
+	else:
+		var shape := ConcavePolygonShape3D.new()
+		shape.set_faces(final)
+		collision_shape.shape = shape
+
+	last_collision_player_position = player_global
+	last_collision_update_time = now
+	collision_initialized = true
 
 func get_params_array():
 	var params = []

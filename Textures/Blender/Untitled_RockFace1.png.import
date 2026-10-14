@@ -3,9 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b7uijevo2qdy"
-path.s3tc="res://.godot/imported/Untitled_RockFace1.png-b618d0dd5bdb0552cf6886fa342e518a.s3tc.ctex"
+path.etc2="res://.godot/imported/Untitled_RockFace1.png-b618d0dd5bdb0552cf6886fa342e518a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +15,7 @@ generator_parameters={
 [deps]
 
 source_file="res://Textures/Blender/Untitled_RockFace1.png"
-dest_files=["res://.godot/imported/Untitled_RockFace1.png-b618d0dd5bdb0552cf6886fa342e518a.s3tc.ctex"]
+dest_files=["res://.godot/imported/Untitled_RockFace1.png-b618d0dd5bdb0552cf6886fa342e518a.etc2.ctex"]
 
 [params]
 
