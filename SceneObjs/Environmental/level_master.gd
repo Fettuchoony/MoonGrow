@@ -10,6 +10,7 @@ const FLAT_PORTAL_SHADER = preload(
 )
 
 @onready var _player: CharacterBody3D = $"../MainPlayer"
+@onready var _player_cam  : Camera3D = $"../MainPlayer/CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D"
 @onready var _overworld: Node3D = $MainTestScene
 @onready var _underworld: Node3D = $Underworld
 
