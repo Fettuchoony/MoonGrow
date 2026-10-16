@@ -340,7 +340,7 @@ func pickup_and_lockon(delta : float) -> void:
 		var x_rot = _held_item.rotation.x
 		var y_rot = _held_item.rotation.y
 		var z_rot = _held_item.rotation.z
-		print(_held_item.rotation)
+		#print(_held_item.rotation)
 		_held_item.rotation = Vector3(x_rot * (1-delta), y_rot, z_rot * (1-delta))
 		
 	

@@ -91,7 +91,8 @@ func _process(delta: float) -> void:
 		run_compute()
 
 	if collision_needs_update:
-		build_trimesh_collision(verts)
+		pass
+		#build_trimesh_collision(verts)
 		# Clear the flag only if a collision update actually happened.
 
 	frame += 1

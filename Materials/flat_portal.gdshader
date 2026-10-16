@@ -16,14 +16,17 @@ uniform vec2 portal_half_size = vec2(2.5, 2.5);
 uniform float portal_plane_epsilon = 0.02;
 uniform float portal_parallel_epsilon = 0.0000001;
 uniform int player_dimension = 1;
-instance uniform int visual_layer = 2;
-instance uniform bool portal_clipping_enabled = true;
+instance uniform int visual_layer = 1;
 // TODO : change the clip plane pos and norm to portal pos and norm
+
+instance uniform bool portal_clipping_enabled = false;
 instance uniform vec3 clip_plane_position = vec3(0.0);
 instance uniform vec3 clip_plane_normal = vec3(0.0, 0.0, 1.0);
-
-// +1 renders the positive side; -1 renders the negative side.
 instance uniform float clip_side = 1.0;
+instance uniform bool is_transition_object = false;
+instance uniform int debug_copy_type = 0;
+instance uniform bool debug_dimension = true;
+
 
 uniform bool debug_portal_intersection = false;
 
@@ -82,33 +85,27 @@ bool ray_hits_portal(
     vec3 n = normal / normal_length;
     float denominator = dot(ray_direction, n);
 
-	// This epsilon check should really exist for denom but it breaks idk why
-    //if (abs(denominator) < portal_parallel_epsilon) {
-        //return false;
-    //}
+	// Reject rays that are nearly parallel to the portal plane.
+	if (abs(denominator) < portal_parallel_epsilon) {
+	    return false;
+	}
 
-    float t = dot(center - ray_origin, n) / denominator;
+	float t = dot(center - ray_origin, n) / denominator;
 
-    // Ignore intersections behind the camera.
-    if (t <= 0.0) {
-        return false;
-    }
+	if (t <= 0.0) {
+	    return false;
+	}
 
-    intersection = ray_origin + ray_direction * t;
+	intersection = ray_origin + ray_direction * t;
 
-    if (!point_inside_portal(
-        intersection,
-        center,
-        n,
-        right,
-        up,
-        half_size
-    )) {
-        return false;
-    }
+	if (!point_inside_portal(
+	    intersection, center, n, right, up, half_size
+	)) {
+	    return false;
+	}
 
-    distance_to_portal = t;
-    return true;
+	distance_to_portal = t;
+	return true;
 }
 
 
@@ -117,32 +114,43 @@ void vertex() {
 
 
 void fragment() {
+	//if (debug_copy_type == 1) {
+	    //ALBEDO = vec3(1.0, 0.0, 0.0); // Source copy: red
+//
+	//}
+//
+	//if (debug_copy_type == 2) {
+	    //ALBEDO = vec3(0.0, 0.0, 1.0); // Destination copy: blue
+//
+	//}
     int active_portals = clamp(
         portal_count,
         0,
         PORTAL_COUNT_SHADER_MAX
     );
 	
-	vec3 fragment_world_position =
-    (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vec3 world_hit = (INV_VIEW_MATRIX * vec4(VERTEX, 1.0)).xyz;
+	vec3 fragment_world_position = world_hit;
 
 	if (portal_clipping_enabled) {
-	    float signed_distance = dot(
-	        fragment_world_position - clip_plane_position,
-	        normalize(clip_plane_normal)
-	    );
+	    float normal_length = length(clip_plane_normal);
 
-	    if (signed_distance * clip_side < 0.0) {
-	        discard;
+	    if (normal_length > 0.00001) {
+	        vec3 plane_normal = clip_plane_normal / normal_length;
+
+	        float signed_distance = dot(
+	            fragment_world_position - clip_plane_position,
+	            plane_normal
+	        );
+
+	        // Keep the side selected by clip_side.
+	        if (signed_distance * clip_side < 0.0) {
+	            discard;
+	        }
 	    }
 	}
 
     bool same_dimension = (player_dimension == visual_layer);
-
-    // VERTEX is in view space here; convert to world space.
-    vec3 world_hit = (
-        INV_VIEW_MATRIX * vec4(VERTEX, 1.0)
-    ).xyz;
 
     vec3 ray_origin = CAMERA_POSITION_WORLD;
     vec3 ray_vector = world_hit - ray_origin;
@@ -198,20 +206,35 @@ void fragment() {
         }
     }
 
-    if (debug_portal_intersection) {
-        ALBEDO = through_portal
-            ? vec3(0.0, 1.0, 0.0)
-            : vec3(1.0, 0.0, 1.0);
-        EMISSION = ALBEDO * 0.2;
-    }
+	bool visible = (same_dimension && !through_portal)
+	    || (!same_dimension && through_portal);
 
-    // Current dimension: show this dimension outside portal apertures.
-    // Other dimension: show it only inside portal apertures.
-    bool visible = (same_dimension && !through_portal)
-        || (!same_dimension && through_portal);
+	if (debug_portal_intersection) {
+	    if (!through_portal) {
+	        ALBEDO = vec3(1.0, 0.0, 1.0); // Magenta: no portal hit
+	    } else if (same_dimension) {
+	        ALBEDO = vec3(1.0, 0.0, 0.0); // Red: current dimension
+	    } else {
+	        ALBEDO = vec3(0.0, 1.0, 0.0); // Green: other dimension
+	    }
 
-    if (!visible) {
-        discard;
-    }
+	    	EMISSION = ALBEDO * 0.2;
+	}
+	
+	
+	if (debug_dimension) {
+		if (visual_layer == 2) {
+			ALBEDO = vec3(1.0, 0.0, 0.0); // Red if underworld 
+		} else if (visual_layer == 1) {
+			ALBEDO = vec3(0.0, 1.0, 0.0); // Green if overworld
+		} else {
+			ALBEDO = vec3(0.0, 0.0, 1.0); // Blue if invalid dimension
+		}
+		EMISSION = ALBEDO * 0.2;
+	}
+
+	if (!visible) {
+    	discard;
+	}
 	
 }

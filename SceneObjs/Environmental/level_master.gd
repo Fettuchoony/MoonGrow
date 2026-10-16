@@ -79,18 +79,30 @@ func load_level(level: PackedScene, global_shift: Vector3) -> void:
 func _init_dimension_shader() -> void:
 	_assign_dimension_materials(_overworld, IN_OVERWORLD)
 	_assign_dimension_materials(_underworld, IN_UNDERWORLD)
-
+	
 func _assign_dimension_materials(root: Node, dimension: int) -> void:
-	for node in root.find_children("*", "MeshInstance3D", true, false):
-		var mesh_instance := node as MeshInstance3D
-		if mesh_instance == null:
-			continue
+	if root == null:
+		return
 
-		mesh_instance.material_override = FLAT_PORTAL_SHADER
-		mesh_instance.set_instance_shader_parameter(
-			"visual_layer",
-			dimension
-		)
+	if root is MeshInstance3D:
+		_set_mesh_dimension(root as MeshInstance3D, dimension)
+
+	for node in root.find_children("*", "MeshInstance3D", true, false):
+		_set_mesh_dimension(node as MeshInstance3D, dimension)
+
+
+func _set_mesh_dimension(
+	mesh_instance: MeshInstance3D,
+	dimension: int
+) -> void:
+	if mesh_instance == null:
+		return
+
+	mesh_instance.material_override = FLAT_PORTAL_SHADER
+	mesh_instance.set_instance_shader_parameter(
+		"visual_layer",
+		dimension
+	)
 
 
 func _update_dimension_shader() -> void:
@@ -133,7 +145,7 @@ func _update_dimension_shader() -> void:
 	FLAT_PORTAL_SHADER.set_shader_parameter(
 		"player_dimension", _get_player_dimension()
 	)
-	FLAT_PORTAL_SHADER.set_shader_parameter("portal_count", 1)
+
 	FLAT_PORTAL_SHADER.set_shader_parameter("debug_portal_intersection", false)
 
 func _get_player_dimension() -> int:
