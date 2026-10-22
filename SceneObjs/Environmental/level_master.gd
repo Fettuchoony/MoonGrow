@@ -10,7 +10,6 @@ const FLAT_PORTAL_SHADER = preload(
 )
 
 @onready var _player: CharacterBody3D = $"../MainPlayer"
-@onready var _player_cam  : Camera3D = $"../MainPlayer/CameraPivot/SpringArm3D/CurrPlayerCam/Camera3D"
 @onready var _overworld: Node3D = $MainTestScene
 @onready var _underworld: Node3D = $Underworld
 
@@ -90,6 +89,11 @@ func _assign_dimension_materials(root: Node, dimension: int) -> void:
 	for node in root.find_children("*", "MeshInstance3D", true, false):
 		_set_mesh_dimension(node as MeshInstance3D, dimension)
 
+#TODO
+func _assign_dimension_collisions() -> void:
+	
+	pass
+
 
 func _set_mesh_dimension(
 	mesh_instance: MeshInstance3D,
@@ -98,6 +102,7 @@ func _set_mesh_dimension(
 	if mesh_instance == null:
 		return
 
+	# TODO: Set this as a next pass as to not override the material of the object
 	mesh_instance.material_override = FLAT_PORTAL_SHADER
 	mesh_instance.set_instance_shader_parameter(
 		"visual_layer",

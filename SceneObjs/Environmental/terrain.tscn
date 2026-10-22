@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://i7uw72uqvrjm"]
+
+[ext_resource type="Material" uid="uid://c16m6psb2fle8" path="res://Materials/TerrainMat.tres" id="1_16idl"]
+[ext_resource type="Script" uid="uid://ce17m62yh67wg" path="res://Scripts/TerrainGenerator.gd" id="2_egnoo"]
+
+[node name="Terrain" type="MeshInstance3D" unique_id=1690329566 node_paths=PackedStringArray("player")]
+visible = false
+layers = 2
+material_override = ExtResource("1_16idl")
+skeleton = NodePath("../../MainTestScene")
+script = ExtResource("2_egnoo")
+noise_scale = 3.0
+noise_offset = Vector3(152.543, -150, 100)
+iso_level = 0.2
+chunk_scale = 100.0
+player = NodePath("")

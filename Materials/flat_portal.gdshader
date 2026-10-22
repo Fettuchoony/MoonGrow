@@ -25,7 +25,7 @@ instance uniform vec3 clip_plane_normal = vec3(0.0, 0.0, 1.0);
 instance uniform float clip_side = 1.0;
 instance uniform bool is_transition_object = false;
 instance uniform int debug_copy_type = 0;
-instance uniform bool debug_dimension = true;
+instance uniform bool debug_dimension = false;
 
 
 uniform bool debug_portal_intersection = false;

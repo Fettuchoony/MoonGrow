@@ -133,13 +133,13 @@ func _begin_object_transition(root: Node3D) -> void:
 			plane_position,
 			plane_normal
 		)
-		_configure_copy_tree(
-			destination,
-			destination_dimension,
-			-1.0,
-			plane_position,
-			plane_normal
-		)
+		#_configure_copy_tree(
+			#destination,
+			#destination_dimension,
+			#-1.0,
+			#plane_position,
+			#plane_normal
+		#)
 
 		_transition_objects[id] = {
 			"original": original,
@@ -281,15 +281,19 @@ func _configure_copy(
 func _sync_transition_objects() -> void:
 	for id in _transition_objects.keys():
 		var data: Dictionary = _transition_objects[id]
-
+		if !is_instance_valid(id):
+			_transition_objects.erase(id)
+			print("Dead object update detected")
 		var original = data["original"] as GeometryInstance3D
+		if not is_instance_valid(original):
+			print("Invalid instance detected")
+			continue
 		var source = data["source"] as GeometryInstance3D
 		var destination = data["destination"] as GeometryInstance3D
-
-		if not is_instance_valid(original):
-			continue
 		if not is_instance_valid(source) or not is_instance_valid(destination):
+			print("Invalid instance detected")
 			continue
+
 
 		source.global_transform = original.global_transform
 		destination.global_transform = original.global_transform
