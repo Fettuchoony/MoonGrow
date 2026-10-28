@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bm7uu5y0it7e2"
-path.s3tc="res://.godot/imported/CampLevel_slot0_albedo_bump.png-dc04bc284c202d9f593ec327de27fcc7.s3tc.ctex"
+path.etc2="res://.godot/imported/CampLevel_slot0_albedo_bump.png-dc04bc284c202d9f593ec327de27fcc7.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://SceneObjs/Levels/CampLevel_slot0_albedo_bump.png"
-dest_files=["res://.godot/imported/CampLevel_slot0_albedo_bump.png-dc04bc284c202d9f593ec327de27fcc7.s3tc.ctex"]
+dest_files=["res://.godot/imported/CampLevel_slot0_albedo_bump.png-dc04bc284c202d9f593ec327de27fcc7.etc2.ctex"]
 
 [params]
 

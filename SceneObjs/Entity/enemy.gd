@@ -6,10 +6,9 @@ static var REFRESH_FREQUENCY : float = 1
 @onready var _dmg_particle_spawner : Node3D = $DmgParticleSpawner
 
 @onready var time : float = 0
-@onready var health_sprite : Sprite3D = $Sprite3D
 @onready var health_sprite_timer : float = 0
 @onready var heart_module_scene = preload("res://SceneObjs/UI/Scenes/HeartModule.tscn")
-@onready var health_bar : HBoxContainer = $"Sprite3D/EnemyViewport/Health Bar/HBoxContainer"
+@onready var health_bar : Node3D = $HealthBar
 @onready var time_since_target_update : float = 0
 @onready var time_since_last_hop : float = 0
 @onready var player : CharacterBody3D = get_tree().root.get_child(0).find_child("MainPlayer")
@@ -60,30 +59,31 @@ func _adjust_target() -> void :
 
 
 func enable_info() -> void:
-	health_sprite.visible = true
+	health_bar.visible = true
 	health_sprite_timer = 0
 
 func health_gui_update(updated_health: int, updated_max: int) -> void:
-	var temp_health : int = health
-	var temp_max : int = max_health
-	for heart_module in health_bar.get_children():
-		var half : TextureRect = heart_module.get_child(0)
-		var full : TextureRect = half.get_child(0)
-		if temp_max > 0:
-			heart_module.visible = true
-		else:
-			heart_module.visible = false
-		if temp_health > 1:
-			half.visible = true
-			full.visible = true
-		elif temp_health == 1:
-			half.visible = true
-			full.visible = false
-		else:
-			half.visible = false
-			full.visible = false
-		temp_max -= 2
-		temp_health -= 2
+	pass
+	#var temp_health : int = health
+	#var temp_max : int = max_health
+	#for heart_module in health_bar.get_children():
+		#var half : TextureRect = heart_module.get_child(0)
+		#var full : TextureRect = half.get_child(0)
+		#if temp_max > 0:
+			#heart_module.visible = true
+		#else:
+			#heart_module.visible = false
+		#if temp_health > 1:
+			#half.visible = true
+			#full.visible = true
+		#elif temp_health == 1:
+			#half.visible = true
+			#full.visible = false
+		#else:
+			#half.visible = false
+			#full.visible = false
+		#temp_max -= 2
+		#temp_health -= 2
 
 func change_health(delta: int) -> void:
 	print(name + " took " + str(delta) + " dmg")

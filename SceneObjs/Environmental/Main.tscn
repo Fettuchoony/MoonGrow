@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dc047347gnkh2" path="res://SceneObjs/Environmental/energy_source.tscn" id="10_chges"]
 [ext_resource type="PackedScene" uid="uid://0x8uufyrcwad" path="res://SceneObjs/Entity/pickup_emmiter.tscn" id="10_daody"]
 [ext_resource type="Script" uid="uid://cbm26jdhaslks" path="res://SceneObjs/Environmental/nav_region.gd" id="10_m5msw"]
-[ext_resource type="Script" uid="uid://yn6lnxvjhk3r" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
+[ext_resource type="Script" path="res://SceneObjs/Environmental/underworld_controller.gd" id="11_chges"]
 [ext_resource type="PackedScene" uid="uid://c83dnwe7afdko" path="res://SceneObjs/Environmental/RockWall1.tscn" id="11_jjgha"]
 [ext_resource type="Script" uid="uid://dxme07nhdrpmn" path="res://SceneObjs/UI/Scripts/menu_func.gd" id="11_krkgy"]
 [ext_resource type="PackedScene" uid="uid://ccguxx12dl1bh" path="res://SceneObjs/Environmental/underworld_environment.tscn" id="11_lqwkv"]
@@ -301,7 +301,7 @@ target = Object(Sprite3D,"unique_name_in_owner":false,"process_mode":0,"process_
 
 
 [node name="FlatPortalProto" type="Node3D" parent="." unique_id=45491246 node_paths=PackedStringArray("objects_root") groups=["portals"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4911747, 2.5, -15.876324)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 script = ExtResource("31_73b8e")
 objects_root = NodePath("../CurrentLevel/MainTestScene")
 

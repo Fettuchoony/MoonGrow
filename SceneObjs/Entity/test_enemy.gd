@@ -14,7 +14,6 @@ static var HOP_INTENSITY : float = 4
 @onready var slime_scale : Vector3 = scale
 # Lets the slime do its animation even after player is flung outside its radius
 @onready var temp_radius : float = charge_attack_radius
-@onready var health_y : float = health_sprite.position.y
 
 func _ready() -> void:
 	pass
@@ -31,7 +30,6 @@ func _physics_process(delta: float) -> void:
 	rotation.z = 0
 	if health_sprite_timer > HEALTH_SHOW_TIME:
 		health_gui_update(6, 10)
-		health_sprite.visible = false
 	# Do not query when the map has never synchronized and is empty.
 	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
 		return
@@ -65,11 +63,9 @@ func _physics_process(delta: float) -> void:
 			scale = factor * slime_scale
 			charge += delta
 			# Shift health bar, undo scaling
-			health_sprite.position.y = health_y * factor
 		else:
 			charge = 0
 			# Reset health y pos
-			health_sprite.global_position.y = health_y
 			# Reset activation radius of slime charge
 			temp_radius = charge_attack_radius
 			slime_scale = Vector3(1, 1, 1)

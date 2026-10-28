@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://beq0ai8f4xwsf"]
+
+[ext_resource type="Script" uid="uid://tht25npb34a3" path="res://SceneObjs/Entity/health_bar.gd" id="1_m54vr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m54vr"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ki13b"]
+material = SubResource("StandardMaterial3D_m54vr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ki13b"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_ymb3d"]
+material = SubResource("StandardMaterial3D_ki13b")
+
+[node name="HealthBar" type="Node3D" unique_id=1049267497]
+script = ExtResource("1_m54vr")
+
+[node name="Bar" type="MeshInstance3D" parent="." unique_id=936954467]
+transform = Transform3D(2, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("QuadMesh_ki13b")
+
+[node name="HP" type="MeshInstance3D" parent="Bar" unique_id=84754826]
+mesh = SubResource("QuadMesh_ymb3d")

@@ -4,7 +4,6 @@ class_name Bomb extends Projectile
 
 @onready var main : Node3D = $".."
 # In degrees
-@onready var camera_tilt = $"../MainPlayer/CameraPivot/SpringArm3D/Camera3D"._camera_pivot.rotation.x
 @onready var player : CharacterBody3D = $"../MainPlayer"
 @onready var age: float = 0
 @onready var wall_delete_hitbox : Area3D = $WallDeleteBox

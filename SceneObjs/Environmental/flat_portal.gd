@@ -29,6 +29,16 @@ var _transition_objects: Dictionary = {}
 @onready var _nearby_areas : Array[Area3D]
 
 func _ready() -> void:
+	var initial_dimension := (
+	IN_OVERWORLD
+	if _player.in_overworld
+	else IN_UNDERWORLD
+	)
+
+	FLAT_PORTAL_SHADER.set_shader_parameter(
+	"player_dimension",
+	initial_dimension
+	)
 	_previous_local_position = to_local(
 		_player_cam.global_position
 	)
@@ -62,29 +72,48 @@ func _on_body_exited(body: Node3D) -> void:
 			continue
 
 		var plane_normal := global_basis.z.normalized()
-		var signed_distance := plane_normal.dot(
-			original.global_position - global_position
+
+		var data: Dictionary = _transition_objects.get(id, {})
+
+		var final_dimension: int = data.get(
+			"original_dimension",
+			IN_OVERWORLD if _player.in_overworld else IN_UNDERWORLD
 		)
 
-		var final_dimension := source_dimension
-		if signed_distance < 0.0:
-			final_dimension = destination_dimension
+		if data.get("crossed_portal", false):
+			var signed_distance := global_basis.z.normalized().dot(
+				original.global_position - global_position
+			)
+
+			final_dimension = (
+				destination_dimension if signed_distance < 0.0
+				else source_dimension
+			)
 
 		_end_object_transition(id, final_dimension)
+
 
 func _generate_transition_copies() -> void:
 	_source_container = Node3D.new()
 	_source_container.name = "PortalSourceCopies"
-	get_tree().current_scene.add_child.call_deferred(_source_container)
 
 	_destination_container = Node3D.new()
 	_destination_container.name = "PortalDestinationCopies"
-	get_tree().current_scene.add_child.call_deferred(_destination_container)
+
+	add_child.call_deferred(_source_container)
+	add_child.call_deferred(_destination_container)
 
 
 
 
 func _begin_object_transition(root: Node3D) -> void:
+	if not is_instance_valid(_source_container) \
+	or not is_instance_valid(_destination_container):
+		return
+
+	if not _source_container.is_inside_tree() \
+	or not _destination_container.is_inside_tree():
+		return
 	var meshes: Array[GeometryInstance3D] = []
 	_collect_meshes(root, meshes)
 
@@ -100,18 +129,17 @@ func _begin_object_transition(root: Node3D) -> void:
 		if _transition_objects.has(id):
 			continue
 
+
 		var source := original.duplicate() as GeometryInstance3D
 		var destination := original.duplicate() as GeometryInstance3D
-		
-		# DEBUG
-		source.set_instance_shader_parameter("debug_copy_type", 1)
-		destination.set_instance_shader_parameter("debug_copy_type", 2)
 
+		# Check before using either duplicate.
 		if source == null or destination == null:
 			if is_instance_valid(source):
 				source.queue_free()
 			if is_instance_valid(destination):
 				destination.queue_free()
+			push_warning("Failed to duplicate mesh: " + original.name)
 			continue
 
 		source.name = original.name + "_PortalSource"
@@ -126,26 +154,67 @@ func _begin_object_transition(root: Node3D) -> void:
 		var plane_position := global_position
 		var plane_normal := global_basis.z.normalized()
 
+		# Determine which side of the portal the original occupies.
+		var signed_distance := plane_normal.dot(
+			original.global_position - plane_position
+		)
+
+		var dimension_value: Variant = original.get_instance_shader_parameter(
+		    "visual_layer"
+		)
+
+		var original_dimension: int
+
+		if dimension_value == null:
+			# Fall back to the player's current dimension.
+			original_dimension = (
+				IN_OVERWORLD
+				if _player.in_overworld
+				else IN_UNDERWORLD
+			)
+		else:
+			original_dimension = dimension_value as int
+
+		# Determine the opposite dimension.
+		var other_dimension := (
+			IN_UNDERWORLD
+			if original_dimension == IN_OVERWORLD
+			else IN_OVERWORLD
+		)
+
+		# The copy matching the original's dimension stays on
+		# the side where the original currently resides.
+		var original_side := 1.0 if signed_distance >= 0.0 else -1.0
+		var opposite_side := -original_side
+
 		_configure_copy_tree(
 			source,
-			source_dimension,
-			1.0,
+			original_dimension,
+			original_side,
 			plane_position,
 			plane_normal
 		)
-		#_configure_copy_tree(
-			#destination,
-			#destination_dimension,
-			#-1.0,
-			#plane_position,
-			#plane_normal
-		#)
+
+		_configure_copy_tree(
+			destination,
+			other_dimension,
+			opposite_side,
+			plane_position,
+			plane_normal
+		)
+
 
 		_transition_objects[id] = {
 			"original": original,
 			"source": source,
 			"destination": destination,
-			"was_visible": original.visible
+			"was_visible": original.visible,
+			"original_dimension": original.get_meta(
+				"visual_layer",
+				IN_OVERWORLD if _player.in_overworld else IN_UNDERWORLD
+			),
+			"previous_position": original.global_position,
+			"crossed_portal": false
 		}
 		
 		original.set_instance_shader_parameter("is_transition_object", false)
@@ -155,6 +224,34 @@ func _begin_object_transition(root: Node3D) -> void:
 		
 		original.visible = false
 
+func _crossing_is_inside_portal(
+	from_position: Vector3,
+	to_position: Vector3
+) -> bool:
+	var basis := global_basis.orthonormalized()
+	var normal := basis.z
+	var plane_position := global_position
+
+	var from_distance := normal.dot(from_position - plane_position)
+	var to_distance := normal.dot(to_position - plane_position)
+
+	# Must cross from one side of the plane to the other.
+	if from_distance * to_distance >= 0.0:
+		return false
+
+	# Find the exact point where the movement segment crosses the plane.
+	var t := from_distance / (from_distance - to_distance)
+	var crossing_point := from_position.lerp(to_position, t)
+
+	# Convert the crossing point into portal-local horizontal/vertical offsets.
+	var offset := crossing_point - plane_position
+	var local_x := basis.x.dot(offset)
+	var local_y := basis.y.dot(offset)
+
+	return (
+		absf(local_x) <= portal_half_size.x
+		and absf(local_y) <= portal_half_size.y
+	)
 
 func _collect_meshes(
 	node: Node,
@@ -278,25 +375,49 @@ func _configure_copy(
 	copy.set_instance_shader_parameter("visual_layer", dimension)
 	copy.set_instance_shader_parameter("is_transition_object", true)
 
+
 func _sync_transition_objects() -> void:
-	for id in _transition_objects.keys():
+	var ids_to_remove: Array = []
+
+	for id in _transition_objects:
 		var data: Dictionary = _transition_objects[id]
-		if !is_instance_valid(id):
-			_transition_objects.erase(id)
-			print("Dead object update detected")
-		var original = data["original"] as GeometryInstance3D
-		if not is_instance_valid(original):
-			print("Invalid instance detected")
-			continue
-		var source = data["source"] as GeometryInstance3D
-		var destination = data["destination"] as GeometryInstance3D
-		if not is_instance_valid(source) or not is_instance_valid(destination):
-			print("Invalid instance detected")
+
+		var original = data.get("original")
+		var source = data.get("source")
+		var destination = data.get("destination")
+
+		# Remove the entry if any required object has been freed
+		# or is waiting to be freed.
+		if (
+			not is_instance_valid(original)
+			or original.is_queued_for_deletion()
+			or not is_instance_valid(source)
+			or source.is_queued_for_deletion()
+			or not is_instance_valid(destination)
+			or destination.is_queued_for_deletion()
+		):
+			ids_to_remove.append(id)
 			continue
 
+		var previous_position: Vector3 = data["previous_position"]
+		var current_position: Vector3 = original.global_position
+
+		if not data["crossed_portal"]:
+			if _crossing_is_inside_portal(
+				previous_position,
+				current_position
+			):
+				data["crossed_portal"] = true
+
+		data["previous_position"] = current_position
 
 		source.global_transform = original.global_transform
 		destination.global_transform = original.global_transform
+
+	# Modify the dictionary after iteration to avoid changing it mid-loop.
+	for id in ids_to_remove:
+		_transition_objects.erase(id)
+
 
 func _end_object_transition(
 	id: int,

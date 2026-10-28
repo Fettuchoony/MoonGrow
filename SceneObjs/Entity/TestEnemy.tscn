@@ -3,11 +3,9 @@
 [ext_resource type="Script" uid="uid://d3xx8xafw62yg" path="res://SceneObjs/Entity/test_enemy.gd" id="1_516de"]
 [ext_resource type="PackedScene" uid="uid://bfcx2gshega8i" path="res://Textures/Blender/Slime.blend" id="2_516de"]
 [ext_resource type="PackedScene" uid="uid://clcu8dl70iumg" path="res://SceneObjs/Entity/dmg_particle_spawner.tscn" id="3_spxmx"]
+[ext_resource type="PackedScene" uid="uid://beq0ai8f4xwsf" path="res://SceneObjs/Entity/HealthBar.tscn" id="4_anff5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_516de"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_34rnb"]
-viewport_path = NodePath("Sprite3D/EnemyViewport")
 
 [sub_resource type="BoxMesh" id="BoxMesh_516de"]
 
@@ -35,38 +33,6 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1397954097]
 debug_enabled = true
 
-[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1995255648]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6135647, 0)
-billboard = 2
-texture_filter = 0
-texture = SubResource("ViewportTexture_34rnb")
-
-[node name="EnemyViewport" type="SubViewport" parent="Sprite3D" unique_id=370263019]
-disable_3d = true
-transparent_bg = true
-handle_input_locally = false
-gui_disable_input = true
-
-[node name="Health Bar" type="Control" parent="Sprite3D/EnemyViewport" unique_id=1574843900]
-layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(4, 4)
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Sprite3D/EnemyViewport/Health Bar" unique_id=294638160]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="TargetPoint" type="Node3D" parent="." unique_id=590453167]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.01517396, 0.36711717, -0.39178085)
 visible = false
@@ -77,3 +43,6 @@ mesh = SubResource("BoxMesh_516de")
 [node name="DmgParticleSpawner" parent="." unique_id=1533725901 instance=ExtResource("3_spxmx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15260124, 0)
 height = SubResource("Curve_spxmx")
+
+[node name="HealthBar" parent="." unique_id=1049267497 instance=ExtResource("4_anff5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0653124, 0)

@@ -12,18 +12,25 @@ uniform vec3 portal_norms[16];
 uniform vec3 portal_rights[16];
 uniform vec3 portal_ups[16];
 
+uniform vec4 albedo_color : source_color = vec4(1.0);
+uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
+uniform float metallic : hint_range(0.0, 1.0) = 0.0;
+uniform float roughness : hint_range(0.0, 1.0) = 1.0;
+
+// Keep your existing instance uniforms:
+instance uniform int visual_layer = 1;
+instance uniform bool portal_clipping_enabled = false;
+instance uniform bool is_transition_object = false;
+
 uniform vec2 portal_half_size = vec2(2.5, 2.5);
 uniform float portal_plane_epsilon = 0.02;
 uniform float portal_parallel_epsilon = 0.0000001;
 uniform int player_dimension = 1;
-instance uniform int visual_layer = 1;
 // TODO : change the clip plane pos and norm to portal pos and norm
 
-instance uniform bool portal_clipping_enabled = false;
 instance uniform vec3 clip_plane_position = vec3(0.0);
 instance uniform vec3 clip_plane_normal = vec3(0.0, 0.0, 1.0);
 instance uniform float clip_side = 1.0;
-instance uniform bool is_transition_object = false;
 instance uniform int debug_copy_type = 0;
 instance uniform bool debug_dimension = false;
 
@@ -114,6 +121,13 @@ void vertex() {
 
 
 void fragment() {
+	
+	// OG Texture info from object if available
+	vec4 tex_color = texture(albedo_texture, UV);
+	ALBEDO = albedo_color.rgb * tex_color.rgb;
+	METALLIC = metallic;
+	ROUGHNESS = roughness;
+	
 	//if (debug_copy_type == 1) {
 	    //ALBEDO = vec3(1.0, 0.0, 0.0); // Source copy: red
 //
