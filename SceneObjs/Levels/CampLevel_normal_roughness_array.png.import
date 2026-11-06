@@ -3,16 +3,16 @@
 importer="2d_array_texture"
 type="CompressedTexture2DArray"
 uid="uid://caxolilp7yt0w"
-path.etc2="res://.godot/imported/CampLevel_normal_roughness_array.png-f5b7961c7f4358f5cda0de406546fc4c.etc2.ctexarray"
+path.s3tc="res://.godot/imported/CampLevel_normal_roughness_array.png-f5b7961c7f4358f5cda0de406546fc4c.s3tc.ctexarray"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://SceneObjs/Levels/CampLevel_normal_roughness_array.png"
-dest_files=["res://.godot/imported/CampLevel_normal_roughness_array.png-f5b7961c7f4358f5cda0de406546fc4c.etc2.ctexarray"]
+dest_files=["res://.godot/imported/CampLevel_normal_roughness_array.png-f5b7961c7f4358f5cda0de406546fc4c.s3tc.ctexarray"]
 
 [params]
 

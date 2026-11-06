@@ -97,6 +97,7 @@ func change_health(delta: int) -> void:
 		_drop_loot()
 		queue_free()
 		pass
+	health_bar.update_health_bar(health)
 
 
 func apply_knockback(origin: Vector3, knockback_strength : float = 1.0) -> void:
