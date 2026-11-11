@@ -18,7 +18,7 @@ uniform float metallic : hint_range(0.0, 1.0) = 0.0;
 uniform float roughness : hint_range(0.0, 1.0) = 1.0;
 
 // Keep your existing instance uniforms:
-instance uniform int visual_layer = 1;
+uniform int visual_layer = 1;
 instance uniform bool portal_clipping_enabled = false;
 instance uniform bool is_transition_object = false;
 

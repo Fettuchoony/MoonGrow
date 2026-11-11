@@ -3,16 +3,16 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c3q147jrrbpbt"
-path.etc2="res://.godot/imported/ramp3.png-03f8d046f2d91ee89c56b9f13b34e5c1.etc2.ctex"
+path.s3tc="res://.godot/imported/ramp3.png-03f8d046f2d91ee89c56b9f13b34e5c1.s3tc.ctex"
 metadata={
-"imported_formats": ["etc2_astc"],
+"imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Textures/ramp3.png"
-dest_files=["res://.godot/imported/ramp3.png-03f8d046f2d91ee89c56b9f13b34e5c1.etc2.ctex"]
+dest_files=["res://.godot/imported/ramp3.png-03f8d046f2d91ee89c56b9f13b34e5c1.s3tc.ctex"]
 
 [params]
 

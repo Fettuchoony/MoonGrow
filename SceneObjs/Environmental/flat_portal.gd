@@ -55,11 +55,28 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node3D) -> void:
 	var root := _find_transition_root(body)
+
+	if root == null:
+		return
+
+	var meshes: Array[GeometryInstance3D] = []
+	_collect_meshes(root, meshes)
+
+	for mesh in meshes:
+		if is_instance_valid(mesh):
+			mesh.set_meta(
+				"portal_previous_position",
+				mesh.global_position
+			)
+
 	_begin_object_transition(root)
 
 
 func _on_body_exited(body: Node3D) -> void:
 	var root := _find_transition_root(body)
+	if root == null:
+		return
+
 	var meshes: Array[GeometryInstance3D] = []
 	_collect_meshes(root, meshes)
 
@@ -68,27 +85,25 @@ func _on_body_exited(body: Node3D) -> void:
 			continue
 
 		var id := original.get_instance_id()
+
 		if not _transition_objects.has(id):
 			continue
 
-		var plane_normal := global_basis.z.normalized()
+		var data: Dictionary = _transition_objects[id]
 
-		var data: Dictionary = _transition_objects.get(id, {})
+		var final_dimension: int = data["original_dimension"]
 
-		var final_dimension: int = data.get(
-			"original_dimension",
-			IN_OVERWORLD if _player.in_overworld else IN_UNDERWORLD
-		)
-
-		if data.get("crossed_portal", false):
+		if data["crossed_portal"]:
 			var signed_distance := global_basis.z.normalized().dot(
 				original.global_position - global_position
 			)
 
-			final_dimension = (
-				destination_dimension if signed_distance < 0.0
-				else source_dimension
-			)
+			var original_side: float = data["original_side"]
+
+			# Only change dimension if the object ended up
+			# on the opposite side from where it started.
+			if signed_distance * original_side < 0.0:
+				final_dimension = data["other_dimension"]
 
 		_end_object_transition(id, final_dimension)
 
@@ -104,8 +119,6 @@ func _generate_transition_copies() -> void:
 	add_child.call_deferred(_destination_container)
 
 
-
-
 func _begin_object_transition(root: Node3D) -> void:
 	if not is_instance_valid(_source_container) \
 	or not is_instance_valid(_destination_container):
@@ -114,6 +127,7 @@ func _begin_object_transition(root: Node3D) -> void:
 	if not _source_container.is_inside_tree() \
 	or not _destination_container.is_inside_tree():
 		return
+
 	var meshes: Array[GeometryInstance3D] = []
 	_collect_meshes(root, meshes)
 
@@ -128,7 +142,8 @@ func _begin_object_transition(root: Node3D) -> void:
 
 		if _transition_objects.has(id):
 			continue
-
+		
+		
 
 		var source := original.duplicate() as GeometryInstance3D
 		var destination := original.duplicate() as GeometryInstance3D
@@ -140,6 +155,24 @@ func _begin_object_transition(root: Node3D) -> void:
 			if is_instance_valid(destination):
 				destination.queue_free()
 			push_warning("Failed to duplicate mesh: " + original.name)
+			continue
+
+		var previous_position: Vector3 = original.get_meta(
+			"portal_previous_position",
+			original.global_position
+		)
+
+		var current_position := original.global_position
+
+		# Update the stored position every time we check.
+		original.set_meta("portal_previous_position", current_position)
+
+		# Only begin a transition when the object crosses
+		# the portal plane inside the portal rectangle.
+		if not _crossing_is_inside_portal(
+			previous_position,
+			current_position
+		):
 			continue
 
 		source.name = original.name + "_PortalSource"
@@ -209,12 +242,11 @@ func _begin_object_transition(root: Node3D) -> void:
 			"source": source,
 			"destination": destination,
 			"was_visible": original.visible,
-			"original_dimension": original.get_meta(
-				"visual_layer",
-				IN_OVERWORLD if _player.in_overworld else IN_UNDERWORLD
-			),
+			"original_dimension": original_dimension,
+			"other_dimension": other_dimension,
+			"original_side": original_side,
 			"previous_position": original.global_position,
-			"crossed_portal": false
+			"crossed_portal": true
 		}
 		
 		original.set_instance_shader_parameter("is_transition_object", false)
@@ -252,6 +284,7 @@ func _crossing_is_inside_portal(
 		absf(local_x) <= portal_half_size.x
 		and absf(local_y) <= portal_half_size.y
 	)
+
 
 func _collect_meshes(
 	node: Node,
@@ -368,12 +401,24 @@ func _configure_copy(
 	plane_position: Vector3,
 	plane_normal: Vector3
 ) -> void:
-	copy.set_instance_shader_parameter("portal_clipping_enabled", true)
-	copy.set_instance_shader_parameter("clip_plane_position", plane_position)
-	copy.set_instance_shader_parameter("clip_plane_normal", plane_normal)
-	copy.set_instance_shader_parameter("clip_side", side)
-	copy.set_instance_shader_parameter("visual_layer", dimension)
-	copy.set_instance_shader_parameter("is_transition_object", true)
+	copy.set_instance_shader_parameter(
+		"portal_clipping_enabled", true
+	)
+	copy.set_instance_shader_parameter(
+		"clip_plane_position", plane_position
+	)
+	copy.set_instance_shader_parameter(
+		"clip_plane_normal", plane_normal
+	) 
+	copy.set_instance_shader_parameter(
+		"clip_side", side
+	)
+	copy.set_instance_shader_parameter(
+		"visual_layer", dimension
+	)
+	copy.set_instance_shader_parameter(
+		"is_transition_object", true
+	)
 
 
 func _sync_transition_objects() -> void:
@@ -401,13 +446,6 @@ func _sync_transition_objects() -> void:
 
 		var previous_position: Vector3 = data["previous_position"]
 		var current_position: Vector3 = original.global_position
-
-		if not data["crossed_portal"]:
-			if _crossing_is_inside_portal(
-				previous_position,
-				current_position
-			):
-				data["crossed_portal"] = true
 
 		data["previous_position"] = current_position
 
