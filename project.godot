@@ -24,10 +24,6 @@ config/icon="res://Textures/icon.svg"
 window/size/always_on_top=true
 window/vsync/vsync_mode=0
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
-
 [global_group]
 
 carry_on_load="Carry this object into other \"levels\". Applied to character, car, items, etc..."
@@ -164,6 +160,7 @@ Debug={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+rendering_device/driver="d3d12"
 global_illumination/gi/use_half_resolution=true
 textures/default_filters/anisotropic_filtering_level=0
 global_illumination/sdfgi/probe_ray_count=0

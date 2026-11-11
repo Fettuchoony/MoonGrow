@@ -1,7 +1,6 @@
 extends Node3D
 
 @onready var disabled : bool = true
-@onready var terrain = $NavigationRegion3D/HTerrain
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

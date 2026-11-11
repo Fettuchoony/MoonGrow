@@ -1,11 +1,11 @@
 extends Node3D
 
 @onready var disabled : bool = false
-@onready var terrain = $HTerrain
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	terrain.set_collision_enabled(!disabled)
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
