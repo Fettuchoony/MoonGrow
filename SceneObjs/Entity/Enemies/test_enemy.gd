@@ -31,16 +31,16 @@ func _physics_process(delta: float) -> void:
 	if health_sprite_timer > HEALTH_SHOW_TIME:
 		health_gui_update(6, 10)
 	# Do not query when the map has never synchronized and is empty.
-	if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
+	if NavigationServer3D.map_get_iteration_id(_navigation_agent.get_navigation_map()) == 0:
 		return
-	if navigation_agent.is_navigation_finished():
+	if _navigation_agent.is_navigation_finished():
 		return
 	
-	var next_path_position: Vector3 = navigation_agent.get_next_path_position()
+	var next_path_position: Vector3 = _navigation_agent.get_next_path_position()
 	var new_dir: Vector3 = (global_position.direction_to(next_path_position)).normalized()
 	var dist_to_target : float = global_position.distance_to(player.global_position)
 	
-	var next_path_pos = navigation_agent.get_next_path_position()
+	var next_path_pos = _navigation_agent.get_next_path_position()
 	var focus_point = Vector3(next_path_pos.x, global_position.y, next_path_pos.z)
 	look_at(focus_point + Vector3(0.1, 0, 0))
 	
