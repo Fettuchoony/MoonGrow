@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://cbm26jdhaslks" path="res://SceneObjs/Environmental/nav_region.gd" id="5_rb82d"]
 [ext_resource type="PackedScene" uid="uid://c83dnwe7afdko" path="res://SceneObjs/Environmental/RockWall1.tscn" id="6_y47v4"]
 [ext_resource type="PackedScene" uid="uid://d3m5qmeybqvho" path="res://SceneObjs/Environmental/test_course.tscn" id="7_5gffo"]
-[ext_resource type="PackedScene" uid="uid://bp3x8ebd1g2bm" path="res://SceneObjs/Entity/Enemies/TestEnemy.tscn" id="8_7ypan"]
+[ext_resource type="PackedScene" uid="uid://bp3x8ebd1g2bm" path="res://SceneObjs/Entity/Enemies/Slime.tscn" id="8_7ypan"]
 [ext_resource type="PackedScene" uid="uid://dm5nydlnkp6ps" path="res://SceneObjs/Environmental/ground_loot.tscn" id="9_bmg8s"]
 [ext_resource type="PackedScene" uid="uid://coh1ixbnqytnp" path="res://Textures/Blender/tree.blend" id="10_mxbwf"]
 [ext_resource type="PackedScene" uid="uid://do72lofk6clol" path="res://SceneObjs/LoadZone/load_zone.tscn" id="14_jxwv7"]

@@ -28,14 +28,6 @@ var _health_bar : HealthBar
 @export var max_health : int = 10
 @export var movement_speed: float = 3.0
 
-
-func _init(parent : Node3D, enemy_name : String):
-	parent.add_child(self)
-	var file : String = "res://SceneObjs/Entity/Enemies/" + enemy_name + ".tscn"
-	if ResourceLoader.exists(file):
-		var asset = ResourceLoader.load(file)
-		add_child(asset)
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#_init_healthbar()
@@ -43,11 +35,6 @@ func _ready() -> void:
 	_setup_dmg_particles()
 	_setup_navigation()
 
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _physics_process(delta: float) -> void:	
 	_adjust_target()
@@ -118,7 +105,7 @@ func apply_knockback(origin: Vector3, knockback_strength : float = 1.0) -> void:
 
 func _update_navigation() -> void:
 	if !is_instance_valid(_navigation_agent):
-		pass
+		return
 	# Do not query when the map has never synchronized and is empty.
 	if NavigationServer3D.map_get_iteration_id(_navigation_agent.get_navigation_map()) == 0:
 		return

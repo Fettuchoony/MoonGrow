@@ -198,7 +198,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 211.7428, 0, 217.80383)
 mesh = SubResource("SphereMesh_dvtkr")
 
 [node name="EnemySpawner" type="Node3D" parent="CurrentLevel/MainTestScene/Objects/Entities" unique_id=1442039396]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 245.15555, 0, 226.94778)
 script = ExtResource("9_lqwkv")
+enemy = "Slime"
 
 [node name="Misc" type="Node3D" parent="CurrentLevel/MainTestScene" unique_id=327445641]
 

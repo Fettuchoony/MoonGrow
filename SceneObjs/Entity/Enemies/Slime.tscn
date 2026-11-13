@@ -1,19 +1,11 @@
 [gd_scene format=3 uid="uid://bp3x8ebd1g2bm"]
 
-[ext_resource type="Script" uid="uid://d3xx8xafw62yg" path="res://SceneObjs/Entity/Enemies/test_enemy.gd" id="1_516de"]
 [ext_resource type="PackedScene" uid="uid://bfcx2gshega8i" path="res://Textures/Blender/Slime.blend" id="2_516de"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_516de"]
 
-[node name="TestEnemy" type="RigidBody3D" unique_id=1213933506]
+[node name="Slime" type="Node3D" unique_id=412127899]
 transform = Transform3D(-0.9992508, 0, -0.0387017, 0, 1, 0, 0.0387017, 0, -0.9992508, 0, 0, 0)
-collision_layer = 4
-axis_lock_angular_x = true
-axis_lock_angular_y = true
-axis_lock_angular_z = true
-script = ExtResource("1_516de")
-health = 400
-max_health = 400
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1773027660]
 shape = SubResource("SphereShape3D_516de")

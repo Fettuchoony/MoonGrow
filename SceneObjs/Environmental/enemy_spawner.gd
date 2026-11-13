@@ -1,17 +1,16 @@
 class_name EnemySpawner extends Node3D
 
-# Only spawns on trigger method call
-@onready var manual_mode : bool = false
+@export var enemy : String
 
-# How many enemies per sec TODO: replace with operating budget like ror2
-@onready var _spawn_freq : float = 5.0
+## Only spawns on trigger method call
+@export var manual_mode : bool = false
+
+## How many enemies per sec TODO: replace with operating budget like ror2
+@export var _spawn_freq : float = 5.0
 
 @onready var time_since_last_spawn : float = 0.0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
+@onready var _entities = get_tree().root.get_child(0).entities
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -21,5 +20,11 @@ func _process(delta: float) -> void:
 	time_since_last_spawn += delta
 
 func trigger() -> void:
+	if _entities == null:
+		push_error("Cannot find entity list for spawning of " + enemy + " defaulting to parent of spawner")
+		_entities = get_parent()
+	var path = "res://SceneObjs/Entity/Enemies/" + enemy + ".gd"
+	var spawned_enemy = load(path).new()
 	time_since_last_spawn = 0.0
-	Enemy.new(get_parent(), "TestEnemy")
+	_entities.add_child(spawned_enemy)
+	spawned_enemy.global_position = global_position
