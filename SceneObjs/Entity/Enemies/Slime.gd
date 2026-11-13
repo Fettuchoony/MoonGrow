@@ -16,7 +16,7 @@ static var HOP_INTENSITY : float = 4
 @onready var temp_radius : float = charge_attack_radius
 
 func _ready() -> void:
-	add_child(load("res://SceneObjs/Entity/Enemies/" + get_class() + ".tscn").instantiate())
+	print("Spawning ", name)
 
 func _physics_process(delta: float) -> void:
 	super(delta)
