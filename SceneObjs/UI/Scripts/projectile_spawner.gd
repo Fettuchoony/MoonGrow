@@ -6,7 +6,7 @@ class_name ProjectileSpawner extends Item
 @onready var added_firerate : float = 0.0
 
 # Enemy targeted at instantiation, can still hit others or miss
-@onready var target_enemy : Enemy
+@onready var _target_enemy : Enemy
 
 # Base: Projectile's base stats with no augmentation, NEVER MUTATED
 @onready var _fire_timer = 0
@@ -30,7 +30,7 @@ func _physics_process(delta: float) -> void:
 
 ## OOP: (Quality modifier * Base Damage) + Modifier Buffs
 func apply_effects_to_enemy(enemy : Enemy) -> void:
-	enemy.change_health(-(quality_mult * base_dmg) - added_dmg)
+	enemy.change_health(-(ceili(quality_mult * base_dmg)) - added_dmg)
 
 func get_dmg() -> int:
 	return base_dmg + added_dmg
@@ -39,6 +39,7 @@ func get_firerate() -> float:
 	return base_firerate + added_firerate
 
 func fire(fire_pos : Vector3, target_enemy : Enemy) -> void:
+	_target_enemy = target_enemy
 	if _fire_timer > get_firerate():
 		var proj_obj : RigidBody3D = projectile.instantiate()
 		# Add copy of spawner just for the stats to carry into projectile
@@ -48,11 +49,11 @@ func fire(fire_pos : Vector3, target_enemy : Enemy) -> void:
 		get_tree().root.get_child(0).add_child(proj_obj)
 		proj_obj.global_position = fire_pos
 		proj_obj.projectile_effect = self
-		proj_obj.flight_behaviour(target_enemy)
+		proj_obj.flight_behaviour(_target_enemy)
 		_fire_timer = 0
 
 # This exists to be overriden by specific projectile
-func flight_behaviour(target_enemy : Enemy) -> void:
+func flight_behaviour() -> void:
 	print("Cannot find prjectile " + name + " flight behaviour, falling back to default")
 
 func reset() -> void:

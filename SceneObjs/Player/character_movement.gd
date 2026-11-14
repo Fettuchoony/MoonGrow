@@ -436,12 +436,10 @@ func _upgrade_hover_ui() -> void:
 	# Trigger gui when hovering but dont free mouse
 	if col != null && col.collision_layer == 8 && !_displaying_turret_gui && !_paused:
 		_current_turret_gui = col.ui
-		col._menu = _menu
 		#_current_turret_gui.populate_upgrade_slots()
 		_displaying_turret_gui = true
 		_current_turret_gui.visible = true
 	if _displaying_turret_gui:
-		_current_turret_gui._menu = _menu
 		if col == null || col.collision_layer != 8:
 			_mouse_mode = Input.MOUSE_MODE_CAPTURED
 			_camera.enable_movement = true

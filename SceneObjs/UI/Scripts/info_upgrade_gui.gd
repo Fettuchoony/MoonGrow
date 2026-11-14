@@ -13,7 +13,6 @@ var _turret_name : Label
 var _dmg : Label
 var _fire_rate : Label
 var _player : CharacterBody3D
-var _menu : Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

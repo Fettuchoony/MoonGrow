@@ -1,12 +1,10 @@
 class_name HoverInfo extends Control
 
-@onready var _panel = $Panel
 @onready var _quality : float = 0.0
 @onready var _quality_mult : float = 0.0
 @onready var _quality_label : RichTextLabel = $Quality
 @onready var _quality_color : Color = Color.WHITE
 @onready var _item_name : Label = $Panel/ScrollContainer/LabelContainer/ItemName
-@onready var _item_info : Label = $Panel/ScrollContainer/LabelContainer/ItemInfo
 @onready var _label_container : VBoxContainer = $Panel/ScrollContainer/LabelContainer
 @onready var _label_array : Array[Node]
 @onready var _time : float = 0.0

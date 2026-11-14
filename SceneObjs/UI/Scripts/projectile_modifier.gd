@@ -31,5 +31,5 @@ func modify_proj(proj : ProjectileSpawner):
 
 # Modifies the delta of the upgrade by the upgrade quality ?with some special cases?
 func _modify_deltas() -> void:
-	delta_dmg *= quality
+	delta_dmg *= ceili(quality)
 	delta_firerate *= quality

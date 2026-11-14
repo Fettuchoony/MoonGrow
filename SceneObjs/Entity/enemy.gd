@@ -3,9 +3,6 @@ class_name Enemy extends RigidBody3D
 static var HEALTH_SHOW_TIME : float = 1
 static var REFRESH_FREQUENCY : float = 1
 
-# Enemy name in constructor must match a file name in this directory
-@onready var _enemies_dir = "res://SceneObjs/Entity/Enemies/"
-
 
 var _dmg_particle_spawner : Node3D
 var _navigation_agent: NavigationAgent3D
@@ -37,6 +34,11 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:	
+	if _dmg_particle_spawner == null || _navigation_agent == null || _health_bar == null:
+		printerr("Enemy: " + name + " is missing vital nav/health properties. Forgot to call super() in enemy's _ready func? 
+		DMG Particle status: " + str(_dmg_particle_spawner) +
+		"\nNAV Agent status: " + str(_navigation_agent) +
+		"\nHealth Bar status: " + str(_health_bar))
 	_adjust_target()
 	#_update_healthbar()
 	_update_navigation()
@@ -50,7 +52,7 @@ func _on_velocity_computed(safe_velocity: Vector3):
 # Determines pathfinding behaviour of enemy
 func _adjust_target() -> void :
 	# Readjust path of enemies and updates length for the turrets to use to determine order
-	if time_since_target_update > REFRESH_FREQUENCY:
+	if _navigation_agent != null && time_since_target_update > REFRESH_FREQUENCY:
 		_navigation_agent.set_target_position(castle.global_position)
 		time_since_target_update = 0
 		path_length = _navigation_agent.get_path_length()
@@ -61,28 +63,6 @@ func enable_info() -> void:
 	_health_bar.visible = true
 	health_sprite_timer = 0
 
-func health_gui_update(updated_health: int, updated_max: int) -> void:
-	pass
-	#var temp_health : int = health
-	#var temp_max : int = max_health
-	#for heart_module in health_bar.get_children():
-		#var half : TextureRect = heart_module.get_child(0)
-		#var full : TextureRect = half.get_child(0)
-		#if temp_max > 0:
-			#heart_module.visible = true
-		#else:
-			#heart_module.visible = false
-		#if temp_health > 1:
-			#half.visible = true
-			#full.visible = true
-		#elif temp_health == 1:
-			#half.visible = true
-			#full.visible = false
-		#else:
-			#half.visible = false
-			#full.visible = false
-		#temp_max -= 2
-		#temp_health -= 2
 
 func change_health(delta: int) -> void:
 	print(name + " took " + str(delta) + " dmg")
@@ -120,8 +100,8 @@ func _drop_loot() -> void:
 			loot.global_position = global_position + Vector3(0.0, 0.5, 0.0)
 			
 func _setup_healthbar() -> void:
-	load("res://SceneObjs/Entity/HealthBar.tscn")
-	add_child(HealthBar.new(self, max_health))
+	_health_bar = HealthBar.new(max_health)
+	add_child(_health_bar)
 
 func _setup_dmg_particles() -> void:
 	_dmg_particle_spawner = DmgParticleSpawner.new()

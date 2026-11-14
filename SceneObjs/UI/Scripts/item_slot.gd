@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _is_cursor_slot:
 		global_position = get_screen_transform() * get_local_mouse_position()
 		if _augment_slot.get_child_count() > 0:

@@ -1,7 +1,6 @@
 extends AspectRatioContainer
 
 @onready var _hover : TextureRect = $Hover
-@onready var _texture : TextureRect = $Icon
 
 @export var icon : Texture2D = preload("res://Textures/Extracted/PlaceholderItem.png")
 

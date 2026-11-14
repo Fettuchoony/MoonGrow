@@ -10,15 +10,12 @@ static var COLLOQUIAL_NAME : String = "Gunner Turret"
 @onready var _current_reachable_enemies : Dictionary[Node3D, float]
 # Attack mode is which enemy to attack in group: first, middle, last, strongest, weakest
 @onready var _attack_mode : String = "first"
-@onready var _debug_target_ball : MeshInstance3D = $DebugTargetBall
-@onready var _bullet_scene = preload("res://SceneObjs/Bullet/test_bullet.tscn")
 @onready var _firing_point : Node3D = $TurretBase/HeadPivot/TurretHead/FiringPoint
 @onready var _head_pivot : Node3D = $TurretBase/HeadPivot
 @onready var _up_ref : Node3D = $TurretBase/UpRef
 @onready var _current_projectiles : Array[ProjectileSpawner]
 @onready var target : Node3D
 
-@onready var _menu : Control
 @onready var ui : TurretUpgrades
 
 # Probably change how this works eventually

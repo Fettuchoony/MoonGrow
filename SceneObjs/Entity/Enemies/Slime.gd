@@ -15,8 +15,6 @@ static var HOP_INTENSITY : float = 4
 # Lets the slime do its animation even after player is flung outside its radius
 @onready var temp_radius : float = charge_attack_radius
 
-func _ready() -> void:
-	print("Spawning ", name)
 
 func _physics_process(delta: float) -> void:
 	super(delta)
@@ -26,9 +24,11 @@ func _physics_process(delta: float) -> void:
 	rotation.x = 0
 	rotation.z = 0
 	if health_sprite_timer > HEALTH_SHOW_TIME:
-		health_gui_update(6, 10)
+		pass
+		# TODO: update health gui move to enemy class
+		#health_gui_update(6, 10)
 	# Do not query when the map has never synchronized and is empty.
-	if NavigationServer3D.map_get_iteration_id(_navigation_agent.get_navigation_map()) == 0:
+	if _navigation_agent == null || NavigationServer3D.map_get_iteration_id(_navigation_agent.get_navigation_map()) == 0:
 		return
 	if _navigation_agent.is_navigation_finished():
 		return

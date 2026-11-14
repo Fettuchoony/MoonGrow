@@ -5,7 +5,6 @@ extends Label3D
 @onready var _spread : float = get_parent().lifetime
 @onready var _size_over_life : Curve = get_parent().size_over_life
 @onready var _time = 0.0
-@onready var _starting_pos : Vector3 = global_position
 @onready var _dir : Vector3 = Vector3(randf() * _spread, 0.0, randf() * _spread)
 @onready var _spread_percent : float = get_parent().spread_percent
 
