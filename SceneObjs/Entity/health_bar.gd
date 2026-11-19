@@ -16,12 +16,14 @@ func _init(max_hp : int = 1) -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_enemy = get_parent()
+	add_child(_bar)
+	add_child(_hp)
 	if !is_instance_valid(_enemy):
 		printerr("HealthBar: Health Bar spawned without proper enemy parent")
 	_bar.mesh = load("res://SceneObjs/UI/HPBarBackground.tres")
 	_hp.mesh = load("res://SceneObjs/UI/HPBar.tres")
 	_hp.mesh.size = _border_thickness * _bar.mesh.size
-	_hp.position += Vector3(0.0, 0.0, 0.0)
+	_hp.mesh.center_offset.z = 0.02
 
 
 func update_health_bar(curr: int):
@@ -30,4 +32,5 @@ func update_health_bar(curr: int):
 	var x_scale = percent_full * _bar.mesh.size.x
 	var y_scale = _bar.mesh.size.y
 	_hp.mesh.size = _border_thickness * Vector2(x_scale, y_scale)
-	_hp.mesh.center_offset = Vector3(x_pos, 0.0, 0.0)
+	_hp.mesh.center_offset.x = x_pos
+	

@@ -7,6 +7,9 @@
 
 [node name="Slime" type="RigidBody3D" unique_id=565799859]
 transform = Transform3D(-0.9992508, 0, -0.0387017, 0, 1, 0, 0.0387017, 0, -0.9992508, 0, 0, 0)
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
 script = ExtResource("1_ujxld")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1773027660]

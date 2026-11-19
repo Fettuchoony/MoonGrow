@@ -11,6 +11,7 @@ var _health_bar : HealthBar
 @onready var time : float = 0
 @onready var health_sprite_timer : float = 0
 @onready var heart_module_scene = preload("res://SceneObjs/UI/Scenes/HeartModule.tscn")
+@onready var _enemy_phys_mat : PhysicsMaterial = preload("res://SceneObjs/Entity/Enemies/enemy_phys_mat.tres")
 @onready var time_since_target_update : float = 0
 @onready var time_since_last_hop : float = 0
 @onready var player : CharacterBody3D = get_tree().root.get_child(0).find_child("MainPlayer")
@@ -24,10 +25,13 @@ var _health_bar : HealthBar
 @export var health : int = 6
 @export var max_health : int = 10
 @export var movement_speed: float = 3.0
+@export var health_bar_y_pos : float = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#_init_healthbar()
+	physics_material_override = _enemy_phys_mat
+	collision_layer = 4
 	_setup_healthbar()
 	_setup_dmg_particles()
 	_setup_navigation()
@@ -46,8 +50,8 @@ func _physics_process(delta: float) -> void:
 	health_sprite_timer += delta
 	time_since_target_update += delta
 	
-func _on_velocity_computed(safe_velocity: Vector3):
-	linear_velocity = safe_velocity
+#func _on_velocity_computed(safe_velocity: Vector3):
+	#linear_velocity = safe_velocity
 
 # Determines pathfinding behaviour of enemy
 func _adjust_target() -> void :
@@ -100,8 +104,11 @@ func _drop_loot() -> void:
 			loot.global_position = global_position + Vector3(0.0, 0.5, 0.0)
 			
 func _setup_healthbar() -> void:
+	if health_bar_y_pos == 0:
+		push_warning("Enemy: " + name + " health bar pos is 0.0, probably clipping in enemy")
 	_health_bar = HealthBar.new(max_health)
 	add_child(_health_bar)
+	_health_bar.position.y = health_bar_y_pos
 
 func _setup_dmg_particles() -> void:
 	_dmg_particle_spawner = DmgParticleSpawner.new()
@@ -111,4 +118,4 @@ func _setup_dmg_particles() -> void:
 func _setup_navigation() -> void:
 	_navigation_agent = NavigationAgent3D.new()
 	add_child(_navigation_agent)
-	_navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
+	#_navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))

@@ -12,6 +12,7 @@ class_name EnemySpawner extends Node3D
 
 @onready var _entities = get_tree().root.get_child(0).entities
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if !manual_mode && _spawn_freq <= time_since_last_spawn:

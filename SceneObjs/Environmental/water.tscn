@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dm73r53tbpm0j"]
+
+[ext_resource type="Texture2D" uid="uid://7uknfvd3u6n6" path="res://Textures/Extracted/Water.png" id="1_07moj"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_vvp7y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47jyh"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.5411765)
+albedo_texture = ExtResource("1_07moj")
+metallic_specular = 0.8
+texture_filter = 0
+
+[node name="water" type="Node3D" unique_id=1537724441]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=789490860]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("QuadMesh_vvp7y")
+surface_material_override/0 = SubResource("StandardMaterial3D_47jyh")

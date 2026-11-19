@@ -8,16 +8,40 @@ static var HOP_INTENSITY : float = 4
 @export var charge_attack_radius: float = 5
 @export var chargeup_time : float = 5
 
-# Theres some parabola magic going on here
-@onready var b : float
 @onready var charge : float = 0
 @onready var slime_scale : Vector3 = scale
 # Lets the slime do its animation even after player is flung outside its radius
 @onready var temp_radius : float = charge_attack_radius
 
+func _ready() -> void:
+	health_bar_y_pos = 1.2
+	super()
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	_slime_movement(delta)
+
+	## Initiate charge attack, probably will be removed idk
+	#if (dist_to_target < temp_radius):
+		#temp_radius = 99999
+		#time_since_last_hop = HOP_FREQUENCY - chargeup_time
+		##first half of the chargeup
+		#if charge < chargeup_time:
+			## This is a formula for a gaussian curve-like graph
+			#var factor : float = charge_attack_radius * exp(-30 * pow(charge - (chargeup_time/2), 2)) + 1
+			## Scale slime
+			#scale = factor * slime_scale
+			#charge += delta
+			## Shift health bar, undo scaling
+		#else:
+			#charge = 0
+			## Reset health y pos
+			## Reset activation radius of slime charge
+			#temp_radius = charge_attack_radius
+			#slime_scale = Vector3(1, 1, 1)
+			#scale = Vector3(1,1,1)
+
+func _slime_movement(delta : float) -> void:
 	# Update timers
 	time_since_last_hop += delta
 	#look_at(player.global_position)
@@ -47,23 +71,3 @@ func _physics_process(delta: float) -> void:
 		new_dir.y = 1
 		apply_impulse(HOP_INTENSITY * new_dir)
 		time_since_last_hop = 0
-
-	# Initiate charge attack, probably will be removed idk
-	if (dist_to_target < temp_radius):
-		temp_radius = 99999
-		time_since_last_hop = HOP_FREQUENCY - chargeup_time
-		#first half of the chargeup
-		if charge < chargeup_time:
-			# This is a formula for a gaussian curve-like graph
-			var factor : float = charge_attack_radius * exp(-30 * pow(charge - (chargeup_time/2), 2)) + 1
-			# Scale slime
-			scale = factor * slime_scale
-			charge += delta
-			# Shift health bar, undo scaling
-		else:
-			charge = 0
-			# Reset health y pos
-			# Reset activation radius of slime charge
-			temp_radius = charge_attack_radius
-			slime_scale = Vector3(1, 1, 1)
-			scale = Vector3(1,1,1)
